@@ -1,0 +1,44 @@
+body
+{
+    background-image: url(https://www.lajauneetlarouge.com/wp-content/uploads/2019/10/shutterstock_116429668.jpg);
+}
+
+.banniere
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.titre_bannière
+{
+    position: absolute;
+    background-color: goldenrod;
+    border-color: black;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    top: 400px;
+    right: 0px;
+
+}
+
+.box
+{
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    font-size: 32px;
+    border: 50px;
+    border-color: black;
+    text-align: center;
+}
+
+.bigbanniere
+{
+    width: 100%;
+    height: 200px;
+    background-color: goldenrod;
+    text-align: center;
+    border-radius: 20px;
+    border: 10px white;
+}
