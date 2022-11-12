@@ -45,33 +45,99 @@ body
 
 .element_number
 {
-    position: absolute;
     text-align: left;
-    margin: 0;
-    bottom: 0;
+    font-weight: normal;
+    font-size: 15px;
+    margin: 5px 5px 5px 5px;
+
 }
 
 .atomic_weight
 {
-    position: absolute;
     text-align: right;
-    margin: 0;
-    top: 0;
-    right: 0;
-    margin-right: 3px;
+    font-weight: normal;
+    font-size: 15px;
+    margin: 5px 5px 5px 5px;
+
 }
 
 .autres-non-métaux
 {
     background-color: rgb(134, 255, 134);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.gaz-nobles
+{
+    background-color: rgb(162, 245, 251);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .alcalin
 {
     background-color: rgb(235, 106, 106);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .alcalino-terreeux
 {
     background-color: rgb(254, 205, 113);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.metalloides
+{
+    background-color: rgb(41, 75, 41);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.halogene
+{
+    background-color: rgb(228, 242, 34);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.metaux-pauvres
+{
+    background-color: rgb(146, 146, 146);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.metaux_de_transition
+{
+    background-color: pink;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.non-classes
+{
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.lanthanides
+{
+    background-color: palevioletred;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.actinides
+{
+    background-color: rgb(254, 146, 164);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.empty
+{
+    border: none;
 }
