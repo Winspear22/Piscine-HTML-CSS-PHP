@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>adaloui CV</title>
+        <style>
+            @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
+
+            body {
+                margin: 0;
+                position: relative;
+                background-color: black;
+                color: #000000;
+                border: 3px solid black;
+                z-index: 1;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .cv_titre {
+                font-family: 'Ninja Naruto', sans-serif;
+                font-size: 35px;
+                color: #F7682E;
+                position: fixed;
+                left: 620px;
+                top: 10px;
+                z-index: 2;
+            }
+
+            .info-perso {
+                background: rgba(255, 255, 255, 0.8);
+                border-left: 5px solid #F7682E;
+                padding: 20px;
+                width: 180px;
+                top: 380px;
+                left: 35px;
+                position: absolute;
+                font-family: 'Arial', sans-serif;
+                color: #04315A;
+            }
+
+            #profile-pic {
+                width: 180px;
+                height: 180px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 5px solid #D7DFDC;
+                position: fixed;
+                top: 50px;
+                left: 350px;
+            }
+
+            #pancarte-image {
+                width: 290px;
+                height: 380px;
+                top: 200px;
+                left: 300px;
+                position: fixed;
+            }
+
+            #lampe-image {
+                width: 170px;
+                height: 200px;
+                top: 15px;
+                left: 500px;
+                position: fixed;
+            }
+
+            .bande_gauche {
+                background-color: #04315A;
+                width: 250px;
+                height: 100vh;
+                padding: 20px;
+                position: fixed;
+                left: 300px;
+                top: 0px;
+                z-index: -1;
+            }
+
+            .bande_droite {
+                background-color: #D7DFDC;
+                width: 600px;
+                height: 100vh;
+                padding: 20px;
+                position: fixed;
+                left: 590px;
+                top: 0px;
+                z-index: -1;
+            }
+
+            .parcours {
+                color: #000;
+                padding-left: 20px;
+                margin-top: 100px;
+                margin-left: 20px;
+            }
+
+
+            .parcours h2 {
+                font-family: 'Ninja Naruto', sans-serif;
+                color: #F7682E;
+                padding-bottom: 5px;
+				margin-top: 20px; /* Réduit l'espace au-dessus du titre si nécessaire */
+
+            }
+
+            .parcours table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                background-color: #D7DFDC;
+            }
+            .parcours table tr:last-child td:last-child {
+                border-color: #424242;
+				border-right: 2px solid #424242;
+    border-bottom: 2px solid #424242;
+	border-top: 2px solid #424242;
+	border-left: 2px solid #424242;
+            }
+            .parcours th, .parcours td {
+                border: 1px solid #F7682E;
+                padding: 5px;
+                text-align: left;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <h1 class="cv_titre">Sasuke Uchiha</h1>
+		<img id="lampe-image" src="Lampe CV.png" alt="Lampe de Sasuke Uchiha">
+		<div class="bande_gauche">
+			<img id="pancarte-image" src="Pancarte terminée.png" alt="Pancarte de Sasuke Uchiha">
+			<img id="profile-pic" src="https://pbs.twimg.com/media/FFnc9WsWQAA6iHw?format=jpg&name=large" alt="Profil de Adnen ALOUI">
+			<div class="info-perso">
+				<ul>
+					<li>Adresse :</li>
+					<li>96 rue de La Feuille Sauvage, 75017 Village caché de Konoha</li>
+					<li>Mail :</li>
+					<li>Sasuke.U@GeninMail.com</li>
+					<li>Contact :</li>
+					<li>06 42 42 42 42</li>
+				</ul>
+			</div>
+		</div>
+		<div class="bande_droite">
+			<div class="parcours">
+				<h2>Parcours Ninja</h2>
+				<table>
+					<tr>
+						<th>Année</th>
+						<th>Étape</th>
+						<th>Lieu</th>
+					</tr>
+					<tr>
+						<td>2007</td>
+						<td>Entrée à l'Académie Ninja</td>
+						<td>Konoha</td>
+					</tr>
+					<tr>
+						<td>2012</td>
+						<td>Formation avec Orochimaru</td>
+						<td>Cachette d'Orochimaru</td>
+					</tr>
+					<tr>
+						<td>2015</td>
+						<td>Fondation de Taka</td>
+						<td>Indéterminé</td>
+					</tr>
+				</table>
+			
+				<h2>Competences acquises</h2>
+				<ol style="padding-left: 20px;">
+					<li style="margin-bottom: 5px;">Maîtrise du Sharingan</li>
+					<li style="margin-bottom: 5px;">Techniques de Katon (techniques de feu)</li>
+					<li style="margin-bottom: 5px;">Maîtrise de l'épée Chidori</li>
+				</ol>
+
+				<h2>Missions Accomplies</h2>
+				<table>
+					<tr>
+						<th>Rang</th>
+						<th>Endroit</th>
+						<th>Objectif</th>
+						<th>Temps pris</th>
+					</tr>
+					<tr>
+						<td>C</td>
+						<td>Pays du thé</td>
+						<td>Escorter Idate Morino dans son voyage</td>
+						<td>1 semaine</td>
+					</tr>
+					<tr>
+						<td>B</td>
+						<td>Pays des Rizières</td>
+						<td>Enquêter sur le Village du Son</td>
+						<td>5 jours</td>
+					</tr>
+					<tr>
+						<td>B</td>
+						<td>Pays de la Terre</td>
+						<td>Protéger le colis sans le visualiser</td>
+						<td>1 semaine</td>
+					</tr>
+					<tr>
+						<td>A</td>
+						<td>Pays des Vagues</td>
+						<td>Participer au combat contre Zabuza et Haku</td>
+						<td>1 mois</td>
+					</tr>
+					<tr>
+						<td>D</td>
+						<td>Konoha</td>
+						<td>Récupérer le chat de la dame</td>
+						<td>2 heures</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+    </body>
+</html>

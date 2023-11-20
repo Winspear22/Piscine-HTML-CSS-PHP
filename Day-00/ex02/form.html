@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Form</title>
+        <style>
+			@import url('https://fonts.cdnfonts.com/css/ninja-naruto');
+
+            body 
+			{
+                background-image: url('./naruto\ background.jpg'); /* Remplacez avec le chemin réel de votre image */
+                background-size: cover; /* S'assure que l'image couvre tout le fond */
+                background-position: center; /* Centrer l'image dans la page */
+                background-repeat: no-repeat; /* Empêche l'image de se répéter */
+                font-family: 'Ninja Naruto', sans-serif;
+                color: #333; /* Couleur de texte pour une bonne lisibilité sur fond d'image */
+				height: 100vh; /* Ajoutez cette propriété pour s'assurer que le fond couvre toute la hauteur de la fenêtre */
+
+            }
+            
+            form 
+			{
+				opacity: 0.9;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #FEECC5;
+                border: 3px solid #FFB81C;
+                border-radius: 10px;
+            }
+            
+			label 
+			{
+				display: block;
+				margin-top: 10px;
+				color: #FFB81C;
+			}
+
+			input[type="button"] 
+			{
+				background-color: #FFB81C;
+                font-family: 'Ninja Naruto', sans-serif;
+				color: #333;
+				position: relative;
+				left: 250px;
+				height: 35px;
+				border-radius: 13%;
+
+			}
+
+			label, input[type="radio"], input[type="checkbox"] 
+			{
+				display: inline-block;
+				margin-right: 10px;
+			}
+            
+        </style>
+    </head>
+    <body>
+		<div>
+			<form action="#" method="post">        
+				<br>
+					<label for="firstname">firstname</label>
+					<input type="text" id="firstname" name="firstname" placeholder="Your firstname" style="opacity: 0.5;">
+				<br>
+					<label for="name">name</label>
+					<input type="text" id="name" name="name" placeholder="Your Family name" style="opacity: 0.5;">
+				<br>
+					<label for="age">Age</label>
+					<input type="date" id="age" name="age">
+				<br>
+					<label for="phone">Phone number</label>
+					<input type="tel" id="phone" name="phone" placeholder="Write your phone number" style="opacity: 0.5;">
+				<br>
+					<label for="email">email</label> 
+					<input type="email" id="email" name="email" placeholder="Write your email" style="opacity: 0.5;">
+				<br>
+					<label for="student">Are you a 42 Student?</label>
+					<input type="checkbox" id="student" name="student" value="Yes">
+					<label for="student">Yes</label>
+				<br>
+					<label for="POPO">What is your gender ?</label> <br>
+					<label for="gender_male">Male</label>
+					<input type="radio" id="gender_male" name="gender_male" value="Male">
+				<br>
+					<label for="gender_female">Female</label>
+					<input type="radio" id="gender_female" name="gender_female" value="Female">
+				<br>
+					<label for="gender_other">Other</label>
+					<input type="radio" id="gender_other" name="gender_other" value="Other">
+				<br>
+				<br>
+					<input type="button" onclick="displayFormContents();" value="Submit">
+				<br>
+			</form>
+		</div>
+		<script>
+			function displayFormContents() 
+			{
+				var out = '';
+				out += 'Firstname = ' + document.getElementById('firstname').value + '\n';
+				out += 'Name = '      + document.getElementById('name').value      + '\n';
+				out += 'Phone = '     + document.getElementById('phone').value     + '\n';
+				out += 'Age = '       + document.getElementById('age').value       + '\n';
+				out += 'Email = '     + document.getElementById('email').value     + '\n';
+				out += 'Gender = ';
+				if (document.getElementById('gender_male').checked == true)
+					out += document.getElementById('gender_male').value;
+				if (document.getElementById('gender_female').checked == true)
+					out += document.getElementById('gender_female').value;
+				if (document.getElementById('gender_other').checked == true)
+					out += document.getElementById('gender_other').value;
+				out += '\n';
+				if (document.getElementById('student').checked == true)
+					out += 'Student at 42 = yes';
+				else
+					out += 'Student at 42 = no';
+				alert(out);
+			}
+		</script>
+    </body>
+</html>
