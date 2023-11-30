@@ -24,21 +24,9 @@ class Coffee extends HotBeverage
 
     }
 
-
-	public function setDescription(string $descriptionSet)
-	{
-		$this->description = $descriptionSet;
-	}
-
 	public function getdescription()
 	{
 		return $this->description;
-	}
-
-
-	public function setComment(string $commentSet)
-	{
-		$this->comment = $commentSet;
 	}
 
 	public function getcomment()

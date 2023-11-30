@@ -7,7 +7,7 @@ try {
 
     // Ajout de l'élément head avec un titre
     $head = new Elem('head', '');
-    $title = new Elem('title', 'Ma Page Web');
+    $title = new Elem('title', 'Mon site Naruto');
     $head->pushElement($title);
     $html->pushElement($head);
 
@@ -15,19 +15,19 @@ try {
     $body = new Elem('body', '');
 
     // Ajout d'un en-tête
-    $header = new Elem('h1', 'Bienvenue sur Ma Page Web');
+    $header = new Elem('h1', 'Naruto Website');
     $body->pushElement($header);
 
     // Ajout de quelques paragraphes
-    $paragraph1 = new Elem('p', 'Ceci est un exemple de paragraphe.');
+    $paragraph1 = new Elem('p', 'Bienvenue sur un site spécialement dédié à Naruto et à son univers.');
     $body->pushElement($paragraph1);
 
-    $paragraph2 = new Elem('p', 'Voici un autre paragraphe pour démontrer comment cela fonctionne.');
+    $paragraph2 = new Elem('p', 'Ce site a été crée par adaloui.');
     $body->pushElement($paragraph2);
 
     // Ajout d'une image
     $image = new Elem('img', '');
-    $image->element = 'img src="https://example.com/image.jpg" alt="Exemple Image"';
+    $image->element = 'img src="https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp" alt="Naruto image"';
     $body->pushElement($image);
 
     // Ajout d'un pied de page
@@ -39,7 +39,9 @@ try {
     // Utilisation de TemplateEngine pour générer le fichier HTML
     $templateEngine = new TemplateEngine($html);
     $templateEngine->createFile("output.html");
-} catch (Exception $e) {
+} 
+catch (Exception $e) 
+{
     echo "Error: " . $e->getMessage();
 }
 ?>
