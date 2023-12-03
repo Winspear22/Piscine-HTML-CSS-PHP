@@ -42,10 +42,8 @@ class Elem
         $indent = str_repeat("\t", $indentLevel); // Crée une chaîne de tabulations en fonction du niveau d'indentation
         $html = "$indent<{$this->element}{$this->getAttributeString()}>\n"; // Ajoute une tabulation avant la balise et un saut de ligne après
 
-        if ($this->content) {
+        if ($this->content)
             $html .= "$indent\t$this->content\n"; // Ajoute une tabulation supplémentaire pour le contenu
-        }
-        //$this->displayAllElements();
         foreach ($this->allElements as $childElement) {
             $html .= $childElement->getHTML($indentLevel + 1); // Appel récursif avec un niveau d'indentation supérieur
         }
@@ -54,9 +52,11 @@ class Elem
         return $html;
     }
 
-	private function getAttributeString(): string {
+	private function getAttributeString(): string 
+	{
         $attrString = '';
-        foreach ($this->attributes as $key => $value) {
+        foreach ($this->attributes as $key => $value) 
+		{
             $attrString .= " $key=\"$value\"";
         }
         return $attrString;
@@ -77,14 +77,20 @@ class Elem
 		$titleCount = 0;
 		$elseCount = 0;
 	
-		foreach ($head->allElements as $child) {
-			if ($child->element == 'meta') {
-				$metaCount++;
-			} else if ($child->element == 'title') {
+		foreach ($head->allElements as $child) 
+		{
+			if ($child->element == 'meta') 
+			{
+				if (count($child->attributes) == 1 && isset($child->attributes['charset']) && strtolower($child->attributes['charset']) == 'utf-8')
+					$metaCount++;
+				else
+					return false; // Retourne false si la condition n'est pas remplie
+				//$metaCount++;
+			} 
+			else if ($child->element == 'title')
 				$titleCount++;
-			} else {
+			else
 				$elseCount++;
-			}
 		}
 	
 		foreach ($body->allElements as $child) 
