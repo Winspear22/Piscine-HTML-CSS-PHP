@@ -1,3 +1,9 @@
 #!/bin/bash
 
-curl -sI "$1" | grep "location" | cut -d ' ' -f 2
+url="$1"
+
+if [[ ! $url == https://* ]]; then
+    url="https://$1"
+fi
+
+curl -sI $url | grep "location" | cut -d ' ' -f 2
