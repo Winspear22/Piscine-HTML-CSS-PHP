@@ -22,6 +22,9 @@ Cet exercice est consacré à la reproduction la plus exacte possible d'une page
 ### ex04 - Intégration de Scripts JavaScript
 L'objectif était de créer une page HTML qui intègre correctement quatre scripts JavaScript afin d'afficher une pop-up sans erreurs.
 
+![pop-up javascript](images/03.png)
+
+
 ### ex05 - Conformité avec les Normes W3C
 Pour cet exercice, j'ai modifié le code HTML d'une page web existante pour assurer sa conformité avec les normes W3C, ce qui signifie qu'il ne devait y avoir aucune erreur ni avertissement.
 
