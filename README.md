@@ -24,7 +24,6 @@ L'objectif était de créer une page HTML qui intègre correctement quatre scrip
 
 ![pop-up javascript](images/03.png)
 
-
 ### ex05 - Conformité avec les Normes W3C
 Pour cet exercice, j'ai modifié le code HTML d'une page web existante pour assurer sa conformité avec les normes W3C, ce qui signifie qu'il ne devait y avoir aucune erreur ni avertissement.
 
