@@ -132,9 +132,9 @@ function capital_city_from($userInput)
 	];
 	if (isset($states[$userInput]))
 	{
-		$abreviation = $states[$userInput];
-		if (isset($capitals[$abreviation]))
-			return $capitals[$abreviation] . "\n";
+		$abbreviation = $states[$userInput];
+		if (isset($capitals[$abbreviation]))
+			return $capitals[$abbreviation] . "\n";
 	}
 	else if (isset($capitals[$userInput]))
 		return $capitals[$userInput] . "\n";
