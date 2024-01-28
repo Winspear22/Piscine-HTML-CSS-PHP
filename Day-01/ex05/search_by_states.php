@@ -49,31 +49,7 @@
 		'Washington' => 'WA',
 		'West Virginia' => 'WV',
 		'Wisconsin' => 'WI',
-		'Montana' => 'MT',
-		'Nebraska' => 'NE',
-		'Nevada' => 'NV',
-		'New Hampshire' => 'NH',
-		'New Jersey' => 'NJ',
-		'New Mexico' => 'NM',
-		'New York' => 'NY',
-		'North Carolina' => 'NC',
-		'North Dakota' => 'ND',
-		'Ohio' => 'OH',
-		'Oklahoma' => 'OK',
-		'Oregon' => 'OR',
-		'Pennsylvania' => 'PA',
-		'Rhode Island' => 'RI',
-		'South Carolina' => 'SC',
-		'South Dakota' => 'SD',
-		'Tennessee' => 'TN',
-		'Texas' => 'TX',
-		'Utah' => 'UT',
-		'Vermont' => 'VT',
-		'Virginia' => 'VA',
-		'Washington' => 'WA',
-		'West Virginia' => 'WV',
-		'Wisconsin' => 'WI',
-		'Wyoming' => 'WY',
+		'Wyoming' => 'WY'
 	];
 	
 	$capitals = [
@@ -144,38 +120,62 @@ function capital_letters($array): array
 
 function capital_city_from($userInput)
 {
-	global $states, $capitals;
-	if (isset($states[$userInput]))
-	{
-		$abbreviation = $states[$userInput];
-		if (isset($capitals[$abbreviation]))
-			echo $capitals[$abbreviation] . " is the capital of " . $userInput . "." . PHP_EOL;
-	}
-	else if (isset($capitals[$userInput]))
-		return $capitals[$userInput] . "\n";
-	else
-		echo $userInput . " is neither a capital nor a state." . PHP_EOL;
+    global $states, $capitals;
+
+    // Inverser le tableau des États pour avoir les abréviations comme clés
+    $reversedStates = array_flip($states);
+
+    // Vérifier si l'entrée est un nom d'État
+    if (isset($states[$userInput])) {
+        // Trouver la capitale correspondant à l'État
+        $abbreviation = $states[$userInput];
+        if (isset($capitals[$abbreviation])) {
+            echo $capitals[$abbreviation] . " is the capital of " . $userInput . ".\n";
+        } else {
+            echo "No capital found for " . $userInput . ".\n";
+        }
+    // Vérifier si l'entrée est une capitale
+    } elseif (in_array($userInput, $capitals)) {
+        // Trouver le nom complet de l'État correspondant à la capitale
+        $stateName = array_search($userInput, $capitals);
+        if ($stateName !== false) {
+            echo $userInput . " is the capital of " . array_search($stateName, $states) . ".\n";
+        } else {
+            echo "The state for the capital " . $userInput . " was not found.\n";
+        }
+    } 
+	elseif (isset($capitals[$userInput])) {
+        $stateName = $reversedStates[$userInput];
+        echo $capitals[$userInput] . " is the capital of " . $stateName . ".\n";
+    }
+	else {
+        echo $userInput . " is neither a capital nor a state.\n";
+    }
 }
+
+
 
 function search_by_states($userInput)
 {
+    if (empty($userInput)) {
+        echo "No input provided.\n";
+        return;
+    }
+    
     $cleanInput = preg_replace('/\s*,\s*/', ',', trim($userInput));
     $inputs = array_filter(explode(",", $cleanInput), function($value) {
         return $value !== '';
     });
-	$userInputsArray = capital_letters($inputs);
 
-    $i = -1;
-    $inputsCount = count($userInputsArray);
+    foreach ($inputs as $string) {
+        if (strlen($string) <= 2) {
+            $formattedInput = strtoupper($string);
+        } else {
+            $formattedInput = str_replace(' ', '', $string);
+        }
 
-	foreach ($userInputsArray as $string)
-	{
-		$formattedInput = str_replace(' ', '', $string);
-		capital_city_from($formattedInput);
-		/*if (isset($capitals[$formattedInput]))
-			echo $capitals[$formattedInput] . " is the capital of " . $formattedInput . "." . PHP_EOL;
-		else
-			echo $formattedInput . " is neither a capital nor a state." . PHP_EOL;*/
-	}
+        capital_city_from($formattedInput);
+    }
 }
+
 ?>
