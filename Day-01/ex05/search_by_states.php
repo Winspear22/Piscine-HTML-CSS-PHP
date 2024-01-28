@@ -1,4 +1,20 @@
 <?php 
+
+function capital_letters($array): array
+{
+    $final_strings = [];
+
+    foreach ($array as $input) 
+	{
+        $final_string = strtolower($input);
+        $final_string = ucfirst($final_string);
+        $final_strings[] = $final_string;
+    }
+	return $final_strings;
+}
+
+function capital_city_from($userInput)
+{
 	$states = [
 		'Alabama' => 'AL',
 		'Alaska' => 'AK',
@@ -104,23 +120,6 @@
 		'WI' => 'Madison',
 		'WY' => 'Cheyenne'
 	];
-
-function capital_letters($array): array
-{
-    $final_strings = [];
-
-    foreach ($array as $input) 
-	{
-        $final_string = strtolower($input);
-        $final_string = ucfirst($final_string);
-        $final_strings[] = $final_string;
-    }
-	return $final_strings;
-}
-
-function capital_city_from($userInput)
-{
-    global $states, $capitals;
 
     // Inverser le tableau des États pour avoir les abréviations comme clés
     $reversedStates = array_flip($states);
