@@ -16,74 +16,98 @@ function sort_string($string): array
     return $properties;
 }
 
+function getArrayElement($lineElements): string
+{
+	$str;
+	$name = $lineElements[0];
+	$position = $lineElements[1];
+	$number = $lineElements[2];
+	$smallName = $lineElements[3];
+	$molar = $lineElements[4];
+	$electron = $lineElements[5];
+
+	$str = "
+	<td class='element'>
+		<div>
+			<h4>$name</h4>
+				<ul>
+					<li>$position</li>
+					<li>No $number</li>
+					<li>$smallName</li>
+					<li>$molar</li>
+					<li>$electron</li>
+				</ul>
+		</div>
+	</td>";
+	return $str;
+}
+
 $filename = "ex06.txt";
-$file = fopen($filename, "r") or die("Unable to open file.");
+$file = fopen($filename, "r");// or die("Unable to open file.");
 if ($file)
 {
-    $elements = [];
+    echo "Opening of the file successful !";
+	$lines = [];
     while (($line = fgets($file)) !== false) 
-    {
-        $elements[] = sort_string($line);
+	{
+        $lines[] = sort_string($line);
     }
-    fclose($file);
-    
-    $htmlContent = '<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tableau de Mendeleïev</title>
-    <style>
-        .titre {
-            color: red;
-            text-align: center;
-            margin-bottom: 20px;
-        }
+	fclose($file);
+	$currentPosition = 0;
+	$htmlContent = '<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Tableau de Mendeleïev</title>
+		<style>
+			table 
+			{
+				border-collapse: separate;
+				border-spacing: 5px;
+				margin: 20px auto;
+			}
 
-        .periodic-table {
-            display: grid;
-            grid-template-columns: repeat(18, 70px);
-            grid-template-rows: repeat(7, 70px);
-            gap: 2px;
-            margin-bottom: 20px;
-        }
+			td, th 
+			{
+				border-radius: 5px;
+				box-shadow: 0 0 5px rgba(0,0,0,0.2);
+			}
 
-        .element {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            width: 70px;
-            height: 70px;
-            border: 1px solid #000;
-            font-size: 0.8em;
-            background-color: #f1f1f1;
-        }
-    </style>
-</head>
-<body>
-    <h4 class="titre">Le tableau de Mendeleïev</h4>
-    <div class="periodic-table">';
-
-    foreach ($elements as $element) {
-        $position = $element[1]; // Assuming the second item is the 'position'
-        $htmlContent .= '<div class="element" style="grid-column: ' . $position . ';">
-        ';
-        $htmlContent .= '<div>' . $element[0] . '</div>
-        '; // Name of the element
-        $htmlContent .= '<div>No ' . $element[2] . '</div>
-        '; // Number
-        $htmlContent .= '<div>' . $element[3] . '</div>
-        '; // Symbol
-        $htmlContent .= '<div>' . $element[4] . '</div>'; // Molar mass
-        $htmlContent .= '</div>';
-    }
-
-    $htmlContent .= '
-    </div>
-</body>
-</html>';
-
-    $htmlFile = fopen('mendeleiev.html', 'w');
+			h4
+			{
+				margin: 0;
+				font-size: 1vw;
+			}
+		</style>
+	</head>
+	<body>';
+	$htmlContent .= '<table>';
+	foreach ($lines as $lineElements)
+	{
+		if ($currentPosition == 0)
+			$htmlContent .= '<tr>';
+		$expectedPosition = $lineElements[1];
+		while ($currentPosition < $expectedPosition) 
+		{
+			$htmlContent .= "<td class='emptyElement'></td>";
+			$currentPosition++;
+		}
+		$htmlContent .= getArrayElement($lineElements);
+		if ($currentPosition >= 17) 
+		{
+			$htmlContent .= '</tr>';
+			$currentPosition = 0;
+		} 
+		else 
+		{
+			$currentPosition++;
+		}
+	}
+	$htmlContent .= '
+			</table>
+		</body>
+	</html>';
+	$htmlFile = fopen('mendeleiev.html', 'w');
     if (!$htmlFile) 
     {
         echo "Cannot open file for writing";
