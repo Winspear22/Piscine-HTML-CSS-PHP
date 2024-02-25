@@ -6,7 +6,7 @@
         <!-- PREMIERE CONSIGNE : C'est ici que débute la partie style  -->
         <style>
             @import url('https://fonts.cdnfonts.com/css/ninja-naruto');
-
+        
             body 
             {
                 margin: 0;
@@ -15,19 +15,21 @@
                 color: #000000;
                 border: 3px solid black;
                 z-index: 1;
+                overflow-y: hidden; /* Empêcher le défilement vertical */
             }
-
+        
             .cv_titre 
             {
                 font-family: 'Ninja Naruto', sans-serif;
                 font-size: 35px;
                 color: #F7682E;
-                position: fixed;
-                left: 620px;
-                top: 10px;
+                position: absolute;
+                left: 350px;
+                top: 35px;
                 z-index: 2;
+                white-space: nowrap;
             }
-
+        
             .info-perso 
             {
                 background: rgba(255, 255, 255, 0.8);
@@ -35,66 +37,66 @@
                 padding: 20px;
                 width: 180px;
                 top: 380px;
-                left: 35px;
+                left: 12%; /* Ajustez selon votre préférence */
                 position: absolute;
                 font-family: 'Arial', sans-serif;
                 color: #04315A;
             }
-
+        
             #profile-pic 
             {
+                position: absolute;
+                top: 50px; /* Ajustez selon votre préférence */
+                left: 20px; /* Ajustez selon votre préférence */
                 width: 180px;
                 height: 180px;
                 border-radius: 50%;
                 object-fit: cover;
                 border: 5px solid #D7DFDC;
-                position: fixed;
-                top: 50px;
-                left: 350px;
             }
-
+        
             #pancarte-image 
             {
+                position: absolute;
+                top: 200px; /* Ajustez selon votre préférence */
+                left: 1px; /* Ajustez selon votre préférence */
                 width: 290px;
                 height: 380px;
-                top: 200px;
-                left: 300px;
-                position: fixed;
             }
-
+        
             #lampe-image 
             {
+                position: absolute;
+                top: 35px;
+                left: 170px;
                 width: 170px;
                 height: 200px;
-                top: 15px;
-                left: 500px;
-                position: fixed;
             }
-
+        
             .bande_gauche 
             {
                 background-color: #04315A;
                 width: 250px;
                 height: 100vh;
                 padding: 20px;
-                position: fixed;
-                left: 300px;
+                position: absolute;
                 top: 0px;
                 z-index: -1;
+                left: 0; /* Ajustez selon votre préférence */
             }
-
+        
             .bande_droite 
             {
                 background-color: #D7DFDC;
                 width: 600px;
                 height: 100vh;
                 padding: 20px;
-                position: fixed;
-                left: 590px;
+                position: absolute;
                 top: 0px;
                 z-index: -1;
+                left: 290px; /* Ajustez selon votre préférence */
             }
-
+        
             .parcours 
             {
                 color: #000;
@@ -102,15 +104,15 @@
                 margin-top: 100px;
                 margin-left: 20px;
             }
-
+        
             .parcours h2 
             {
                 font-family: 'Ninja Naruto', sans-serif;
                 color: #F7682E;
                 padding-bottom: 5px;
-				margin-top: 20px;
+                margin-top: 20px;
             }
-
+        
             .parcours table 
             {
                 width: 100%;
@@ -118,26 +120,32 @@
                 margin-top: 20px;
                 background-color: #D7DFDC;
             }
-
+        
             .parcours th, .parcours td 
             {
                 border: 1px solid #F7682E;
                 padding: 5px;
                 text-align: left;
             }
-
+        
             ol 
             {
                 padding-left: 20px;
             }
-
-            ol, li 
+        
+            ol li 
             {
                 margin-bottom: 5px;
             }
 
-
+            .Tout_le_CV 
+            {
+                position: absolute;
+                top: 50%;
+                left: 25%;
+            }
         </style>
+        
         <!-- CINQUIEME CONSIGNE : C'le style juste au-dessus gère la caractéristique solid et collapse  -->
         <!-- septieme CONSIGNE : les border-right bottom top et left -->
 
@@ -145,6 +153,7 @@
     </head>
     <!-- PREMIERE CONSIGNE : C'est ici que débute la partie fond, les deux sont bien séparés-->
     <body>
+        <div class="Tout_le_CV">
         <!-- SECONDE CONSIGNE : Voici la balise h1  -->
         <h1 class="cv_titre">Sasuke Uchiha</h1>
 		<img id="lampe-image" src="https://i.ibb.co/g4PDCG9/tY53gDx.png" alt="Lampe de Sasuke Uchiha">
@@ -240,5 +249,6 @@
                               
 			</div>
 		</div>
+        </div>
     </body>
-</html>
+</html> 
