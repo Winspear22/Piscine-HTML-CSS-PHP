@@ -15,7 +15,7 @@
                 color: #000000;
                 border: 3px solid black;
                 z-index: 1;
-                overflow-y: hidden; /* Empêcher le défilement vertical */
+                overflow-y: hidden;
             }
         
             .cv_titre 
@@ -37,7 +37,7 @@
                 padding: 20px;
                 width: 180px;
                 top: 380px;
-                left: 12%; /* Ajustez selon votre préférence */
+                left: 12%;
                 position: absolute;
                 font-family: 'Arial', sans-serif;
                 color: #04315A;
@@ -46,8 +46,8 @@
             #profile-pic 
             {
                 position: absolute;
-                top: 50px; /* Ajustez selon votre préférence */
-                left: 20px; /* Ajustez selon votre préférence */
+                top: 50px;
+                left: 20px;
                 width: 180px;
                 height: 180px;
                 border-radius: 50%;
@@ -58,8 +58,8 @@
             #pancarte-image 
             {
                 position: absolute;
-                top: 200px; /* Ajustez selon votre préférence */
-                left: 1px; /* Ajustez selon votre préférence */
+                top: 200px;
+                left: 1px;
                 width: 290px;
                 height: 380px;
             }
@@ -82,7 +82,7 @@
                 position: absolute;
                 top: -3px;
                 z-index: -1;
-                left: 0; /* Ajustez selon votre préférence */
+                left: 0;
             }
         
             .bande_droite 
@@ -94,7 +94,7 @@
                 position: absolute;
                 top: -3px;
                 z-index: -1;
-                left: 290px; /* Ajustez selon votre préférence */
+                left: 290px;
             }
         
             .parcours 
@@ -145,110 +145,107 @@
                 left: 25%;
             }
         </style>
-        
         <!-- CINQUIEME CONSIGNE : C'le style juste au-dessus gère la caractéristique solid et collapse  -->
         <!-- septieme CONSIGNE : les border-right bottom top et left -->
-
-
     </head>
     <!-- PREMIERE CONSIGNE : C'est ici que débute la partie fond, les deux sont bien séparés-->
     <body>
         <div class="Tout_le_CV">
         <!-- SECONDE CONSIGNE : Voici la balise h1  -->
-        <h1 class="cv_titre">Sasuke Uchiha</h1>
-		<img id="lampe-image" src="https://i.ibb.co/g4PDCG9/tY53gDx.png" alt="Lampe de Sasuke Uchiha">
-		<div class="bande_gauche">
-			<img id="pancarte-image" src="https://i.ibb.co/YPbqsmf/4Un9ahD.png" alt="Pancarte de Sasuke Uchiha">
-			<img id="profile-pic" src="https://pbs.twimg.com/media/FFnc9WsWQAA6iHw?format=jpg&name=large" alt="Profil de Sasuke Uchiha">
-			<div class="info-perso">
-                <!-- QUATRIEME ET SIXIEME CONSIGNE : liste avec ul et balise style dans la balise ul -->
-                <ul style="list-style-type: none; padding: 0;">
-                    <li>Adresse :</li>
-                    <li>96 rue de La Feuille Sauvage, 75017 Village caché de Konoha</li>
-                    <li>Mail :</li>
-                    <li>Sasuke.U@GeninMail.com</li>
-                    <li>Contact :</li>
-                    <li>06 42 42 42 42</li>
-                </ul>
-			</div>
-		</div>
-		<div class="bande_droite">
-			<div class="parcours">
-				<h2>Parcours Ninja</h2>
-                <!-- TROISIEME CONSIGNE : premier tableau -->
-                <table>
-                    <tr>
-                        <th>Année</th>
-                        <th>Étape</th>
-                        <th>Lieu</th>
-                    </tr>
-                    <tr>
-                        <td>2007</td>
-                        <td>Entrée à l'Académie Ninja</td>
-                        <td>Konoha</td>
-                    </tr>
-                    <tr>
-                        <td>2012</td>
-                        <td>Formation avec Orochimaru</td>
-                        <td>Cachette d'Orochimaru</td>
-                    </tr>
-                    <tr>
-                        <td>2015</td>
-                        <td>Fondation de Taka</td>
-                        <td style="border: 2px solid #424242;">Indéterminé</td>
-                    </tr>
-                </table>
-				<h2>Competences acquises</h2>
-                <!-- QUATRIEME et SIXIEME CONSIGNE : liste avec ol avec la balise style dans la balise ol -->
-				<ol>
-					<li>Maîtrise du Sharingan</li>
-					<li>Techniques de Katon (techniques de feu)</li>
-					<li>Maîtrise de l'épée Chidori</li>
-				</ol>
+            <h1 class="cv_titre">Sasuke Uchiha</h1>
+            <img id="lampe-image" src="https://i.ibb.co/g4PDCG9/tY53gDx.png" alt="Lampe de Sasuke Uchiha">
+            <div class="bande_gauche">
+                <img id="pancarte-image" src="https://i.ibb.co/YPbqsmf/4Un9ahD.png" alt="Pancarte de Sasuke Uchiha">
+                <img id="profile-pic" src="https://pbs.twimg.com/media/FFnc9WsWQAA6iHw?format=jpg&name=large" alt="Profil de Sasuke Uchiha">
+                <div class="info-perso">
+                    <!-- QUATRIEME ET SIXIEME CONSIGNE : liste avec ul et balise style dans la balise ul -->
+                    <ul style="list-style-type: none; padding: 0;">
+                        <li>Adresse :</li>
+                        <li>96 rue de La Feuille Sauvage, 75017 Village caché de Konoha</li>
+                        <li>Mail :</li>
+                        <li>Sasuke.U@GeninMail.com</li>
+                        <li>Contact :</li>
+                        <li>06 42 42 42 42</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="bande_droite">
+                <div class="parcours">
+                    <h2>Parcours Ninja</h2>
+                    <!-- TROISIEME CONSIGNE : premier tableau -->
+                    <table>
+                        <tr>
+                            <th>Année</th>
+                            <th>Étape</th>
+                            <th>Lieu</th>
+                        </tr>
+                        <tr>
+                            <td>2007</td>
+                            <td>Entrée à l'Académie Ninja</td>
+                            <td>Konoha</td>
+                        </tr>
+                        <tr>
+                            <td>2012</td>
+                            <td>Formation avec Orochimaru</td>
+                            <td>Cachette d'Orochimaru</td>
+                        </tr>
+                        <tr>
+                            <td>2015</td>
+                            <td>Fondation de Taka</td>
+                            <td style="border: 2px solid #424242;">Indéterminé</td>
+                        </tr>
+                    </table>
+                    <h2>Competences acquises</h2>
+                    <!-- QUATRIEME et SIXIEME CONSIGNE : liste avec ol avec la balise style dans la balise ol -->
+                    <ol>
+                        <li>Maîtrise du Sharingan</li>
+                        <li>Techniques de Katon (techniques de feu)</li>
+                        <li>Maîtrise de l'épée Chidori</li>
+                    </ol>
 
-				<h2>Missions Accomplies</h2>
-                <!-- TROISIEME CONSIGNE : second tableau -->
-                <table>
-                    <tr>
-                        <th>Rang</th>
-                        <th>Endroit</th>
-                        <th>Objectif</th>
-                        <th>Temps pris</th>
-                    </tr>
-                    <tr>
-                        <td>C</td>
-                        <td>Pays du thé</td>
-                        <td>Escorter Idate Morino dans son voyage</td>
-                        <td>1 semaine</td>
-                    </tr>
-                    <tr>
-                        <td>B</td>
-                        <td>Pays des Rizières</td>
-                        <td>Enquêter sur le Village du Son</td>
-                        <td>5 jours</td>
-                    </tr>
-                    <tr>
-                        <td>B</td>
-                        <td>Pays de la Terre</td>
-                        <td>Protéger le colis sans le visualiser</td>
-                        <td>1 semaine</td>
-                    </tr>
-                    <tr>
-                        <td>A</td>
-                        <td>Pays des Vagues</td>
-                        <td>Participer au combat contre Zabuza et Haku</td>
-                        <td>1 mois</td>
-                    </tr>
-                    <tr>
-                        <td>D</td>
-                        <td>Konoha</td>
-                        <td>Récupérer le chat de la dame</td>
-                        <td style="border: 2px solid #424242;">2 heures</td>
-                    </tr>
-                </table>
-                              
-			</div>
-		</div>
+                    <h2>Missions Accomplies</h2>
+                    <!-- TROISIEME CONSIGNE : second tableau -->
+                    <table>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Endroit</th>
+                            <th>Objectif</th>
+                            <th>Temps pris</th>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>Pays du thé</td>
+                            <td>Escorter Idate Morino dans son voyage</td>
+                            <td>1 semaine</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>Pays des Rizières</td>
+                            <td>Enquêter sur le Village du Son</td>
+                            <td>5 jours</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>Pays de la Terre</td>
+                            <td>Protéger le colis sans le visualiser</td>
+                            <td>1 semaine</td>
+                        </tr>
+                        <tr>
+                            <td>A</td>
+                            <td>Pays des Vagues</td>
+                            <td>Participer au combat contre Zabuza et Haku</td>
+                            <td>1 mois</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>Konoha</td>
+                            <td>Récupérer le chat de la dame</td>
+                            <td style="border: 2px solid #424242;">2 heures</td>
+                        </tr>
+                    </table>
+                                
+                </div>
+            </div>
         </div>
     </body>
 </html> 
