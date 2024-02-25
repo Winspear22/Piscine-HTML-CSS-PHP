@@ -51,10 +51,21 @@
 				margin-right: 10px;
 			}
 
-			.error {
-    color: red;
-    font-size: 12px;
-}
+			.error 
+			{
+    			color: red;
+    			font-size: 12px;
+			}
+
+			.hidden 
+			{
+				display: none;
+			}
+
+			.not-hidden
+			{
+				display: block;
+			}
 
 /* CSS pour cacher les messages d'erreur par défaut */
 .error {
@@ -102,8 +113,8 @@
 					<label for="student">Yes</label>
 				<br>
 					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
-					<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" style="display: none;"> <!-- Bouton Submit masqué par défaut -->
-                <input type="button" onclick="checkFormData();" value="Check-info"> <!-- Bouton "Check-info" pour valider les données -->
+					<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> <!-- Bouton Submit masqué par défaut -->
+                	<input type="button" id="check_button"  onclick="checkFormData();" value="Check-info" class="not-hidden"> <!-- Bouton "Check-info" pour valider les données -->
 				<br>
 			</form>
 		</div>
@@ -165,20 +176,23 @@
 
 			function checkNameFormat() 
 			{
-    var firstname = document.getElementById('firstname');
-    var firstnameError = document.getElementById('firstname_error');
+				var firstname = document.getElementById('firstname');
+				var firstnameError = document.getElementById('firstname_error');
 
-    var firstnameValue = firstname.value.trim(); // Supprimer les espaces avant et après le texte
+				var firstnameValue = firstname.value.trim(); // Supprimer les espaces avant et après le texte
 
-    if (firstnameValue === '') {
-        firstnameError.textContent = 'Please enter your firstname.'; // Met à jour le message d'erreur
-        firstnameError.style.display = 'block'; // Affiche le message d'erreur
-        return false; // Retourne false pour indiquer que la validation a échoué
-    } else {
-        firstnameError.style.display = 'none'; // Cache le message d'erreur s'il n'y a pas d'erreur
-        return true; // Retourne true pour indiquer que la validation a réussi
-    }
-}
+				if (firstnameValue === '') 
+				{
+					firstnameError.textContent = 'Please enter your firstname.'; // Met à jour le message d'erreur
+					firstnameError.style.display = 'block'; // Affiche le message d'erreur
+					return false; // Retourne false pour indiquer que la validation a échoué
+				} 
+				else 
+				{
+					firstnameError.style.display = 'none'; // Cache le message d'erreur s'il n'y a pas d'erreur
+					return true; // Retourne true pour indiquer que la validation a réussi
+				}
+			}
 		</script>
 		<script name="Verification globale">
 			/*function checkFormData() 
@@ -200,7 +214,14 @@
 
         		// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
         		if (isNameValid && isPhoneNumberValid)
-            		document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
+				{
+            		//document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
+					document.getElementById('submit_button').classList.remove('hidden');
+					document.getElementById('submit_button').classList.add('not-hidden');
+					document.getElementById('check_button').classList.remove('not-hidden');
+					document.getElementById('check_button').classList.add('hidden');
+					//document.getElementById('check_button').style.display = 'none';
+				}
         		else
             		document.getElementById('submit_button').style.display = 'none'; // Masque le bouton
     		}
