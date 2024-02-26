@@ -5,51 +5,107 @@
         <style>
 			@import url('https://fonts.cdnfonts.com/css/ninja-naruto');
 
-            body 
+			body 
 			{
-                background-image: url('https://i.ibb.co/dMLBCF1/8OL7JCh.jpg');
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-                font-family: 'Ninja Naruto', sans-serif;
-                color: #333;
-				height: 100vh;
-            }
+				/* Taille (largeur, longueur, taille maximum) */
+				height: 100vh; /* Hauteur de la fenêtre visible */
+
+				/* Position (top, bottom, left, right, relative, static, etc...) */
+				/* Aucune propriété de position définie pour le corps */
+
+				/* Border (pas de border, border, taille de la border, etc...) */
+				/* Aucune bordure définie pour le corps */
+
+				/* Background (color, transparence, etc...) */
+				background-image: url('https://i.ibb.co/dMLBCF1/8OL7JCh.jpg'); /* Définit l'image de fond */
+				background-size: cover; /* Ajuste la taille de l'image pour couvrir toute la zone */
+				background-position: center; /* Positionne l'image de fond au centre */
+				/*background-repeat: no-repeat; *//* Empêche la répétition de l'image de fond */
+
+				/* Autres propriétés */
+				font-family: 'Ninja Naruto', sans-serif;
+				color: #333;
+			}
             
-            form 
+			form 
 			{
+			/* Opacité */
 				opacity: 0.9;
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #FEECC5;
-                border: 3px solid #FFB81C;
-                border-radius: 10px;
-            }
+
+				/* Taille (largeur, longueur, taille maximum) */
+				max-width: 800px;
+				height: 600px; /* Ajustez la hauteur selon vos besoins */
+				overflow-y: auto; /* Ajoute une barre de défilement verticale si nécessaire */
+
+				/* Position (top, bottom, left, right, relative, static, etc...) */
+				/* Aucune propriété de position définie pour le formulaire */
+
+				/* Border (pas de border, border, taille de la border, etc...) */
+				border: 3px solid #FFB81C;
+				border-radius: 10px;
+
+				/* Background (color, transparence, etc...) */
+				background-color: #FEECC5;
+
+				/* Autres propriétés */
+				margin: 0 auto; /* Centre le formulaire horizontalement */
+				padding: 20px;
+			}
             
+			/* Style pour les balises label */
 			label 
 			{
+				/* Display (block, inline, inline-block, etc...) */
 				display: block;
+
+				/* Margin (espacement autour de l'élément) */
 				margin-top: 10px;
+
+				/* Couleur du texte */
 				color: #FFB81C;
 			}
 
+			/* Style pour les boutons de type "button" */
 			input[type="button"] 
 			{
+				/* Background (color, transparence, etc...) */
 				background-color: #FFB81C;
-                font-family: 'Ninja Naruto', sans-serif;
-				color: #333;
-				position: relative;
+
+				/* Font (police, taille de police, etc...) */
+				font-family: 'Ninja Naruto', sans-serif;
+				color: #333; /* Couleur du texte */
+
+				/* Position (top, bottom, left, right, relative, static, etc...) */
+				position: relative; /* Position relative à sa position normale */
+
+				/* Décalage vers la gauche */
 				left: 250px;
+
+				/* Taille */
 				height: 35px;
-				border-radius: 13%;
+
+				/* Border (pas de border, border, taille de la border, etc...) */
+				border-radius: 13%; /* Bordure arrondie */
 			}
 
-			label, input[type="radio"], input[type="checkbox"] 
+			.radio-group input[type="radio"],
+.radio-group input[type="checkbox"] {
+    display: inline-block;
+    margin-right: 15px; /* adjust as needed */
+}
+
+.radio-group label {
+    display: inline-block;
+    margin-right: 15px; /* adjust as needed */
+}
+
+
+
+			/*input[type="radio"], input[type="checkbox"] 
 			{
 				display: inline-block;
-				margin-right: 10px;
-			}
+				margin-right: 15px;
+			}*/
 
 			.error 
 			{
@@ -114,16 +170,18 @@
 					<input type="email" id="email" name="email" placeholder="Write your email">
 					<span id="email_error" class="error"></span> <!-- Message d'erreur pour le email -->
 				<br>
-					<label for="gender">What is your gender ?</label> <br>
-					<label for="gender_male">Male</label>
+				<label for="gender">What is your gender ?</label>
+				<div class="radio-group">
 					<input type="radio" id="gender_male" name="gender" value="Male">
-				<br>
-					<label for="gender_female">Female</label>
+					<label for="gender_male">Male</label>
+					
 					<input type="radio" id="gender_female" name="gender" value="Female">
-				<br>
-					<label for="gender_other">Other</label>
+					<label for="gender_female">Female</label>
+					
 					<input type="radio" id="gender_other" name="gender" value="Other">
+					<label for="gender_other">Other</label>
 					<span id="gender_error" class="error"></span> <!-- Message d'erreur pour le genre -->
+				</div>
 				<br>
 					<label for="student">Are you a 42 Student?</label>
 					<input type="checkbox" id="student" name="student" value="Yes">
