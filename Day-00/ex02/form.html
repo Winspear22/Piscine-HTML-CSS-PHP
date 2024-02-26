@@ -67,10 +67,26 @@
 				display: block;
 			}
 
-/* CSS pour cacher les messages d'erreur par défaut */
-.error {
-    display: none;
-}
+			/* CSS pour cacher les messages d'erreur par défaut */
+			.error
+			{
+				display: none;
+			}
+
+			.valid 
+			{
+            	border: 2px solid green;
+        	}
+
+			.invalid 
+			{
+            	border: 2px solid red;
+        	}
+
+			input:focus, textarea:focus 
+			{
+    			outline: none;
+			}
             
         </style>
     </head>
@@ -78,13 +94,14 @@
 		<div>
 			<form action="#" method="post">        
 				<br>
-				<label for="firstname">firstname</label>
-                <input type="text" id="firstname" name="firstname" placeholder="Your firstname">
-                <span id="firstname_error" class="error"></span> <!-- Message d'erreur pour le prénom -->
- 		
+					<label for="firstname">firstname</label>
+					<input type="text" id="firstname" name="firstname" placeholder="Your firstname">
+					<span id="firstname_error" class="error"></span> <!-- Message d'erreur pour le prénom -->
 				<br>
 					<label for="name">name</label>
 					<input type="text" id="name" name="name" placeholder="Your Family name" style="opacity: 0.5;">
+					<span id="name_error" class="error"></span> <!-- Message d'erreur pour le nom -->
+
 				<br>
 					<label for="age">Age</label>
 					<input type="date" id="age" name="age">
@@ -140,59 +157,52 @@
 			});
 		</script>
 		<script name="Script qui check le format du nom/prenom">
-			/*function checkNameFormat()
-			{
-				var firstname = document.getElementById('firstname');
-				var name = document.getElementById('name');
-				var firstnameValue = firstname.value.trim(); // Supprimer les espaces avant et après le texte
-				var nameValue = name.value.trim();
-				var nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
-
-				if (firstnameValue === '') 
-				{
-					alert('Please enter your firstname.'); // Afficher un message si le champ est vide
-					return false; // Retourner false pour indiquer que la validation a échoué
-				} 
-				else if (!nameRegex.test(firstnameValue)) 
-				{
-					alert('Please enter a valid firstname.'); // Afficher un message si le format n'est pas valide
-					return false; // Retourner false pour indiquer que la validation a échoué
-				}
-
-				if (nameValue === '') 
-				{
-					alert('Please enter your name.'); // Afficher un message si le champ est vide
-					return false; // Retourner false pour indiquer que la validation a échoué
-				} 
-				else if (!nameRegex.test(nameValue)) 
-				{
-					alert('Please enter a valid name.'); // Afficher un message si le format n'est pas valide
-					return false; // Retourner false pour indiquer que la validation a échoué
-				}
-
-				// Si la validation réussit, retourner true
-				return true;
-			}*/
-
 			function checkNameFormat() 
 			{
 				var firstname = document.getElementById('firstname');
 				var firstnameError = document.getElementById('firstname_error');
+				var name = document.getElementById('name');
+				var nameError = document.getElementById('name_error');
+				var firstnameBool = true;
+				var nameBool = true;
 
-				var firstnameValue = firstname.value.trim(); // Supprimer les espaces avant et après le texte
-
-				if (firstnameValue === '') 
+				console.log("Firstname =", firstname.value);
+				console.log("name =", name.value);
+				if (firstname.value === '') 
 				{
+					firstnameBool = false;
 					firstnameError.textContent = 'Please enter your firstname.'; // Met à jour le message d'erreur
 					firstnameError.style.display = 'block'; // Affiche le message d'erreur
-					return false; // Retourne false pour indiquer que la validation a échoué
-				} 
-				else 
+				}
+				if (name.value === '')
+				{
+					nameBool = false;
+					nameError.textContent = 'Please enter your name.';
+					nameError.style.display = 'block';
+				}
+				var nameRegex = /^[a-zA-ZàâäéèêëîïôöùûüçÀÂÄÉÈÊËÎÏÔÖÙÛÜÇ'-]+$/u;
+				if (!nameRegex.test(firstname.value) && firstname.value !== '')
+				{
+					firstnameBool = false;
+					firstnameError.textContent = 'Wrong firstname, only accepted characters are letters and \' and -.'; // Met à jour le message d'erreur
+					firstnameError.style.display = 'block'; // Affiche le message d'erreur
+				}
+				if (!nameRegex.test(name.value) && name.value !== '')
+				{
+					nameBool = false;
+					nameError.textContent = 'Wrong name, only accepted characters are letters and \' and -.';
+					nameError.style.display = 'block';
+				}
+				if (nameBool === false || firstnameBool === false)
+					return false;
+				else
 				{
 					firstnameError.style.display = 'none'; // Cache le message d'erreur s'il n'y a pas d'erreur
-					return true; // Retourne true pour indiquer que la validation a réussi
+					nameError.style.display = 'none';
+					return true;
 				}
 			}
+
 		</script>
 		<script name="Verification globale">
 			/*function checkFormData() 
