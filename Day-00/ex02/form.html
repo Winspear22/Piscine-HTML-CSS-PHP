@@ -127,6 +127,7 @@
 					<label for="student">Are you a 42 Student?</label>
 					<input type="checkbox" id="student" name="student" value="Yes">
 					<label for="student">Yes</label>
+					<span id="student_error" class="error"></span>
 				<br>
 					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
 					<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> <!-- Bouton Submit masqué par défaut -->
@@ -272,6 +273,27 @@
 				}
 			}
 		</script>
+		<script name="42 student check">
+			function Student42Format() 
+			{
+				var studentCheckbox = document.getElementById('student');
+				var studentError = document.getElementById('student_error');
+				var studentBool = true;
+		
+				console.log("checkbox42 =", studentCheckbox.checked);
+				if (!studentCheckbox.checked) 
+				{
+					studentBool = false;
+					studentError.textContent = 'You must tell if you are a 42 student or not.';
+					studentError.style.display = 'block';
+    			} 
+				else 
+				{
+					studentError.style.display = 'none';
+					return true;
+    			}
+			}
+		</script>
 		<script name="Verification globale">
 
 			function checkFormData() 
@@ -280,9 +302,10 @@
 				var isPhoneNumberValid = checkPhoneNumberFormat(); // Vérifie le format du numéro de téléphone
 				var isAgeValid = checkAgeFormat();
 				var isEmailFormat = checkEmailFormat();
+				var is42Student = Student42Format();
 
         		// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
-        		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailFormat)
+        		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailFormat && is42Student)
 				{
             		//document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
 					document.getElementById('submit_button').classList.remove('hidden');
