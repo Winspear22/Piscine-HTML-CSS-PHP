@@ -112,6 +112,7 @@
 				<br>
 					<label for="email">email</label> 
 					<input type="email" id="email" name="email" placeholder="Write your email">
+					<span id="email_error" class="error"></span> <!-- Message d'erreur pour le email -->
 				<br>
 					<label for="gender">What is your gender ?</label> <br>
 					<label for="gender_male">Male</label>
@@ -219,7 +220,7 @@
 
 		</script>
 		<script name="Sert a checker l'age">
-			function checkAge() 
+			function checkAgeFormat() 
 			{
 				var age = document.getElementById('age');
 				var ageError = document.getElementById('age_error');
@@ -241,27 +242,47 @@
 				}
 			}
 		</script>
-		<script name="Verification globale">
-			/*function checkFormData() 
+		<script>
+			function checkEmailFormat()
 			{
-				var isNameValid = checkNameFormat(); // Vérifie le format du nom et du prénom
-				var isPhoneNumberValid = checkPhoneNumberFormat(); // Vérifie le format du numéro de téléphone
+				var email = document.getElementById("email");
+				var emailError = document.getElementById("email_error");
+				var emailBool = true;
 
-				// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
-				if (isNameValid && isPhoneNumberValid)
-					document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
+				console.log("email =", email.value);
+				var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,10}$/;
+				if (email.value === '')
+				{
+					emailBool = false;
+					emailError.textContent = 'Please enter your email address.';
+					emailError.style.display = 'block';
+				}
+				if (!emailRegex.test(email.value) && email.value !== '')
+				{
+					emailBool = false;
+					emailError.textContent = 'Wrong email format. Please use : popopopo123@popopo.lolo';
+					emailError.style.display = 'block';
+				}
+				if (emailBool === false)
+					return false;
 				else
-					document.getElementById('submit_button').style.display = 'none'; // Masque le bouton
-			}*/
+				{
+					emailError.style.display = 'none';
+					return true;
+				}
+			}
+		</script>
+		<script name="Verification globale">
 
 			function checkFormData() 
 			{
         		var isNameValid = checkNameFormat(); // Vérifie le format du nom et du prénom
 				var isPhoneNumberValid = checkPhoneNumberFormat(); // Vérifie le format du numéro de téléphone
-				var isAgeValid = checkAge();
+				var isAgeValid = checkAgeFormat();
+				var isEmailFormat = checkEmailFormat();
 
         		// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
-        		if (isNameValid && isPhoneNumberValid && isAgeValid)
+        		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailFormat)
 				{
             		//document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
 					document.getElementById('submit_button').classList.remove('hidden');
