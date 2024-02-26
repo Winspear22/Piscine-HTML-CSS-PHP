@@ -123,10 +123,13 @@
 				<br>
 					<label for="gender_other">Other</label>
 					<input type="radio" id="gender_other" name="gender" value="Other">
+					<span id="gender_error" class="error"></span> <!-- Message d'erreur pour le genre -->
 				<br>
 					<label for="student">Are you a 42 Student?</label>
 					<input type="checkbox" id="student" name="student" value="Yes">
 					<label for="student">Yes</label>
+					<input type="checkbox" id="not_student" name="not_student" value="No">
+					<label for="not_student">No</label>
 					<span id="student_error" class="error"></span>
 				<br>
 					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
@@ -273,15 +276,58 @@
 				}
 			}
 		</script>
+
+		<script name="gender check">
+			function checkGenderSelection() 
+			{
+				var genderRadios = document.getElementsByName('gender');
+				var genderError = document.getElementById('gender_error');
+				var genderBool = false;
+
+				for (var i = 0; i < genderRadios.length; i++) 
+				{
+					if (genderRadios[i].checked) 
+					{
+						genderBool = true;
+						break;
+					}
+				}
+
+				if (genderBool === false) 
+				{
+					genderError.textContent = 'Please select your gender.';
+					genderError.style.display = 'block';
+					return false;
+				} 
+				else 
+				{
+					genderError.style.display = 'none';
+					return true;
+				}
+			}
+
+			/* Sert a deselectionner le checkbox lors d'un refresh */
+			window.onload = function() 
+			{
+    			var radioButtons = document.querySelectorAll('input[type="radio"]');
+    			for (var i = 0; i < radioButtons.length; i++)
+        			radioButtons[i].checked = false;
+
+				var checkBoxButtons = document.querySelectorAll('input[type="checkbox"]');
+    			for (var i = 0; i < checkBoxButtons.length; i++)
+        			checkBoxButtons[i].checked = false;
+			};
+		</script>
 		<script name="42 student check">
 			function Student42Format() 
 			{
 				var studentCheckbox = document.getElementById('student');
+				var notStudentCheckbox = document.getElementById('not_student');
 				var studentError = document.getElementById('student_error');
 				var studentBool = true;
 		
 				console.log("checkbox42 =", studentCheckbox.checked);
-				if (!studentCheckbox.checked) 
+				if (!studentCheckbox.checked && !notStudentCheckbox.checked) 
 				{
 					studentBool = false;
 					studentError.textContent = 'You must tell if you are a 42 student or not.';
@@ -301,18 +347,17 @@
         		var isNameValid = checkNameFormat(); // Vérifie le format du nom et du prénom
 				var isPhoneNumberValid = checkPhoneNumberFormat(); // Vérifie le format du numéro de téléphone
 				var isAgeValid = checkAgeFormat();
-				var isEmailFormat = checkEmailFormat();
-				var is42Student = Student42Format();
+				var isEmailValid = checkEmailFormat();
+				var isGenderValid = checkGenderSelection();
+				var is42StudentValid = Student42Format();
 
         		// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
-        		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailFormat && is42Student)
+        		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailValid && is42StudentValid && isGenderValid)
 				{
-            		//document.getElementById('submit_button').style.display = 'block'; // Affiche le bouton
 					document.getElementById('submit_button').classList.remove('hidden');
 					document.getElementById('submit_button').classList.add('not-hidden');
 					document.getElementById('check_button').classList.remove('not-hidden');
 					document.getElementById('check_button').classList.add('hidden');
-					//document.getElementById('check_button').style.display = 'none';
 				}
         		else
             		document.getElementById('submit_button').style.display = 'none'; // Masque le bouton
