@@ -130,21 +130,43 @@
 
 			.checkbox-group {
     display: flex;
-    align-items: center;
-    justify-content: start; /* Ajustez selon les besoins */
+    align-items: center; /* Alignement vertical au centre */
+    flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si nécessaire */
+    position: relative;
 }
 
 .checkbox-choice {
     display: flex;
-    align-items: center;
-    margin-right: 15px; /* Espace entre les choix */
+    align-items: center; /* Alignement vertical au centre */
+    margin-right: 15px; /* Espacement entre les choix */
 }
 
 .checkbox-error {
+    position: absolute;
+    top: 0; /* Ajustement vertical */
+    right: 0; /* Ajustement horizontal */
     color: red;
     font-size: 12px;
-    margin-left: auto; /* Pousse le message d'erreur vers la droite si nécessaire */
-    display: none; /* Initialement caché, affiché via JavaScript si nécessaire */
+    display: block; /* Changez ceci en 'block' si vous souhaitez toujours l'afficher */
+}
+
+/* Ajustez selon vos besoins pour les labels spécifiquement */
+.checkbox-choice label {
+    margin-left: 5px; /* Espacement entre la case à cocher et le label */	
+}
+
+.checkbox-choice-yes {
+	position: relative;
+	top: -5px;
+	right: -5px;
+}
+
+.checkbox-choice-no 
+{
+position: relative;
+top: -5px;
+right: -5px;
+
 }
 
 			/*-------------------------------------------------------------------------------------*/
@@ -181,11 +203,6 @@
 			.not-hidden
 			{
 				display: block;
-			}
-
-			input:focus, textarea:focus 
-			{
-    			outline: none;
 			}
             
         </style>
@@ -245,11 +262,11 @@
 					<div class="checkbox-group">
 						<div class="checkbox-choice">
 							<input type="checkbox" id="student" name="student" value="Yes">
-							<label for="student">Yes</label>
+							<label for="student" class="checkbox-choice-yes">Yes</label>
 						</div>
 						<div class="checkbox-choice">
 							<input type="checkbox" id="not_student" name="not_student" value="No">
-							<label for="not_student">No</label>
+							<label for="not_student" class="checkbox-choice-no">No</label>
 						</div>
 						<span id="student_error" class="error"></span>
 					</div>
