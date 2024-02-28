@@ -88,24 +88,32 @@
 				border-radius: 13%; /* Bordure arrondie */
 			}
 
-			.radio-group input[type="radio"],
-.radio-group input[type="checkbox"] {
-    display: inline-block;
-    margin-right: 15px; /* adjust as needed */
-}
-
-.radio-group label {
-    display: inline-block;
-    margin-right: 15px; /* adjust as needed */
-}
-
-
-
-			/*input[type="radio"], input[type="checkbox"] 
+			.radio-group input[type="radio"]
 			{
 				display: inline-block;
-				margin-right: 15px;
-			}*/
+				margin-right: 15px; /* adjust as needed */
+			}
+			
+			.radio-group label 
+			{
+				display: inline-block;
+				margin-right: 15px; /* adjust as needed */
+			}
+
+			.checkbox-group 
+			{
+    			display: flex;
+			}
+
+			.checkbox-group label 
+			{
+    			margin-right: 15px; /* Ajustez selon vos besoins */
+			}
+
+			.checkbox-group input[type="checkbox"] 
+			{
+   				margin-right: 5px; /* Ajustez selon vos besoins */
+			}
 
 			.error 
 			{
@@ -150,6 +158,7 @@
 		<div>
 			<form action="#" method="post">        
 				<br>
+				<div class="form-group">
 					<label for="firstname">firstname</label>
 					<input type="text" id="firstname" name="firstname" placeholder="Your firstname" maxlength="15">
 					<span id="firstname_error" class="error"></span> <!-- Message d'erreur pour le prénom -->
@@ -173,8 +182,7 @@
 				<label for="gender">What is your gender ?</label>
 				<div class="radio-group">
 					<input type="radio" id="gender_male" name="gender" value="Male">
-					<label for="gender_male">Male</label>
-					
+					<label for="gender_male">Male</label>					
 					<input type="radio" id="gender_female" name="gender" value="Female">
 					<label for="gender_female">Female</label>
 					
@@ -183,12 +191,14 @@
 					<span id="gender_error" class="error"></span> <!-- Message d'erreur pour le genre -->
 				</div>
 				<br>
-					<label for="student">Are you a 42 Student?</label>
-					<input type="checkbox" id="student" name="student" value="Yes">
-					<label for="student">Yes</label>
-					<input type="checkbox" id="not_student" name="not_student" value="No">
-					<label for="not_student">No</label>
-					<span id="student_error" class="error"></span>
+				<label for="student">Are you a 42 Student?</label>
+					<div class="checkbox-group">
+						<input type="checkbox" id="student" name="student" value="Yes">
+						<label for="student">Yes</label>
+						<input type="checkbox" id="not_student" name="not_student" value="No">
+						<label for="not_student">No</label>
+						<span id="student_error" class="error"></span>
+					</div>
 				<br>
 					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
 					<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> <!-- Bouton Submit masqué par défaut -->
