@@ -54,6 +54,7 @@
 				/* Autres propriétés */
 				margin: 0 auto; /* Centre le formulaire horizontalement */
 				padding: 20px;
+				
 			}
             
 			/* Style pour les balises label */
@@ -83,7 +84,7 @@
 				position: relative; /* Position relative à sa position normale */
 
 				/* Décalage vers la gauche */
-				left: 250px;
+				left: 350px;
 
 				/* Taille */
 				height: 35px;
@@ -91,6 +92,7 @@
 				/* Border (pas de border, border, taille de la border, etc...) */
 				border-radius: 13%; /* Bordure arrondie */
 			}
+
 
 			/*-------------------------------------------------------------------------------------*/
 			/*-------------------------------- FORMULAIRE RADIO CSS -------------------------------*/
@@ -276,9 +278,9 @@
 						<span id="student_error" class="error"></span>
 					</div>
 				<br>
-					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
-					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> --><!-- Bouton Submit masqué par défaut -->
-                	<input type="button" id="check_button"  onclick="checkFormData();" value="Submit" class="not-hidden"> <!-- Bouton "Check-info" pour valider les données -->
+				<div class="button-container">
+					<input type="button" id="check_button" onclick="checkFormData();" value="Submit" class="not-hidden">
+				</div>
 				<br>
 			</form>
 		</div>
