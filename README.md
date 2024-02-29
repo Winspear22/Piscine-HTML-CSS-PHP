@@ -36,13 +36,15 @@ Pour cet exercice, j'ai modifié le code HTML d'une page web existante pour assu
 ![Note finale](images/PHP-00-Success.png)
 
 ## PHP-01 - Introduction à PHP
-Lors de cette seconde journée, j'ai fait pour la première fois du PHP. Le but de cette journée était de découvrir la création et la manipulation de variables, de strings et de tableaux en PHP.
+Lors de cette seconde journée, j'ai fait pour la première fois du PHP. Le but de cette journée était de découvrir la création et la manipulation de variables, de strings et de tableaux en PHP. On y apprend également la manipulation de file descriptors.
 
 ### ex00 - Var
 Dans cet exercice, il faut initialiser 4 variables de types différents et créer un programme qui nous permette d'afficher dynamiquement leur valeur ainsi que leur type. Voici mon résultat : 
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex00.png)
+
 Voici le résultat attendu :
+
 ![Affichage de mon résultat résultat](images/PHP-01-ex00-result.png)
 
 
