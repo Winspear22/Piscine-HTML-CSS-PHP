@@ -33,7 +33,7 @@
             
 			form 
 			{
-			/* Opacité */
+				/* Opacité */
 				opacity: 0.9;
 
 				/* Taille (largeur, longueur, taille maximum) */
@@ -501,7 +501,27 @@
 
         		// Affiche ou masque le bouton "submit_button" en fonction des résultats de validation
         		if (isNameValid && isPhoneNumberValid && isAgeValid && isEmailValid && is42StudentValid && isGenderValid)
-					displayFormContents();
+				{
+					var formErrorElements = 
+					{
+					// Mapping des éléments d'erreur du formulaire
+						errors: 
+						{
+							firstnameError: document.getElementById('firstname_error'),
+							nameError: document.getElementById('name_error'),
+							ageError: document.getElementById('age_error'),
+							phoneError: document.getElementById('phone_error'),
+							emailError: document.getElementById('email_error'),
+							genderError: document.getElementById('gender_error'),
+							studentError: document.getElementById('student_error')
+						}
+					}
+					Object.values(formErrorElements.errors).forEach(function(errorElement) 
+					{
+            			errorElement.style.display = 'none';
+        			});
+					setTimeout(function() {displayFormContents();}, 10);				
+				}
     		}
 		</script>
     </body>
