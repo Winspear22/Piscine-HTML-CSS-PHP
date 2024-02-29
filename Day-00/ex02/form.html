@@ -277,8 +277,8 @@
 					</div>
 				<br>
 					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit">-->
-					<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> <!-- Bouton Submit masqué par défaut -->
-                	<input type="button" id="check_button"  onclick="checkFormData();" value="Check-info" class="not-hidden"> <!-- Bouton "Check-info" pour valider les données -->
+					<!--<input type="button" id="submit_button" onclick="displayFormContents();" value="Submit" class="hidden"> --><!-- Bouton Submit masqué par défaut -->
+                	<input type="button" id="check_button"  onclick="checkFormData();" value="Submit" class="not-hidden"> <!-- Bouton "Check-info" pour valider les données -->
 				<br>
 			</form>
 		</div>
@@ -310,14 +310,6 @@
 					return true;
 				}
 			}
-			
-			document.getElementById('submit_button').addEventListener('click', function(event) 
-			{
-				if (!checkPhoneNumberFormat()) 
-				{
-						event.preventDefault(); // Empêche la soumission du formulaire si le format n'est pas valide
-				}
-			});
 		</script>
 		<script name="Script qui check le format du nom/prenom">
 			function checkNameFormat() 
@@ -356,8 +348,18 @@
 					nameError.textContent = 'Wrong name, only accepted characters are letters and \' and -.';
 					nameError.style.display = 'block';
 				}
-				if (nameBool === false || firstnameBool === false)
+				if (nameBool === false)
+				{
+					if (firstnameBool === true)
+						firstnameError.style.display = 'none'; // Cache le message d'erreur s'il n'y a pas d'erreur
 					return false;
+				}
+				if (firstnameBool === false)
+				{
+					if (nameBool === true)
+						nameError.style.display = 'none';
+					return false;
+				}
 				else
 				{
 					firstnameError.style.display = 'none'; // Cache le message d'erreur s'il n'y a pas d'erreur
