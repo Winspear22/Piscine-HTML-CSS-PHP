@@ -8,9 +8,9 @@ $file = fopen($filename, "r");
         $result = explode(",", $content);
         while (++$i < count($result)) 
         {
-            echo $result[$i];
-            if ($i <= count($result) - 2)
-                echo PHP_EOL;
+            $resultTrimmed = trim($result[$i]); // Supprime les espaces blancs autour de la chaîne
+            if (!empty($resultTrimmed)) // Vérifie si la chaîne est non vide
+                echo $resultTrimmed . PHP_EOL;
         }
         fclose($file);
     }
