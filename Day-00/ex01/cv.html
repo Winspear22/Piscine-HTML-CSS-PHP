@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
+        <meta charset="UTF-8">
         <!-- SECONDE CONSIGNE : Voici la balise title  -->
         <title>adaloui CV</title>
         <!-- PREMIERE CONSIGNE : C'est ici que débute la partie style  -->
@@ -123,7 +124,10 @@
         
             .parcours th, .parcours td 
             {
-                border: 1px solid #F7682E;
+                /*border: 1px solid #F7682E;*/
+                border-width: 1px;  /* EQUIVALENT DE BORDER: 1PX SOLID #F7682E; QUI EST UN SIMPLE RACCOURCI*/
+                border-style: solid; /* CORRECTION DE BORDER-STYLE*/
+                border-color: #F7682E;
                 padding: 5px;
                 text-align: left;
             }
@@ -136,6 +140,12 @@
             ol li 
             {
                 margin-bottom: 5px;
+            }
+
+            ul
+            {
+                list-style-type: none;
+                padding: 0;
             }
 
             .Tout_le_CV 
@@ -159,7 +169,7 @@
                 <img id="profile-pic" src="https://pbs.twimg.com/media/FFnc9WsWQAA6iHw?format=jpg&name=large" alt="Profil de Sasuke Uchiha">
                 <div class="info-perso">
                     <!-- QUATRIEME ET SIXIEME CONSIGNE : liste avec ul et balise style dans la balise ul -->
-                    <ul style="list-style-type: none; padding: 0;">
+                    <ul>
                         <li>Adresse :</li>
                         <li>96 rue de La Feuille Sauvage, 75017 Village caché de Konoha</li>
                         <li>Mail :</li>
