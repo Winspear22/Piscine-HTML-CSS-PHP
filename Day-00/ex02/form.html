@@ -107,7 +107,7 @@
 			.radio-error 
 			{
 				position: absolute;
-				top: 15px; /* Ajustez cette valeur pour aligner verticalement comme désiré */
+				top: 16px; /* Ajustez cette valeur pour aligner verticalement comme désiré */
 				right: 350px; /* Ajustez pour positionner horizontalement le message d'erreur */
 				color: red;
 				font-size: 12px;
@@ -143,13 +143,15 @@
 				display: flex;
 				align-items: center; /* Alignement vertical au centre */
 				margin-right: 15px; /* Espacement entre les choix */
+				margin-top: 8px;
+				
 			}
 
 			.checkbox-error
 			{
 				position: absolute;
-				top: 0; /* Ajustement vertical */
-				right: 0; /* Ajustement horizontal */
+				top: 18px; /* Ajustement vertical */
+				right: 405px; /* Ajustement horizontal */
 				color: red;
 				font-size: 12px;
 				display: block; /* Changez ceci en 'block' si vous souhaitez toujours l'afficher */
@@ -184,11 +186,14 @@
 				display: flex;
 				align-items: center; /* Aligner verticalement les éléments du formulaire et le message d'erreur */
 				margin-bottom: 10px; /* Espacement entre les groupes de formulaire */
+
 			}
 			
 			.formulaire-firstname label, .formulaire-firstname input, .formulaire-firstname .error 
 			{
     			margin-right: 10px; /* Espacement entre les éléments du formulaire */
+				padding: 8px;
+        margin: 0;
 			}
 
 			.error 
@@ -275,7 +280,7 @@
 							<input type="checkbox" id="not_student" name="not_student" value="No">
 							<label for="not_student" class="checkbox-choice-no">No</label>
 						</div>
-						<span id="student_error" class="error"></span>
+						<span id="student_error" class="checkbox-error"></span>
 					</div>
 				<br>
 				<div class="button-container">
@@ -478,7 +483,7 @@
 				if (!studentCheckbox.checked && !notStudentCheckbox.checked) 
 				{
 					studentBool = false;
-					studentError.textContent = 'You must tell if you are a 42 student or not.';
+					studentError.textContent = 'Please tell if you are a 42 student or not.';
 					studentError.style.display = 'block';
     			} 
 				else 
