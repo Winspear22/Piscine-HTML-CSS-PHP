@@ -42,15 +42,12 @@
             </li>
         </ul>
 		<script>
-			document.addEventListener("DOMContentLoaded", function() 
+			document.querySelectorAll('p[data-value]').forEach(function(p) 
 			{
-				document.querySelectorAll('p[data-value]').forEach(function(p) 
-				{
-					// Récupère la valeur de l'attribut data-value
-					var value = p.getAttribute('data-value');
-					// Applique le style directement via JavaScript en utilisant cette valeur
-					p.style.width = value + '%';
-				});
+				// Récupère la valeur de l'attribut data-value
+				var value = p.getAttribute('data-value');
+				// Applique le style directement via JavaScript en utilisant cette valeur
+				p.style.width = value + '%';
 			});
 		</script>
         </body>

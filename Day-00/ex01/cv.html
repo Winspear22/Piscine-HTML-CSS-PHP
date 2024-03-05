@@ -117,7 +117,7 @@
             .parcours table 
             {
                 width: 100%;
-                border-collapse: collapse;
+                border-collapse: collapse; /* CORRECTION DE BORDER-COLLAPSE ----- SIXIEME CONSIGNE : BORDER COLLAPSE DANS STYLE */
                 margin-top: 20px;
                 background-color: #D7DFDC;
             }
@@ -126,7 +126,7 @@
             {
                 /*border: 1px solid #F7682E;*/
                 border-width: 1px;  /* EQUIVALENT DE BORDER: 1PX SOLID #F7682E; QUI EST UN SIMPLE RACCOURCI*/
-                border-style: solid; /* CORRECTION DE BORDER-STYLE*/
+                border-style: solid; /* CORRECTION DE BORDER-STYLE ----- SIXIEME CONSIGNE : BORDER STYLE DANS STYLE */
                 border-color: #F7682E;
                 padding: 5px;
                 text-align: left;
@@ -156,7 +156,6 @@
             }
         </style>
         <!-- CINQUIEME CONSIGNE : C'le style juste au-dessus gère la caractéristique solid et collapse  -->
-        <!-- septieme CONSIGNE : les border-right bottom top et left -->
     </head>
     <!-- PREMIERE CONSIGNE : C'est ici que débute la partie fond, les deux sont bien séparés-->
     <body>
@@ -168,7 +167,7 @@
                 <img id="pancarte-image" src="https://i.ibb.co/YPbqsmf/4Un9ahD.png" alt="Pancarte de Sasuke Uchiha">
                 <img id="profile-pic" src="https://pbs.twimg.com/media/FFnc9WsWQAA6iHw?format=jpg&name=large" alt="Profil de Sasuke Uchiha">
                 <div class="info-perso">
-                    <!-- QUATRIEME ET SIXIEME CONSIGNE : liste avec ul et balise style dans la balise ul -->
+                    <!-- QUATRIEME : liste avec ul -->
                     <ul>
                         <li>Adresse :</li>
                         <li>96 rue de La Feuille Sauvage, 75017 Village caché de Konoha</li>
@@ -202,11 +201,11 @@
                         <tr>
                             <td>2015</td>
                             <td>Fondation de Taka</td>
-                            <td style="border: 2px solid #424242;">Indéterminé</td>
+                            <td style="border: 2px solid #424242;">Indéterminé</td> <!-- SEPTIEME CONSIGNE : BORDER DE LA DERNIERE CASE DU TABLEAU DANS BALISE TD -->
                         </tr>
                     </table>
                     <h2>Competences acquises</h2>
-                    <!-- QUATRIEME et SIXIEME CONSIGNE : liste avec ol avec la balise style dans la balise ol -->
+                    <!-- QUATRIEME CONSIGNE : liste avec ol -->
                     <ol>
                         <li>Maîtrise du Sharingan</li>
                         <li>Techniques de Katon (techniques de feu)</li>
@@ -250,7 +249,7 @@
                             <td>D</td>
                             <td>Konoha</td>
                             <td>Récupérer le chat de la dame</td>
-                            <td style="border: 2px solid #424242;">2 heures</td>
+                            <td style="border: 2px solid #424242;">2 heures</td> <!-- SEPTIEME CONSIGNE : BORDER DE LA DERNIERE CASE DU TABLEAU DANS BALISE TD -->
                         </tr>
                     </table>
                                 
