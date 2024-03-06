@@ -161,7 +161,7 @@ function search_by_states($userInput)
 	{
         if (strlen($string) <= 2) 
             $formattedInput = strtoupper($string);
-		else 
+		else
             $formattedInput = ucfirst($string); // Met la première lettre en majuscule
         capital_city_from($formattedInput, $string, $states, $capitals);
     }

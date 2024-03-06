@@ -27,7 +27,7 @@ function getArrayElement($lineElements): string
 	$electron = $lineElements[5];
 
 	$str = "
-	<td class='element'>
+	<td class='element' data-number='$number'>
 		<div>
 			<h4>$name</h4>
 				<ul>
@@ -46,7 +46,7 @@ $filename = "ex06.txt";
 $file = fopen($filename, "r");// or die("Unable to open file.");
 if ($file)
 {
-    echo "Opening of the file successful !";
+    echo "Opening of the file successful !\n";
 	$lines = [];
     while (($line = fgets($file)) !== false) 
 	{
@@ -78,6 +78,21 @@ if ($file)
 				margin: 0;
 				font-size: 1vw;
 			}
+
+			.alcalins
+			{
+				background-color: #FF6666; 
+			}
+
+			.alcalino-terreux
+			{
+				background-color: #FFDFAF;
+			}
+
+			.métaux-de-transition
+			{
+				background-color: #FFB7C2;
+			}
 		</style>
 	</head>
 	<body>';
@@ -103,6 +118,32 @@ if ($file)
 			$currentPosition++;
 		}
 	}
+	$javascript = "
+		<script>
+			document.addEventListener('DOMContentLoaded', function () 
+			{
+    			document.querySelectorAll('.element').forEach(function(element) 
+				{
+        			var number = element.getAttribute('data-number');
+        			if (number) 
+					{
+            			// Remplacez par votre logique de classification
+            			if (number == 3 || number == 11 || number == 19 || number == 37 || number == 55 || number == 87) 
+                			element.classList.add('alcalins');
+						else if (number == 4 || number == 12 || number == 20 || number == 38 || number == 56 || number == 88)
+                			element.classList.add('alcalino-terreux');
+						else if ((number >= 21 && number <= 29) || (number >= 39 && number <= 47) || (number >= 72 && number <= 79)
+						|| (number >= 104 && number <= 108) || number == 112)
+						{
+							element.classList.add('métaux-de-transition');
+						}
+
+            			// Ajoutez d'autres conditions ici
+        			}
+    			});
+			});
+		</script>";
+	$htmlContent .= $javascript;
 	$htmlContent .= '
 			</table>
 		</body>
