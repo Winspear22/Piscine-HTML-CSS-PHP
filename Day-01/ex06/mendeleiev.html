@@ -37,6 +37,36 @@
 			{
 				background-color: #FFB7C2;
 			}
+
+			.métaux-pauvres
+			{
+				background-color: #D4D4D4;
+			}
+
+			.metalloides
+			{
+				background-color: #CDCD9A;
+			}
+
+			.autres-non-metaux
+			{
+				background-color: #99FB99;
+			}
+
+			.halogenes
+			{
+				background-color: #FFFF9A;
+			}
+
+			.gaz-nobles
+			{
+				background-color: #B0EFEF;
+			}
+
+			.non-classes
+			{
+				background-color: #F5F5F5;
+			}
 		</style>
 	</head>
 	<body><table><tr>
@@ -1111,9 +1141,20 @@
                 			element.classList.add('alcalino-terreux');
 						else if ((number >= 21 && number <= 29) || (number >= 39 && number <= 47) || (number >= 72 && number <= 79)
 						|| (number >= 104 && number <= 108) || number == 112)
-						{
 							element.classList.add('métaux-de-transition');
-						}
+						else if (number == 13 || (number >= 30 && number <= 31) || (number >= 48 && number <= 50) || (number >= 80 && number <= 84))
+							element.classList.add('métaux-pauvres');
+						else if (number == 5 || number == 14 || (number >= 32 && number <= 33) || (number >= 51 && number <= 52) || number == 85)
+							element.classList.add('metalloides');
+						else if (number == 1 || (number >= 6 && number <= 8) || (number >= 15 && number <= 16) || number == 34)
+							element.classList.add('autres-non-metaux');
+						else if (number == 9 || number == 17 || number == 35 || number == 53)
+                			element.classList.add('halogenes');
+						else if (number == 2 || number == 10 || number == 18 || number == 36 || number == 54 || number == 86) 
+                			element.classList.add('gaz-nobles');
+						else if ((number >= 109 && number <= 111) || (number >= 113 && number <= 118))
+							element.classList.add('non-classes');
+
 
             			// Ajoutez d'autres conditions ici
         			}
