@@ -1,20 +1,51 @@
 <?php 
 
-function capital_letters($array): array
+function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
 {
-    $final_strings = [];
+    // Inverser le tableau des États pour avoir les abréviations comme clés
+    $reversedStates = array_flip($states);
 
-    foreach ($array as $input) 
+    // Vérifier si l'entrée est un nom d'État
+
+    if (isset($states[$userInput])) 
 	{
-        $final_string = strtolower($input);
-        $final_string = ucfirst($final_string);
-        $final_strings[] = $final_string;
+        // Trouver la capitale correspondant à l'État
+        $abbreviation = $states[$userInput];
+        if (isset($capitals[$abbreviation]))
+            echo $capitals[$abbreviation] . " is the capital of " . $InitialuserInput . ".\n";
+        else
+            echo "No capital found for " . $InitialuserInput . ".\n";
+    	// Vérifier si l'entrée est une capitale
+    } 
+	elseif (in_array($userInput, $capitals))
+	{
+        // Trouver le nom complet de l'État correspondant à la capitale
+        $stateName = array_search($userInput, $capitals);
+        if ($stateName !== false) {
+            echo $InitialuserInput . " is the capital of " . array_search($stateName, $states) . ".\n";
+        } else {
+            echo "The state for the capital " . $InitialuserInput . " was not found.\n";
+        }
+    } 
+	elseif (isset($capitals[$userInput])) 
+	{
+        $stateName = $reversedStates[$userInput];
+        echo $capitals[$userInput] . " is the capital of " . $stateName . ".\n";
     }
-	return $final_strings;
+	else
+        echo $InitialuserInput . " is neither a capital nor a state.\n";
 }
 
-function capital_city_from($userInput)
+
+
+function search_by_states($userInput)
 {
+    if (empty($userInput)) 
+	{
+        echo "No input provided.\n";
+        return;
+    }
+
 	$states = [
 		'Alabama' => 'AL',
 		'Alaska' => 'AK',
@@ -120,60 +151,19 @@ function capital_city_from($userInput)
 		'WI' => 'Madison',
 		'WY' => 'Cheyenne'
 	];
-
-    // Inverser le tableau des États pour avoir les abréviations comme clés
-    $reversedStates = array_flip($states);
-
-    // Vérifier si l'entrée est un nom d'État
-    if (isset($states[$userInput])) {
-        // Trouver la capitale correspondant à l'État
-        $abbreviation = $states[$userInput];
-        if (isset($capitals[$abbreviation])) {
-            echo $capitals[$abbreviation] . " is the capital of " . $userInput . ".\n";
-        } else {
-            echo "No capital found for " . $userInput . ".\n";
-        }
-    // Vérifier si l'entrée est une capitale
-    } elseif (in_array($userInput, $capitals)) {
-        // Trouver le nom complet de l'État correspondant à la capitale
-        $stateName = array_search($userInput, $capitals);
-        if ($stateName !== false) {
-            echo $userInput . " is the capital of " . array_search($stateName, $states) . ".\n";
-        } else {
-            echo "The state for the capital " . $userInput . " was not found.\n";
-        }
-    } 
-	elseif (isset($capitals[$userInput])) {
-        $stateName = $reversedStates[$userInput];
-        echo $capitals[$userInput] . " is the capital of " . $stateName . ".\n";
-    }
-	else {
-        echo $userInput . " is neither a capital nor a state.\n";
-    }
-}
-
-
-
-function search_by_states($userInput)
-{
-    if (empty($userInput)) {
-        echo "No input provided.\n";
-        return;
-    }
     
     $cleanInput = preg_replace('/\s*,\s*/', ',', trim($userInput));
     $inputs = array_filter(explode(",", $cleanInput), function($value) {
         return $value !== '';
     });
 
-    foreach ($inputs as $string) {
-        if (strlen($string) <= 2) {
+    foreach ($inputs as $string) 
+	{
+        if (strlen($string) <= 2) 
             $formattedInput = strtoupper($string);
-        } else {
-            $formattedInput = str_replace(' ', '', $string);
-        }
-
-        capital_city_from($formattedInput);
+		else 
+            $formattedInput = ucfirst($string); // Met la première lettre en majuscule
+        capital_city_from($formattedInput, $string, $states, $capitals);
     }
 }
 

@@ -5,12 +5,7 @@ $states = [
     'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia',
     'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa',
     'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
-    'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-    'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
-    'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio',
-    'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
-    'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
+    'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri'
 ];
 
 $fictitious_states = [
@@ -18,20 +13,30 @@ $fictitious_states = [
     "Eldorado",
     "New Atlantis",
     "Pacifica",
-    "Utopia",
-    "Zephyria",
-    "Avalonia",
-    "Perdida",
-    "Quivira",
-    "Terra Nova"
+    "Utopia"
 ];
 
 // Boucle pour appeler capital_city_from pour chaque État
+echo "\033[1;33m=======================================\033[0m" . PHP_EOL;
+echo "\033[1;32m------------ADALOUI EXAMPLES------------\033[0m" . PHP_EOL;
+echo "\033[1;33m=======================================\033[0m" . PHP_EOL;
+
 foreach ($states as $state) {
     echo $state . ': ' . capital_city_from($state) . PHP_EOL;
 }
-foreach ($fictitious_states as $fstate)
-{
+
+echo "\033[1;33m=============================================\033[0m" . PHP_EOL;
+echo "\033[1;32m------------ADALOUI FAKE EXAMPLES------------\033[0m" . PHP_EOL;
+echo "\033[1;33m=============================================\033[0m" . PHP_EOL;
+
+
+foreach ($fictitious_states as $fstate) {
     echo $fstate . ': ' . capital_city_from($fstate) . PHP_EOL;
 }
+
+echo "\033[1;33m=======================================\033[0m" . PHP_EOL;
+echo "\033[1;32m--------------42 EXAMPLES--------------\033[0m" . PHP_EOL;
+echo "\033[1;33m=======================================\033[0m" . PHP_EOL;
+echo capital_city_from('Oregon');
+echo capital_city_from('Origan');
 ?>

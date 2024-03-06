@@ -1,5 +1,5 @@
 <?php
-	$a = 10;
+	$a = 10; // Pour forcer à être un entier, il aurait fallu écrire $a = (int) 10; Pareil pour les lignes en bas.
 	$b = "10";
     $c = "ten";
     $d = 10.0;
