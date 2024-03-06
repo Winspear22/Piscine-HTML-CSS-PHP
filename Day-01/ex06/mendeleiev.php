@@ -28,7 +28,7 @@ function getArrayElement($lineElements): string
 
 	$str = "
 	<td class='element' data-number='$number'>
-		<div>
+		<div class='table_element'>
 			<h4>$name</h4>
 				<ul>
 					<li>$position</li>
@@ -62,15 +62,33 @@ if ($file)
 		<style>
 			table 
 			{
-				border-collapse: separate;
+				border-collapse: collapse;
 				border-spacing: 5px;
 				margin: 20px auto;
 			}
 
-			td, th 
+			.emptyElement
 			{
-				border-radius: 5px;
-				box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+				border: 3px dashed black; 
+			}
+
+			.element, .emptyElement {
+				width: 120px; /* Largeur fixe pour les cellules */
+				height: 120px; /* Hauteur fixe pour les cellules */
+			}
+
+			.element
+			{
+				width: 200px;
+				border: 3px solid black;
+			}
+
+			.table_element h4 
+			{
+				margin: 0;
+				text-align: center; /* Centre horizontalement le titre dans la cellule */
+
 			}
 
 			h4
@@ -122,6 +140,66 @@ if ($file)
 			.non-classes
 			{
 				background-color: #F5F5F5;
+				border: 3px dotted black;
+
+			}
+
+			.gaz h4
+			{
+				color: #F41A0E
+			}
+
+			.liquide h4
+			{
+				color: #0606FD;
+			}
+
+			.gaz-legend
+			{
+				font-weight: bold;
+				color: #F41A0E
+			}
+
+			.liquid-legend
+			{
+				font-weight: bold;
+				color: #0606FD
+			}
+
+			.solid-legend
+			{
+				font-weight: bold;
+				color: #000;
+			}
+
+			ul 
+			{
+				list-style-type: none; /* Enlève les puces */
+			}
+
+			.legend
+			{
+				text-align: center;
+				margin-top: 30px;
+				border: 6px solid #000;
+			}
+						
+			.legend-item
+			{
+				display: inline-block;
+				margin: 5px;
+				padding: 5px;
+				border: 1px solid #000;
+				border-radius: 5px;
+			}
+
+			.legend-item-non-classé
+			{
+				display: inline-block;
+				margin: 5px;
+				padding: 5px;
+				border: 1px dotted #000;
+				border-radius: 5px;
 			}
 		</style>
 	</head>
@@ -134,7 +212,9 @@ if ($file)
 		$expectedPosition = $lineElements[1];
 		while ($currentPosition < $expectedPosition) 
 		{
-			$htmlContent .= "<td class='emptyElement'></td>";
+			$htmlContent .= "
+			<td class='emptyElement'>
+			</td>";
 			$currentPosition++;
 		}
 		$htmlContent .= getArrayElement($lineElements);
@@ -177,14 +257,45 @@ if ($file)
                 			element.classList.add('gaz-nobles');
 						else if ((number >= 109 && number <= 111) || (number >= 113 && number <= 118))
 							element.classList.add('non-classes');
-
-
-            			// Ajoutez d'autres conditions ici
+						if (number == 1 || number == 2 || (number >= 7 && number <= 10) || number == 17 || number == 18 || number == 36
+						|| number == 54 || number == 86)
+							element.classList.add('gaz');
+						if (number == 35 || number == 80)
+							element.classList.add('liquide'); 
         			}
     			});
 			});
 		</script>";
 	$htmlContent .= $javascript;
+	$legend = '
+    <div class="legend">
+        <h3>Légende</h3>
+		<h4>Couleur du background</h4>
+        <div class="legend-item alcalins"><span>Alcalins</span></div>
+        <div class="legend-item alcalino-terreux"><span>Alcalino-terreux</span></div>
+        <div class="legend-item métaux-de-transition"><span>Métaux de transition</span></div>
+        <div class="legend-item métaux-pauvres"><span>Métaux pauvres</span></div>
+        <div class="legend-item metalloides"><span>Métalloïdes</span></div>
+        <div class="legend-item autres-non-metaux"><span>Autres non-métaux</span></div>
+        <div class="legend-item halogenes"><span>Halogènes</span></div>
+        <div class="legend-item gaz-nobles"><span>Gaz nobles</span></div>
+        <div class="legend-item-non-classé non-classes"><span>Non classés</span></div>
+		<h4>Couleur de la police</h4>
+        <div class="legend-item gaz-legend"><span>Gaz (coloré en bleu)</span></div>
+        <div class="legend-item liquid-legend"><span>Liquide (coloré en rouge)</span></div>
+        <div class="legend-item solid-legend"><span>Solide (coloré en noir)</span></div>';
+
+$legend .= '
+        <h4>Description des informations</h4>
+		<ul>
+            <li><strong>Position :</strong> Emplacement sur la ligne</li>
+        	<li><strong>No :</strong> Numéro atomique</li>
+        	<li><strong>Nom court :</strong> Symbole chimique</li>
+        	<li><strong>Masse molaire :</strong> Molarité de l\'élément</li>
+        	<li><strong>Configuration électronique :</strong> Répartition des électrons</li>
+    	</ul>
+	</div>';
+	$htmlContent .= $legend;
 	$htmlContent .= '
 			</table>
 		</body>

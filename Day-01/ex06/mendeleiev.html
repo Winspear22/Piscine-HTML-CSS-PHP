@@ -6,15 +6,33 @@
 		<style>
 			table 
 			{
-				border-collapse: separate;
+				border-collapse: collapse;
 				border-spacing: 5px;
 				margin: 20px auto;
 			}
 
-			td, th 
+			.emptyElement
 			{
-				border-radius: 5px;
-				box-shadow: 0 0 5px rgba(0,0,0,0.2);
+
+				border: 3px dashed black; 
+			}
+
+			.element, .emptyElement {
+				width: 120px; /* Largeur fixe pour les cellules */
+				height: 120px; /* Hauteur fixe pour les cellules */
+			}
+
+			.element
+			{
+				width: 200px;
+				border: 3px solid black;
+			}
+
+			.table_element h4 
+			{
+				margin: 0;
+				text-align: center; /* Centre horizontalement le titre dans la cellule */
+
 			}
 
 			h4
@@ -66,12 +84,72 @@
 			.non-classes
 			{
 				background-color: #F5F5F5;
+				border: 3px dotted black;
+
+			}
+
+			.gaz h4
+			{
+				color: #F41A0E
+			}
+
+			.liquide h4
+			{
+				color: #0606FD;
+			}
+
+			.gaz-legend
+			{
+				font-weight: bold;
+				color: #F41A0E
+			}
+
+			.liquid-legend
+			{
+				font-weight: bold;
+				color: #0606FD
+			}
+
+			.solid-legend
+			{
+				font-weight: bold;
+				color: #000;
+			}
+
+			ul 
+			{
+				list-style-type: none; /* Enlève les puces */
+			}
+
+			.legend
+			{
+				text-align: center;
+				margin-top: 30px;
+				border: 6px solid #000;
+			}
+						
+			.legend-item
+			{
+				display: inline-block;
+				margin: 5px;
+				padding: 5px;
+				border: 1px solid #000;
+				border-radius: 5px;
+			}
+
+			.legend-item-non-classé
+			{
+				display: inline-block;
+				margin: 5px;
+				padding: 5px;
+				border: 1px dotted #000;
+				border-radius: 5px;
 			}
 		</style>
 	</head>
 	<body><table><tr>
 	<td class='element' data-number='1'>
-		<div>
+		<div class='table_element'>
 			<h4>Hydrogen</h4>
 				<ul>
 					<li>0</li>
@@ -81,9 +159,41 @@
 					<li>1</li>
 				</ul>
 		</div>
-	</td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td>
+	</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
 	<td class='element' data-number='2'>
-		<div>
+		<div class='table_element'>
 			<h4>Helium</h4>
 				<ul>
 					<li>17</li>
@@ -95,7 +205,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='3'>
-		<div>
+		<div class='table_element'>
 			<h4>Lithium</h4>
 				<ul>
 					<li>0</li>
@@ -107,7 +217,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='4'>
-		<div>
+		<div class='table_element'>
 			<h4>Beryllium</h4>
 				<ul>
 					<li>1</li>
@@ -117,9 +227,29 @@
 					<li>2 2</li>
 				</ul>
 		</div>
-	</td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td>
+	</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
 	<td class='element' data-number='5'>
-		<div>
+		<div class='table_element'>
 			<h4>Boron</h4>
 				<ul>
 					<li>12</li>
@@ -131,7 +261,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='6'>
-		<div>
+		<div class='table_element'>
 			<h4>Carbon</h4>
 				<ul>
 					<li>13</li>
@@ -143,7 +273,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='7'>
-		<div>
+		<div class='table_element'>
 			<h4>Nitrogen</h4>
 				<ul>
 					<li>14</li>
@@ -155,7 +285,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='8'>
-		<div>
+		<div class='table_element'>
 			<h4>Oxygen</h4>
 				<ul>
 					<li>15</li>
@@ -167,7 +297,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='9'>
-		<div>
+		<div class='table_element'>
 			<h4>Fluorine</h4>
 				<ul>
 					<li>16</li>
@@ -179,7 +309,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='10'>
-		<div>
+		<div class='table_element'>
 			<h4>Neon</h4>
 				<ul>
 					<li>17</li>
@@ -191,7 +321,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='11'>
-		<div>
+		<div class='table_element'>
 			<h4>Sodium</h4>
 				<ul>
 					<li>0</li>
@@ -203,7 +333,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='12'>
-		<div>
+		<div class='table_element'>
 			<h4>Magnesium</h4>
 				<ul>
 					<li>1</li>
@@ -213,9 +343,29 @@
 					<li>2 8 2</li>
 				</ul>
 		</div>
-	</td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td><td class='emptyElement'></td>
+	</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
+			<td class='emptyElement'>
+			</td>
 	<td class='element' data-number='13'>
-		<div>
+		<div class='table_element'>
 			<h4>Aluminium</h4>
 				<ul>
 					<li>12</li>
@@ -227,7 +377,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='14'>
-		<div>
+		<div class='table_element'>
 			<h4>Silicon</h4>
 				<ul>
 					<li>13</li>
@@ -239,7 +389,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='15'>
-		<div>
+		<div class='table_element'>
 			<h4>Phosphorus</h4>
 				<ul>
 					<li>14</li>
@@ -251,7 +401,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='16'>
-		<div>
+		<div class='table_element'>
 			<h4>Sulfur</h4>
 				<ul>
 					<li>15</li>
@@ -263,7 +413,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='17'>
-		<div>
+		<div class='table_element'>
 			<h4>Chlorine</h4>
 				<ul>
 					<li>16</li>
@@ -275,7 +425,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='18'>
-		<div>
+		<div class='table_element'>
 			<h4>Argon</h4>
 				<ul>
 					<li>17</li>
@@ -287,7 +437,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='19'>
-		<div>
+		<div class='table_element'>
 			<h4>Potassium</h4>
 				<ul>
 					<li>0</li>
@@ -299,7 +449,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='20'>
-		<div>
+		<div class='table_element'>
 			<h4>Calcium</h4>
 				<ul>
 					<li>1</li>
@@ -311,7 +461,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='21'>
-		<div>
+		<div class='table_element'>
 			<h4>Scandium</h4>
 				<ul>
 					<li>2</li>
@@ -323,7 +473,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='22'>
-		<div>
+		<div class='table_element'>
 			<h4>Titanium</h4>
 				<ul>
 					<li>3</li>
@@ -335,7 +485,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='23'>
-		<div>
+		<div class='table_element'>
 			<h4>Vanadium</h4>
 				<ul>
 					<li>4</li>
@@ -347,7 +497,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='24'>
-		<div>
+		<div class='table_element'>
 			<h4>Chromium</h4>
 				<ul>
 					<li>5</li>
@@ -359,7 +509,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='25'>
-		<div>
+		<div class='table_element'>
 			<h4>Manganese</h4>
 				<ul>
 					<li>6</li>
@@ -371,7 +521,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='26'>
-		<div>
+		<div class='table_element'>
 			<h4>Iron</h4>
 				<ul>
 					<li>7</li>
@@ -383,7 +533,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='27'>
-		<div>
+		<div class='table_element'>
 			<h4>Cobalt</h4>
 				<ul>
 					<li>8</li>
@@ -395,7 +545,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='28'>
-		<div>
+		<div class='table_element'>
 			<h4>Nickel</h4>
 				<ul>
 					<li>9</li>
@@ -407,7 +557,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='29'>
-		<div>
+		<div class='table_element'>
 			<h4>Copper</h4>
 				<ul>
 					<li>10</li>
@@ -419,7 +569,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='30'>
-		<div>
+		<div class='table_element'>
 			<h4>Zinc</h4>
 				<ul>
 					<li>11</li>
@@ -431,7 +581,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='31'>
-		<div>
+		<div class='table_element'>
 			<h4>Gallium</h4>
 				<ul>
 					<li>12</li>
@@ -443,7 +593,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='32'>
-		<div>
+		<div class='table_element'>
 			<h4>Germanium</h4>
 				<ul>
 					<li>13</li>
@@ -455,7 +605,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='33'>
-		<div>
+		<div class='table_element'>
 			<h4>Arsenic</h4>
 				<ul>
 					<li>14</li>
@@ -467,7 +617,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='34'>
-		<div>
+		<div class='table_element'>
 			<h4>Selenium</h4>
 				<ul>
 					<li>15</li>
@@ -479,7 +629,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='35'>
-		<div>
+		<div class='table_element'>
 			<h4>Bromine</h4>
 				<ul>
 					<li>16</li>
@@ -491,7 +641,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='36'>
-		<div>
+		<div class='table_element'>
 			<h4>Krypton</h4>
 				<ul>
 					<li>17</li>
@@ -503,7 +653,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='37'>
-		<div>
+		<div class='table_element'>
 			<h4>Rubidium</h4>
 				<ul>
 					<li>0</li>
@@ -515,7 +665,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='38'>
-		<div>
+		<div class='table_element'>
 			<h4>Strontium</h4>
 				<ul>
 					<li>1</li>
@@ -527,7 +677,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='39'>
-		<div>
+		<div class='table_element'>
 			<h4>Yttrium</h4>
 				<ul>
 					<li>2</li>
@@ -539,7 +689,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='40'>
-		<div>
+		<div class='table_element'>
 			<h4>Zirconium</h4>
 				<ul>
 					<li>3</li>
@@ -551,7 +701,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='41'>
-		<div>
+		<div class='table_element'>
 			<h4>Niobium</h4>
 				<ul>
 					<li>4</li>
@@ -563,7 +713,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='42'>
-		<div>
+		<div class='table_element'>
 			<h4>Molybdenum</h4>
 				<ul>
 					<li>5</li>
@@ -575,7 +725,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='43'>
-		<div>
+		<div class='table_element'>
 			<h4>Technetium</h4>
 				<ul>
 					<li>6</li>
@@ -587,7 +737,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='44'>
-		<div>
+		<div class='table_element'>
 			<h4>Ruthenium</h4>
 				<ul>
 					<li>7</li>
@@ -599,7 +749,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='45'>
-		<div>
+		<div class='table_element'>
 			<h4>Rhodium</h4>
 				<ul>
 					<li>8</li>
@@ -611,7 +761,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='46'>
-		<div>
+		<div class='table_element'>
 			<h4>Palladium</h4>
 				<ul>
 					<li>9</li>
@@ -623,7 +773,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='47'>
-		<div>
+		<div class='table_element'>
 			<h4>Silver</h4>
 				<ul>
 					<li>10</li>
@@ -635,7 +785,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='48'>
-		<div>
+		<div class='table_element'>
 			<h4>Cadmium</h4>
 				<ul>
 					<li>11</li>
@@ -647,7 +797,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='49'>
-		<div>
+		<div class='table_element'>
 			<h4>Indium</h4>
 				<ul>
 					<li>12</li>
@@ -659,7 +809,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='50'>
-		<div>
+		<div class='table_element'>
 			<h4>Tin</h4>
 				<ul>
 					<li>13</li>
@@ -671,7 +821,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='51'>
-		<div>
+		<div class='table_element'>
 			<h4>Antimony</h4>
 				<ul>
 					<li>14</li>
@@ -683,7 +833,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='52'>
-		<div>
+		<div class='table_element'>
 			<h4>Tellurium</h4>
 				<ul>
 					<li>15</li>
@@ -695,7 +845,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='53'>
-		<div>
+		<div class='table_element'>
 			<h4>Iodine</h4>
 				<ul>
 					<li>16</li>
@@ -707,7 +857,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='54'>
-		<div>
+		<div class='table_element'>
 			<h4>Xenon</h4>
 				<ul>
 					<li>17</li>
@@ -719,7 +869,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='55'>
-		<div>
+		<div class='table_element'>
 			<h4>Caesium</h4>
 				<ul>
 					<li>0</li>
@@ -731,7 +881,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='56'>
-		<div>
+		<div class='table_element'>
 			<h4>Barium</h4>
 				<ul>
 					<li>1</li>
@@ -741,9 +891,11 @@
 					<li>2 8 18 18 8 2</li>
 				</ul>
 		</div>
-	</td><td class='emptyElement'></td>
+	</td>
+			<td class='emptyElement'>
+			</td>
 	<td class='element' data-number='72'>
-		<div>
+		<div class='table_element'>
 			<h4>Hafnium</h4>
 				<ul>
 					<li>3</li>
@@ -755,7 +907,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='73'>
-		<div>
+		<div class='table_element'>
 			<h4>Tantalum</h4>
 				<ul>
 					<li>4</li>
@@ -767,7 +919,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='74'>
-		<div>
+		<div class='table_element'>
 			<h4>Tungsten</h4>
 				<ul>
 					<li>5</li>
@@ -779,7 +931,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='75'>
-		<div>
+		<div class='table_element'>
 			<h4>Rhenium</h4>
 				<ul>
 					<li>6</li>
@@ -791,7 +943,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='76'>
-		<div>
+		<div class='table_element'>
 			<h4>Osmium</h4>
 				<ul>
 					<li>7</li>
@@ -803,7 +955,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='77'>
-		<div>
+		<div class='table_element'>
 			<h4>Iridium</h4>
 				<ul>
 					<li>8</li>
@@ -815,7 +967,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='78'>
-		<div>
+		<div class='table_element'>
 			<h4>Platinum</h4>
 				<ul>
 					<li>9</li>
@@ -827,7 +979,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='79'>
-		<div>
+		<div class='table_element'>
 			<h4>Gold</h4>
 				<ul>
 					<li>10</li>
@@ -839,7 +991,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='80'>
-		<div>
+		<div class='table_element'>
 			<h4>Mercury</h4>
 				<ul>
 					<li>11</li>
@@ -851,7 +1003,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='81'>
-		<div>
+		<div class='table_element'>
 			<h4>Thallium</h4>
 				<ul>
 					<li>12</li>
@@ -863,7 +1015,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='82'>
-		<div>
+		<div class='table_element'>
 			<h4>Lead</h4>
 				<ul>
 					<li>13</li>
@@ -875,7 +1027,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='83'>
-		<div>
+		<div class='table_element'>
 			<h4>Bismuth</h4>
 				<ul>
 					<li>14</li>
@@ -887,7 +1039,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='84'>
-		<div>
+		<div class='table_element'>
 			<h4>Polonium</h4>
 				<ul>
 					<li>15</li>
@@ -899,7 +1051,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='85'>
-		<div>
+		<div class='table_element'>
 			<h4>Astatine</h4>
 				<ul>
 					<li>16</li>
@@ -911,7 +1063,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='86'>
-		<div>
+		<div class='table_element'>
 			<h4>Radon</h4>
 				<ul>
 					<li>17</li>
@@ -923,7 +1075,7 @@
 		</div>
 	</td></tr><tr>
 	<td class='element' data-number='87'>
-		<div>
+		<div class='table_element'>
 			<h4>Francium</h4>
 				<ul>
 					<li>0</li>
@@ -935,7 +1087,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='88'>
-		<div>
+		<div class='table_element'>
 			<h4>Radium</h4>
 				<ul>
 					<li>1</li>
@@ -945,9 +1097,11 @@
 					<li>2 8 18 32 18 8 2</li>
 				</ul>
 		</div>
-	</td><td class='emptyElement'></td>
+	</td>
+			<td class='emptyElement'>
+			</td>
 	<td class='element' data-number='104'>
-		<div>
+		<div class='table_element'>
 			<h4>Rutherfordium</h4>
 				<ul>
 					<li>3</li>
@@ -959,7 +1113,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='105'>
-		<div>
+		<div class='table_element'>
 			<h4>Dubnium</h4>
 				<ul>
 					<li>4</li>
@@ -971,7 +1125,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='106'>
-		<div>
+		<div class='table_element'>
 			<h4>Seaborgium</h4>
 				<ul>
 					<li>5</li>
@@ -983,7 +1137,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='107'>
-		<div>
+		<div class='table_element'>
 			<h4>Bohrium</h4>
 				<ul>
 					<li>6</li>
@@ -995,7 +1149,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='108'>
-		<div>
+		<div class='table_element'>
 			<h4>Hassium</h4>
 				<ul>
 					<li>7</li>
@@ -1007,7 +1161,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='109'>
-		<div>
+		<div class='table_element'>
 			<h4>Meitnerium</h4>
 				<ul>
 					<li>8</li>
@@ -1019,7 +1173,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='110'>
-		<div>
+		<div class='table_element'>
 			<h4>Darmstadtium</h4>
 				<ul>
 					<li>9</li>
@@ -1031,7 +1185,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='111'>
-		<div>
+		<div class='table_element'>
 			<h4>Roentgenium</h4>
 				<ul>
 					<li>10</li>
@@ -1043,7 +1197,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='112'>
-		<div>
+		<div class='table_element'>
 			<h4>Copernicium</h4>
 				<ul>
 					<li>11</li>
@@ -1055,7 +1209,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='113'>
-		<div>
+		<div class='table_element'>
 			<h4>Ununtrium</h4>
 				<ul>
 					<li>12</li>
@@ -1067,7 +1221,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='114'>
-		<div>
+		<div class='table_element'>
 			<h4>Flerovium</h4>
 				<ul>
 					<li>13</li>
@@ -1079,7 +1233,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='115'>
-		<div>
+		<div class='table_element'>
 			<h4>Ununpentium</h4>
 				<ul>
 					<li>14</li>
@@ -1091,7 +1245,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='116'>
-		<div>
+		<div class='table_element'>
 			<h4>Livermorium</h4>
 				<ul>
 					<li>15</li>
@@ -1103,7 +1257,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='117'>
-		<div>
+		<div class='table_element'>
 			<h4>Ununseptium</h4>
 				<ul>
 					<li>16</li>
@@ -1115,7 +1269,7 @@
 		</div>
 	</td>
 	<td class='element' data-number='118'>
-		<div>
+		<div class='table_element'>
 			<h4>Ununoctium</h4>
 				<ul>
 					<li>17</li>
@@ -1154,13 +1308,40 @@
                 			element.classList.add('gaz-nobles');
 						else if ((number >= 109 && number <= 111) || (number >= 113 && number <= 118))
 							element.classList.add('non-classes');
-
-
-            			// Ajoutez d'autres conditions ici
+						if (number == 1 || number == 2 || (number >= 7 && number <= 10) || number == 17 || number == 18 || number == 36
+						|| number == 54 || number == 86)
+							element.classList.add('gaz');
+						if (number == 35 || number == 80)
+							element.classList.add('liquide'); 
         			}
     			});
 			});
 		</script>
+    <div class="legend">
+        <h3>Légende</h3>
+		<h4>Couleur du background</h4>
+        <div class="legend-item alcalins"><span>Alcalins</span></div>
+        <div class="legend-item alcalino-terreux"><span>Alcalino-terreux</span></div>
+        <div class="legend-item métaux-de-transition"><span>Métaux de transition</span></div>
+        <div class="legend-item métaux-pauvres"><span>Métaux pauvres</span></div>
+        <div class="legend-item metalloides"><span>Métalloïdes</span></div>
+        <div class="legend-item autres-non-metaux"><span>Autres non-métaux</span></div>
+        <div class="legend-item halogenes"><span>Halogènes</span></div>
+        <div class="legend-item gaz-nobles"><span>Gaz nobles</span></div>
+        <div class="legend-item-non-classé non-classes"><span>Non classés</span></div>
+		<h4>Couleur de la police</h4>
+        <div class="legend-item gaz-legend"><span>Gaz (coloré en bleu)</span></div>
+        <div class="legend-item liquid-legend"><span>Liquide (coloré en rouge)</span></div>
+        <div class="legend-item solid-legend"><span>Solide (coloré en noir)</span></div>
+        <h4>Description des informations</h4>
+		<ul>
+            <li><strong>Position :</strong> Emplacement sur la ligne</li>
+        	<li><strong>No :</strong> Numéro atomique</li>
+        	<li><strong>Nom court :</strong> Symbole chimique</li>
+        	<li><strong>Masse molaire :</strong> Molarité de l'élément</li>
+        	<li><strong>Configuration électronique :</strong> Répartition des électrons</li>
+    	</ul>
+	</div>
 			</table>
 		</body>
 	</html>
