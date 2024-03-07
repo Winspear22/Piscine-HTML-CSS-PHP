@@ -1,5 +1,9 @@
 <?php
-
+/* TROIS SPLIT
+ - le split du =
+ - le split de la ,
+ - le split de :
+pour n'obtenir que les infos et les caractéristiques de la string */
 function sort_string($string): array
 {
     $parts = explode(" = ", $string);
@@ -15,6 +19,8 @@ function sort_string($string): array
     }
     return $properties;
 }
+
+/* Permet de construire en HTML une cellule du tableau (td) */
 
 function getArrayElement($lineElements): string
 {
@@ -42,6 +48,8 @@ function getArrayElement($lineElements): string
 	return $str;
 }
 
+
+/* Début du code */
 $filename = "ex06.txt";
 $file = fopen($filename, "r");// or die("Unable to open file.");
 if ($file)
@@ -53,7 +61,7 @@ if ($file)
         $lines[] = sort_string($line);
     }
 	fclose($file);
-	$currentPosition = 0;
+	$currentPosition = 0; // sert à connaître la position de l'élément dans le tableau pour laisser des espaces qd la case est vide
 	$htmlContent = '<!DOCTYPE html>
 	<html lang="en">
 	<head>
@@ -205,12 +213,12 @@ if ($file)
 	</head>
 	<body>';
 	$htmlContent .= '<table>';
-	foreach ($lines as $lineElements)
+	foreach ($lines as $lineElements) // boucle pour parcourir mon tableau contenabnt toutes les infos
 	{
 		if ($currentPosition == 0)
 			$htmlContent .= '<tr>';
 		$expectedPosition = $lineElements[1];
-		while ($currentPosition < $expectedPosition) 
+		while ($currentPosition < $expectedPosition)  // boucle pour remplir la ligne d'éléments vides tant qu'on a pas atteint un élément
 		{
 			$htmlContent .= "
 			<td class='emptyElement'>
@@ -218,16 +226,16 @@ if ($file)
 			$currentPosition++;
 		}
 		$htmlContent .= getArrayElement($lineElements);
-		if ($currentPosition >= 17) 
+		if ($currentPosition >= 17) // La colonne max est 17. Du coup, si on a attenit 17 ou plus, il faut un retour à la ligne
 		{
 			$htmlContent .= '</tr>';
 			$currentPosition = 0;
 		} 
-		else 
+		else //Sinon, on progresse
 		{
 			$currentPosition++;
 		}
-	}
+	} // Colorisation des cases en fonction de l'appartenence familiale et couleur de la police
 	$javascript = "
 		<script>
 			document.addEventListener('DOMContentLoaded', function () 
@@ -237,7 +245,6 @@ if ($file)
         			var number = element.getAttribute('data-number');
         			if (number) 
 					{
-            			// Remplacez par votre logique de classification
             			if (number == 3 || number == 11 || number == 19 || number == 37 || number == 55 || number == 87) 
                 			element.classList.add('alcalins');
 						else if (number == 4 || number == 12 || number == 20 || number == 38 || number == 56 || number == 88)
@@ -266,7 +273,7 @@ if ($file)
     			});
 			});
 		</script>";
-	$htmlContent .= $javascript;
+	$htmlContent .= $javascript; // Inscription de la légende du tableau
 	$legend = '
     <div class="legend">
         <h3>Légende</h3>
@@ -299,7 +306,7 @@ $legend .= '
 	$htmlContent .= '
 			</table>
 		</body>
-	</html>';
+	</html>'; // Fin du de la string, on va maintenant créer un fichier mendeleiev.html et y insérer le tout
 	$htmlFile = fopen('mendeleiev.html', 'w');
     if (!$htmlFile) 
     {
