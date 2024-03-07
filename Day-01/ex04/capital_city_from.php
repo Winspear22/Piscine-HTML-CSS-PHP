@@ -111,15 +111,15 @@ function capital_city_from($userInput)
 		'WI' => 'Madison',
 		'WY' => 'Cheyenne'
 	];
-	if (isset($states[$userInput]))
+	if (isset($states[$userInput])) // Je cherche si le userinput fait partie du tableau $states ($states --> $abbrevation)
 	{
-		$abbreviation = $states[$userInput];
-		if (isset($capitals[$abbreviation]))
+		$abbreviation = $states[$userInput]; // J'obtiens l'abbrévation --> New York --> NY
+		if (isset($capitals[$abbreviation])) // J'obtiens le nom de la capitale avec l'abbrévation NY --> Albany
 			return $capitals[$abbreviation] . "\n";
 	}
-	else if (isset($capitals[$userInput]))
+	else if (isset($capitals[$userInput])) // Si le userInput est directemlent l'abbréviation : NY --> Albany
 		return $capitals[$userInput] . "\n";
-	else
+	else // Si le UserInput ne se situe ni dans l'un ni dans l'autre, alors on renvoi error
 		return "Unknown\n";
 }
 ?>

@@ -1,5 +1,5 @@
 <?php 
-
+					/* string traitée / string brute mise par l'user / tableau des states / tableau des capitals */
 function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
 {
     // Inverser le tableau des États pour avoir les abréviations comme clés
@@ -7,7 +7,7 @@ function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
 
     // Vérifier si l'entrée est un nom d'État
 
-    if (isset($states[$userInput])) 
+    if (isset($states[$userInput]))  // TRAITE LES ETATS COMPLETS NEW YORK
 	{
         // Trouver la capitale correspondant à l'État
         $abbreviation = $states[$userInput];
@@ -17,17 +17,16 @@ function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
             echo "No capital found for " . $InitialuserInput . ".\n";
     	// Vérifier si l'entrée est une capitale
     } 
-	elseif (in_array($userInput, $capitals))
+	/*elseif (in_array($userInput, $capitals)) // TRAITE DES NOMS DES CAPITALES
 	{
         // Trouver le nom complet de l'État correspondant à la capitale
         $stateName = array_search($userInput, $capitals);
-        if ($stateName !== false) {
+        if ($stateName !== false)
             echo $InitialuserInput . " is the capital of " . array_search($stateName, $states) . ".\n";
-        } else {
+    	else
             echo "The state for the capital " . $InitialuserInput . " was not found.\n";
-        }
-    } 
-	elseif (isset($capitals[$userInput])) 
+    }*/
+	elseif (isset($capitals[$userInput])) // TRAITE LES ABBREVIATION NY
 	{
         $stateName = $reversedStates[$userInput];
         echo $capitals[$userInput] . " is the capital of " . $stateName . ".\n";
@@ -152,16 +151,17 @@ function search_by_states($userInput)
 		'WY' => 'Cheyenne'
 	];
     
-    $cleanInput = preg_replace('/\s*,\s*/', ',', trim($userInput));
-    $inputs = array_filter(explode(",", $cleanInput), function($value) {
+    $cleanInput = preg_replace('/\s*,\s*/', ',', trim($userInput)); // retire toutr les espaces, et remplace ces derniers par une virgule
+    $inputs = array_filter(explode(",", $cleanInput), function($value) // split les virgules puis retire tous les éléments vides avec la fonction anonyme
+	{
         return $value !== '';
     });
 
     foreach ($inputs as $string) 
 	{
-        if (strlen($string) <= 2) 
+        if (strlen($string) <= 2) // est-ce une abbréviation ? NY
             $formattedInput = strtoupper($string);
-		else
+		else // C'est un nom d'état complet New York
             $formattedInput = ucfirst($string); // Met la première lettre en majuscule
         capital_city_from($formattedInput, $string, $states, $capitals);
     }
