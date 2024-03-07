@@ -9,7 +9,7 @@ define("COLOR_RESET", "\033[0m");
 
 require_once 'Text.php';
 
-class TemplateEngine
+/*class TemplateEngine
 {
     function __construct()
     {
@@ -41,3 +41,39 @@ class TemplateEngine
         }
     }
 }
+*/
+
+class TemplateEngine
+{
+    public function __construct()
+    {
+        print(COLOR_GREEN . 'Constructor TemplateEngine called' . COLOR_RESET . PHP_EOL);
+    }
+
+    public function __destruct()
+    {
+		print(COLOR_BLUE . 'Destructor TemplateEngine called' . COLOR_RESET . PHP_EOL);  
+    }
+
+	public function createFile(string $fileName, Text $text)
+	{
+		try
+		{
+			$file = fopen($fileName, "x+");
+			if ($file === false)
+				throw new Exception("Unable to open file: $fileName, the file already exists !");
+			$fileContent = $text->readData();
+			fwrite($file, $fileContent);
+			fclose($file);
+ 
+		}
+		catch (Exception $e)
+		{
+            echo COLOR_RED . "Error: " . $e->getMessage() . COLOR_RESET . PHP_EOL;
+		}
+	}
+
+}
+
+
+?>
