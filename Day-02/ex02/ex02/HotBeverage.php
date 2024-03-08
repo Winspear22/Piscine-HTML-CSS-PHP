@@ -4,12 +4,15 @@ require_once 'TemplateEngine.php';
 
 class HotBeverage
 {
-	protected $name;
+	protected $nom;
 	protected $price;
 	protected $resistance;
 
     public function __construct(string $name, float $price, int $resistance)
 	{
+		$this->nom = $name;
+        $this->price = $price;
+        $this->resistance = $resistance;
         print(COLOR_MAGENTA . 'Constructor HotBeverage called' . COLOR_RESET . PHP_EOL);
 	}
 
@@ -18,9 +21,9 @@ class HotBeverage
         print(COLOR_MAGENTA . 'Destructor HotBeverage called' . COLOR_RESET . PHP_EOL);
 	}
 
-	public function getName()
+	public function getNom()
 	{
-		return $this->name;
+		return $this->nom;
 	}
 
 	public function getPrice()
