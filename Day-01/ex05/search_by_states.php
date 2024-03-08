@@ -7,7 +7,7 @@ function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
 
     // Vérifier si l'entrée est un nom d'État
 
-    if (isset($states[$userInput]))  // TRAITE LES ETATS COMPLETS NEW YORK
+    if (isset($states[$userInput]))  // TRAITE LES ETATS COMPLETS CALIFORNIA
 	{
         // Trouver la capitale correspondant à l'État
         $abbreviation = $states[$userInput];
@@ -17,7 +17,7 @@ function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
             echo "No capital found for " . $InitialuserInput . ".\n";
     	// Vérifier si l'entrée est une capitale
     } 
-	/*elseif (in_array($userInput, $capitals)) // TRAITE DES NOMS DES CAPITALES
+	/*elseif (in_array($userInput, $capitals)) // TRAITE DES NOMS DES CAPITALES SACRAMENTO
 	{
         // Trouver le nom complet de l'État correspondant à la capitale
         $stateName = array_search($userInput, $capitals);
@@ -26,7 +26,7 @@ function capital_city_from($userInput, $InitialuserInput, $states, $capitals)
     	else
             echo "The state for the capital " . $InitialuserInput . " was not found.\n";
     }*/
-	elseif (isset($capitals[$userInput])) // TRAITE LES ABBREVIATION NY
+	elseif (isset($capitals[$userInput])) // TRAITE LES ABBREVIATION CF
 	{
         $stateName = $reversedStates[$userInput];
         echo $capitals[$userInput] . " is the capital of " . $stateName . ".\n";
