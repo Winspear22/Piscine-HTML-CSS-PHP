@@ -130,7 +130,43 @@ class Elem
 			}
 		}
 		if ($titleNumber != 1 || $metaNumber != 1)
-			return false; 
+			return false;
+		// VERIFICATION DE P TABLE TR TD TH, UL OL ET LI
+		foreach ($this->allElements as $elem)
+		{
+			if (in_array($elem->element, ['p']))
+			{
+				foreach ($elem->allElements as $childElement)
+				{
+					if ($pChild instanceof Elem) 
+						return false; // Balise <p> ne devrait contenir que du texte
+				}
+			}
+			if (in_array($elem->element, ["tr", "th", "td"])) 
+				return false; // Ces balises ne doivent pas être directement dans body
+			if (in_array($elem->element, ["table"]))
+			{
+				foreach ($elem->allElements as $childElement)
+				{
+					if ($childElement->element != "tr")
+						return false;
+					foreach ($childElement->allElements as $grandChildElement)
+					{
+						if (!($grandChildElement->element == "th" || $grandChildElement->element == "td"))
+							return false; // Les enfants de tr doivent être des th ou td
+					}
+				}
+			}
+			if (in_array($elem->element, ["ul", "ol"]))
+			{
+				foreach ($elem->allElements as $childElement)
+				{
+					if ($childElement != "li")
+						return false; // les enfants de ul et ol doivent etre li
+				}
+			}
+		
+		} 
 		echo $htmlNumber . ' ' . $headNumber . ' ' . $bodyNumber . "\n";
 		echo $titleNumber . ' ' . $metaNumber . ' ' . "\n";
 		return true;

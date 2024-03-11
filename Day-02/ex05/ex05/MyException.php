@@ -46,5 +46,4 @@ class MyException extends Exception
 
     }
 }
-
 ?>

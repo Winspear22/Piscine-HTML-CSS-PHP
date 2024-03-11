@@ -3,7 +3,7 @@
 require_once "Elem.php";
 require_once "TemplateEngine.php";
 
-
+// ESSAIE VALIDE 
 try 
 {
     $html = new Elem('html');
@@ -54,6 +54,9 @@ catch (Exception $e)
 {
     echo "Error: " . $e->errorMessage();
 }
+
+// ESSAIS INVALIDES : 
+
 
 
 ?>
