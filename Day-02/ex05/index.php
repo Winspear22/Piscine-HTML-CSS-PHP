@@ -17,8 +17,6 @@ require_once 'TemplateEngine.php';
 
     	$html->pushElement($head);
 
-
-
     	// Création du corps de la page
     	$body = new Elem('body', '');
     	$header = new Elem('h1', 'Naruto - Le Ninja Légendaire');
