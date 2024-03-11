@@ -35,23 +35,19 @@ class Elem
 
 	public function getHTML()
 	{
-		$indent = static::getIndentation(); // On veut savoir le niveau d'identation, avec une string remplie d'identation ou vide
-		// On assigne la balise avec le niveau d'identation
-		// Pour les balises auto-fermantes, on ne rajoute pas de balise fermante.
-		if (in_array($this->element, ['img', 'meta', 'br', 'hr'])) 
+		$indent = static::getIndentation(); // Get le niveau d'identation
+		if (in_array($this->element, ['img', 'meta', 'br', 'hr'])) // POUR LES BALISES AUTO-FERMANTES
 		{
-			$html = "$indent<$this->element";
-			if (!empty($this->content)) 
+			$html = "$indent<$this->element"; // Assignation du lvl d'identation + balise
+			if (!empty($this->content))
 				$html .= " " . $this->content; // Ajouter le contenu comme attribut pour les balises autofermantes
 			$html .= " />\n"; // Fermeture autofermante pour les balises spécifiques
 		} 
-		else // Ce n'est pas une balise auto-fermante
+		else // POUR LES BALISES A CONTENU
 		{
-			$html = "$indent<$this->element>\n"; // Début de la balise pour les autres éléments
+			$html = "$indent<$this->element>\n";  // Assignation du lvl d'identation + balise
 			if (!empty($this->content)) 
-			{
-				$html .= $indent . "\t" . $this->content . "\n"; // Si le contenu de la balise n'est pas vide
-			}
+				$html .= $indent . "\t" . $this->content . "\n"; // Ajouter le contenu comme attribut pour les balises a contenu en ajoutant le lvl d'identation
 			foreach ($this->allElements as $childElement) 
 			{
 				static::$indentLevel++; // Augmenter le niveau d'indentation pour les enfants
@@ -60,7 +56,6 @@ class Elem
 			}
 			$html .= "$indent</$this->element>\n"; // Balise fermante
 		}
-		
 		return $html;
 	}
 }
