@@ -4,10 +4,12 @@ require_once 'TemplateEngine.php';
 
 class HotBeverage
 {
+	// Propriete protected car elles vont etre heritees par Tea et Coffee
 	protected $nom;
 	protected $price;
 	protected $resistance;
 
+	// Constructeur classique
     public function __construct(string $name, float $price, int $resistance)
 	{
 		$this->nom = $name;
@@ -21,6 +23,7 @@ class HotBeverage
         print(COLOR_MAGENTA . 'Destructor HotBeverage called' . COLOR_RESET . PHP_EOL);
 	}
 
+	// Getters classiques
 	public function getNom()
 	{
 		return $this->nom;

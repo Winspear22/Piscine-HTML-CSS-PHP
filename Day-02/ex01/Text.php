@@ -1,35 +1,8 @@
 <?php
 
-/*class Text
-{
-	private $string = [];
-    function __construct(array $kwargs)
-    {
-        print(COLOR_GREEN . 'Constructor Text called' . COLOR_RESET . PHP_EOL);
-		$this->string = $kwargs;
-	}
-
-    function __destruct()
-    {
-        print(COLOR_BLUE . 'Destructor Text called' . COLOR_RESET . PHP_EOL);
-    }
-
-	public function append(string $appendString)
-	{
-		$this->string[] = $appendString;
-	}
-
-	public function readData()
-	{
-		$html = '';
-        foreach ($this->string as $stringElement)
-            $html .= "<p>$stringElement</p>";
-        return $html;
-	}
-}*/
-
 class Text
 {
+	// Tableau qui va conserver l'integralite des strings que l'on va append
 	private $savedStrings = [];
 	public function __construct(array $Tab)
 	{
@@ -42,11 +15,13 @@ class Text
 		print(COLOR_BLUE . 'Destructor Text called' . COLOR_RESET . PHP_EOL);  
 	}
 
+	// Une simple methode setArrays, mais la consigne impose que l'on nomme ca append
 	public function append(string $addedString)
 	{
 		$this->savedStrings[] = $addedString;
 	}
 
+	// Une simple methode ou l'on doit inserer le contenu de savedStrings entre deux balises <p></p>
 	public function readData()
 	{
 		$html = '';

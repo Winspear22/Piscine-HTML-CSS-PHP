@@ -9,6 +9,7 @@ class Tea extends HotBeverage
 
     public function __construct(string $name, float $price, int $resistance, string $description, string $comment)
 	{
+		// On appelle le constructeur de la classe parent, l'appel se fait automatiquement, mais c'est une bonne pratique
         parent::__construct($name, $price, $resistance);
 		$this->description = $description;
 		$this->comment = $comment;
@@ -17,10 +18,12 @@ class Tea extends HotBeverage
 
 	public function __destruct()
 	{
+		// Pareil pour le destructeur
 		parent::__destruct();
         print(COLOR_CYAN . 'Destructor Tea called' . COLOR_RESET . PHP_EOL);
 	}
 
+	// De simples getters
 	public function getDescription()
 	{
 		return $this->description;

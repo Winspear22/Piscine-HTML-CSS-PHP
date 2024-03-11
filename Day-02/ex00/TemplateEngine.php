@@ -9,13 +9,12 @@ define("COLOR_RESET", "\033[0m");
 
 class TemplateEngine
 {
-    public function __construct()
+    function __construct()
     {
         print(COLOR_GREEN . 'Constructor called' . COLOR_RESET . PHP_EOL);
-        $this->foo = 42;
     }
 
-    public function __destruct()
+    function __destruct()
     {
         print(COLOR_BLUE . 'Destructor called' . COLOR_RESET . PHP_EOL);
     }
@@ -24,14 +23,18 @@ class TemplateEngine
     {
         try 
         {
+            // Ouverture du fichier
             $file = fopen($fileName, "x+");
             if ($file === false)
                 throw new Exception("Unable to open file: $fileName, the file already exists !");
 
-            // J'ouvre et je prends tout le contenu du fichier dans ma variable $tamplateContent
+            // Traitement du fichier
+            // Je get tout le contenu du fichier
             $templateContent = file_get_contents($templateName);
+            // Je prends chaque element du tableau associatif et je remplace avec str_replace tout ce qui est entre {} par la value
             foreach ($parameters as $key => $value)
                 $templateContent = str_replace("{" . $key . "}", $value, $templateContent);
+            // Je cree un file avec le contenu de templateContent
             fwrite($file, $templateContent);
             fclose($file);
         } 
@@ -41,5 +44,3 @@ class TemplateEngine
         }
     }
 }
-
-?>
