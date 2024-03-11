@@ -5,9 +5,13 @@ require_once "Elem.php";
 
 class MyException extends Exception
 {
-    public function errorMessage(): string
+    private $element;
+    private $content;
+
+    public function __construct($element, $content)
     {
-        $errorMessage = "Error. The tag you used is not authorized in this exercise. Please, try only the following tags :\n" .
+        $errorMessage = COLOR_RED . "Error. The element " . COLOR_RESET . "'$this->element'" . COLOR_RED . " with the content " . COLOR_RESET . "'$this->content'" 
+        . COLOR_RED . " you used is not authorized in this exercise. Please, try only the following elements :\n" . COLOR_RESET .
         "\t- meta\n" .
         "\t- img\n" .
         "\t- hr\n" .
@@ -31,8 +35,15 @@ class MyException extends Exception
         "\t- td\n" .
         "\t- ul\n" .
         "\t- ol\n" .
-        "\t- li";
-        return $errorMessage;
+        "\t- li\n" . COLOR_RESET;
+        parent::__construct($errorMessage);
+        $this->element = $element;
+        $this->content = $content;
+    }
+
+    public function __destruct()
+    {
+
     }
 }
 
