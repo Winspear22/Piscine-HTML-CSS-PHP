@@ -95,6 +95,7 @@ class Elem
 		if ($this->element !== 'html')
 			return false;
 		$htmlNumber = 1;
+		// VERIFICATION DE LA PRESENCE ET DU NOMBRE DE HTML HEAD BODY
 		foreach ($this->allElements as $elem) 
 		{
 			if (in_array($elem->element, ['html']))
@@ -106,6 +107,7 @@ class Elem
 		}
 		if ($htmlNumber != 1 || $headNumber != 1 || $bodyNumber != 1)
 			return false;
+		// VERIFICATION DE LA PRESENCE ET L'ABSENCE DE HEAD ET BODY
 		foreach ($this->allElements as $elem)
 		{
 			if (in_array($elem->element, ['head']))
@@ -138,7 +140,7 @@ class Elem
 			{
 				foreach ($elem->allElements as $childElement)
 				{
-					if ($pChild instanceof Elem) 
+					if ($childElement instanceof Elem) 
 						return false; // Balise <p> ne devrait contenir que du texte
 				}
 			}
@@ -161,14 +163,14 @@ class Elem
 			{
 				foreach ($elem->allElements as $childElement)
 				{
-					if ($childElement != "li")
+					if ($childElement->element != "li")
 						return false; // les enfants de ul et ol doivent etre li
 				}
 			}
 		
 		} 
-		echo $htmlNumber . ' ' . $headNumber . ' ' . $bodyNumber . "\n";
-		echo $titleNumber . ' ' . $metaNumber . ' ' . "\n";
+		//echo $htmlNumber . ' ' . $headNumber . ' ' . $bodyNumber . "\n";
+		//echo $titleNumber . ' ' . $metaNumber . ' ' . "\n";
 		return true;
 	}
 }
