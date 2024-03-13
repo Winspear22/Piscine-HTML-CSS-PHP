@@ -1,0 +1,52 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "aa2dfc2970bad4b4af2c1ce5f5536a99",
+    "packages": [
+        {
+            "name": "alexradyuk/hellopackage",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aloha202/hellopackage.git",
+                "reference": "e69b33501be798ccba5520d9b8afa9d9d945156c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aloha202/hellopackage/zipball/e69b33501be798ccba5520d9b8afa9d9d945156c",
+                "reference": "e69b33501be798ccba5520d9b8afa9d9d945156c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "AlexRadyuk": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Alex",
+                    "email": "alex.r@gms.info"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/aloha202/hellopackage/issues",
+                "source": "https://github.com/aloha202/hellopackage/tree/v1.0.1"
+            },
+            "time": "2022-08-22T07:12:29+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

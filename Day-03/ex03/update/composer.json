@@ -1,0 +1,17 @@
+{
+    "name": "adnen/ex03",
+    "autoload": {
+        "psr-4": {
+            "Adnen\\Ex03\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Winspear22",
+            "email": "adnen.aloui2@hotmail.com"
+        }
+    ],
+    "require": {
+        "alexradyuk/hellopackage": "1.0.1"
+    }
+}
