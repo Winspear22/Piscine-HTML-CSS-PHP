@@ -1,0 +1,12 @@
+{
+    "name": "vendor/exo03",
+    "authors": [
+        {
+            "name": "Winspear22",
+            "email": "adnen.aloui2@hotmail.com"
+        }
+    ],
+    "require": {
+        "monolog/monolog": "^3.5"
+    }
+}
