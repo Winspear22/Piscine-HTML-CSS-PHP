@@ -12,6 +12,7 @@
         }
     ],
     "require": {
-        "alexradyuk/hellopackage": "1.0.1"
+        "alexradyuk/hellopackage": "^1.0.1",
+        "monolog/monolog": "3.0"
     }
 }
