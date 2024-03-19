@@ -1,4 +1,9 @@
 {
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
     "require": {
         "monolog/monolog": "^2.0.0 <2.0.2"
     }
