@@ -48,3 +48,8 @@ Voici le résultat attendu :
 ![Affichage de mon résultat résultat](images/PHP-01-ex00-result.png)
 
 
+## PHP-04 :
+### ex00  Première page. 
+Voici la commande utilisee pour installer la version LTS (Long Term Support) de Symfony via composer
+
+```composer create-project symfony/skeleton d04 "6.4.*"```
