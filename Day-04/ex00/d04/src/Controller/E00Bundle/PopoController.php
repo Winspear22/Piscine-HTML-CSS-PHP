@@ -13,15 +13,16 @@ class PopoController extends AbstractController
     /**
      * @Route("/annotation", name="annotation")
      */
+    #[Route('/annotation', name: 'annotation')]
     public function helloFromAnnotation()
     {
-        return new Response('Hello world!');
+        return new Response('Hello world! From Annotation');
     }
 
     #[Route('/attribute', name: 'attribute')]
     public function helloFromAttribute()
     {
-        return new Response('Hello world from Attribute');
+        return new Response('Hello world! from Attribute');
     }
 }
 

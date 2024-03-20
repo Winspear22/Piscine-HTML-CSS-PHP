@@ -59,5 +59,6 @@ Ensuite j'ai installe ca :
 Puis : 
 ```composer require symfony/framework-bundle```
 Ensuite, j'ai cree mon premier controller dans : 
-PHP03/Day-04/ex00/d04/src/Controller/E00Bundle/Controller
+PHP03/Day-04/ex00/d04/src/Controller/E00Bundle/
+
 
