@@ -48,8 +48,16 @@ Voici le résultat attendu :
 ![Affichage de mon résultat résultat](images/PHP-01-ex00-result.png)
 
 
-## PHP-04 :
+## PHP-04 - La base de Symfony
 ### ex00  Première page. 
 Voici la commande utilisee pour installer la version LTS (Long Term Support) de Symfony via composer
 
 ```composer create-project symfony/skeleton d04 "6.4.*"```
+
+Ensuite j'ai installe ca :
+```sudo apt-get install php-xml```
+Puis : 
+```composer require symfony/framework-bundle```
+Ensuite, j'ai cree mon premier controller dans : 
+PHP03/Day-04/ex00/d04/src/Controller/E00Bundle/Controller
+
