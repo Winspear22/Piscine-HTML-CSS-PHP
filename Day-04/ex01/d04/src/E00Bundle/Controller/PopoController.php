@@ -26,7 +26,6 @@ class PopoController extends AbstractController
             Response::HTTP_NOT_FOUND
         );
     }
-
     
     #[Route('/e00/firstpageAttribute', name: 'first_pageAttribute')]
     public function helloFromAttribute()
