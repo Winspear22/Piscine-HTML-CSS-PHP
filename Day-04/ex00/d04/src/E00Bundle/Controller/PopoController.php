@@ -27,7 +27,6 @@ class PopoController extends AbstractController
         );
     }
 
-    
     #[Route('/e00/firstpageAttribute', name: 'first_pageAttribute')]
     public function helloFromAttribute()
     {

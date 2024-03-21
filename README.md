@@ -67,6 +67,15 @@ Pour vérifier que tout fonctionne, il on peut très bien utiliser les fonction 
 ```php bin/console debug:container | grep PopoBundle``` Pour obtenir le nom du bundle qui vient d'être déclaré. Et :
 ```php bin/console debug:router``` pour obtenir les routes disponibles.
 
+Pour obtenir le résultat des routs, on peut utiliser : 
+```curl http://127.0.0.1:8000/annotation```
 
+Pour autoriser les annotations, il faut aller dans le fichier ```framework.yaml``` et mettre annotations à true. Puis installer ce paquet : ```composer require doctrine/annotations```
+
+### ex01  Pages multiples.
+
+Il faut installer ```composer require symfony/twig-bundle``` pour pouvoir obtenir le dossier template et avoir les outils pour créer des pages multiples.
+
+On modifie ensuite le contenu de PopoController pour pouvoir afficher plusieurs pages.
 
 
