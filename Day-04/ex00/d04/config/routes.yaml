@@ -2,4 +2,8 @@ controllers:
     resource:
         path: ../src/E00Bundle/
         namespace: App\E00Bundle
-    type: attribute
+    type: annotation
+
+#controllers:
+#    resource: '../src/E00Bundle/Controller/'
+#    type: annotation
