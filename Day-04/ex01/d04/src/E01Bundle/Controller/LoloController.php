@@ -9,11 +9,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class LoloController extends AbstractController
 {
     /**
-     * @Route("/e01/secondpage", name="second_page")
-     */     
-    public function helloFromAnnotationEx01(): Response
+     * @Route("/e01", name="e01_main")
+     */    
+    public function index_ex01(): Response
     {
-        return new Response('Hello world ex01!');
+        return $this->render('E01Bundle/main.html.twig'); 
+    }
+
+    /**
+    * @Route("/e01/{articleName}", name="e01_article")
+    */
+    public function article($articleName): Response
+    {
+        return $this->render("E01Bundle/{$articleName}.html.twig");
     }
 }
 
