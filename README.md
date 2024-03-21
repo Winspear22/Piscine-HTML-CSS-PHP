@@ -58,7 +58,15 @@ Ensuite j'ai installe ca :
 ```sudo apt-get install php-xml```
 Puis : 
 ```composer require symfony/framework-bundle```
+Il ne faut surtout pas oublier d'installer les paquets avec ```composer install``` si on vient de clone le projet.
 Ensuite, j'ai cree mon premier controller dans : 
-PHP03/Day-04/ex00/d04/src/Controller/E00Bundle/
+```PHP03/Day-04/ex00/d04/src/E00Bundle/Controller```
+J'ai ensuite crée mon premier bundle dans ```src``` et je l'ai déclaré dans ```bundles.php```
+Pour vérifier que tout fonctionne, il on peut très bien utiliser les fonction suivantes :
+
+```php bin/console debug:container | grep PopoBundle``` Pour obtenir le nom du bundle qui vient d'être déclaré. Et :
+```php bin/console debug:router``` pour obtenir les routes disponibles.
+
+
 
 
