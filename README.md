@@ -39,13 +39,23 @@ Pour cet exercice, j'ai modifié le code HTML d'une page web existante pour assu
 Lors de cette seconde journée, j'ai fait pour la première fois du PHP. Le but de cette journée était de découvrir la création et la manipulation de variables, de strings et de tableaux en PHP. On y apprend également la manipulation de file descriptors.
 
 ### ex00 - Var
-Dans cet exercice, il faut initialiser 4 variables de types différents et créer un programme qui nous permette d'afficher dynamiquement leur valeur ainsi que leur type. Voici mon résultat : 
+Dans cet exercice, il faut initialiser 4 variables de types différents et créer un programme qui nous permette d'afficher dynamiquement leur valeur ainsi que leur type. Voici le résultat attendu : 
 
-![Affichage de mon résultat résultat](images/PHP-01-ex00.png)
+![Affichage du resultat de l'ecole](images/PHP-01-ex00-exemple.png)
 
-Voici le résultat attendu :
 
+Voici mon résultat :
 ![Affichage de mon résultat résultat](images/PHP-01-ex00-result.png)
+
+### ex01 - CSV :
+Cet exercice apprend à lire et traiter des données stockées dans un fichier texte en utilisant PHP. Il enseigne comment ouvrir un fichier, lire son contenu, séparer les valeurs stockées en utilisant une virgule comme délimiteur, et ensuite afficher ces valeurs ligne par ligne, après avoir retiré les espaces superflus. Cela donne une base pour comprendre le traitement de fichiers et la manipulation de chaînes en PHP, des compétences essentielles pour le traitement de données et l'automatisation de tâches. Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-01-ex01-exemple.png)
+
+
+Voici mon résultat :
+![Affichage de mon résultat résultat](images/PHP-01-ex01-result.png)
+
 
 ### Résultat final :
 
