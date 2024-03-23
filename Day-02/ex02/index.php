@@ -1,13 +1,13 @@
 <?php
-require_once 'HotBeverage.php';
-require_once 'TemplateEngine.php';
-require_once 'Coffee.php';
 require_once 'Tea.php';
+require_once 'Coffee.php';
+require_once 'TemplateEngine.php';
 
-$coffee = new Coffee("Rich Espresso", "Strong and invigorating");
-$tea = new Tea("Green Tea", "Refreshing and calming");
+$Tea = new Tea("Tea", 1.5, 1, "Sweet Tea", "Very good tea, i loved it");
+$Coffee = new Coffee("Coffee", 2, 5, "Sweet Coffee", "Very good Coffee, i loved it");
 
-$engine = new TemplateEngine();
-$engine->createFile("Coffee.html", $coffee);
-$engine->createFile("Tea.html", $tea);
+$templateEngine = new TemplateEngine();
+$templateEngine->createFile($Tea);
+$templateEngine->createFile($Coffee);
+
 ?>

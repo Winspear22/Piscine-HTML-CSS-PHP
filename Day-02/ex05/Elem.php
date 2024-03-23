@@ -5,156 +5,180 @@ require_once 'MyException.php';
 
 class Elem
 {
+    public string   	$element;
+    public string  		$content;
+	public array		$attributes;
+    private array		$allElements = [];
+    private static int 	$indentLevel = 0; // Sert a gerer le niveau d'identation pour gerer les tabulations
 
-	private $allElements = [];
-
-    function __construct(
-        public string $element = "",
-        public string $content = "",
-		public array $attributes = [],
-    )
-	{
-		if (!in_array($element, ['meta', 'img', 'hr', 'br', 'html', 'head', 'body', 'title', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div',
-		'table', 'tr', 'th', 'td', 'ul', 'ol', 'li'])) 
-		{
-            throw new MyException("Invalid HTML element: $element\n");
-        }
-
+    public function __construct(string $element = "", string $content = "", array $attributes = [])
+    {
+		if (!in_array($element, ['meta', 'img', 'hr', 'br', 'html', 'head', 
+		'body', 'title', 'h1', 'h2', 'h3', 'h4', 
+		'h5', 'h6', 'p', 'span', 'div', 'table', 'tr', 'th', 'td',
+		'ul', 'ol', 'li']))
+			throw new MyException($element, $content);
         $this->element = $element;
         $this->content = $content;
-        //print("Element : $element");
-		print(COLOR_YELLOW . 'Constructor Elem called' . COLOR_RESET . PHP_EOL);
+		$this->attributes = $attributes;
+        //print(COLOR_YELLOW . 'Constructor Elem called' . COLOR_RESET . PHP_EOL);
+    }
 
-	}
-
-	function __destruct()
-	{
-		print(COLOR_YELLOW . 'Destructor Elem called' . COLOR_RESET . PHP_EOL);
-	}
-
-	public function pushElement(Elem $elemPart)
-	{
-		$this->allElements[] = $elemPart;
-	}
-
-    public function getHTML($indentLevel = 0): string
+    public function __destruct()
     {
-        $indent = str_repeat("\t", $indentLevel); // Crée une chaîne de tabulations en fonction du niveau d'indentation
-        $html = "$indent<{$this->element}{$this->getAttributeString()}>\n"; // Ajoute une tabulation avant la balise et un saut de ligne après
-
-        if ($this->content)
-            $html .= "$indent\t$this->content\n"; // Ajoute une tabulation supplémentaire pour le contenu
-        foreach ($this->allElements as $childElement) {
-            $html .= $childElement->getHTML($indentLevel + 1); // Appel récursif avec un niveau d'indentation supérieur
-        }
-        if ($this->element != "meta")
-            $html .= "$indent</$this->element>\n"; // Ferme la balise avec le même niveau d'indentation
-        return $html;
+        //print(COLOR_YELLOW . 'Constructor Elem called' . COLOR_RESET . PHP_EOL);
     }
 
-	private function getAttributeString(): string 
+    public function pushElement(Elem $newElement)
+    {
+		$this->allElements[] = $newElement;
+    }
+
+	private function getIndentation(): string
+    {
+        return str_repeat("\t", static::$indentLevel); // Génère l'indentation
+    }
+
+	private function getAttributesAsString(): string
 	{
-        $attrString = '';
-        foreach ($this->attributes as $key => $value) 
+		$attributesString = '';
+		foreach ($this->attributes as $key => $value) {
+			$attributesString .= $key . '="' . htmlspecialchars($value) . '" ';
+		}
+		return rtrim($attributesString);
+	}
+
+	public function getHTML()
+	{
+		//print_r($this->getAttributes());
+		$indent = static::getIndentation(); // Get le niveau d'identation
+		if (in_array($this->element, ['img', 'meta', 'br', 'hr'])) // POUR LES BALISES AUTO-FERMANTES
 		{
-            $attrString .= " $key=\"$value\"";
-        }
-        return $attrString;
-    }
+			$html = "$indent<$this->element"; // Assignation du lvl d'identation + balise
+			if (!empty($this->attributes))
+				$html .= " " . $this->getAttributesAsString();
+			if (!empty($this->content))
+				$html .= " " . $this->content; // Ajouter le contenu comme attribut pour les balises autofermantes
+			$html .= " />\n"; // Fermeture autofermante pour les balises spécifiques
+		} 
+		else // POUR LES BALISES A CONTENU
+		{
+			if (!empty($this->attributes))
+			{
+				$thisAttributes = $this->getAttributesAsString();
+				$html = "$indent<$this->element $thisAttributes>\n";  // Assignation du lvl d'identation + balise
+			}
+			else
+				$html = "$indent<$this->element>\n";  // Assignation du lvl d'identation + balise
+
+
+			if (!empty($this->content)) 
+				$html .= $indent . "\t" . $this->content . "\n"; // Ajouter le contenu comme attribut pour les balises a contenu en ajoutant le lvl d'identation
+			foreach ($this->allElements as $childElement) 
+			{
+				static::$indentLevel++; // Augmenter le niveau d'indentation pour les enfants
+				$html .= $childElement->getHTML();
+				static::$indentLevel--; // Diminuer le niveau d'indentation après avoir traité l'enfant
+			}
+			$html .= "$indent</$this->element>\n"; // Balise fermante
+		}
+		return $html;
+	}
 
 	public function validPage(): bool
 	{
-		if ($this->element != 'html' || count($this->allElements) != 2) {
+		$headNumber = 0;
+		$bodyNumber = 0;
+		$htmlNumber = 0;
+		$titleNumber = 0;
+		$metaNumber = 0;
+		if ($this->element !== 'html')
 			return false;
+		$htmlNumber = 1;
+		// VERIFICATION DE LA PRESENCE ET DU NOMBRE DE HTML HEAD BODY
+		foreach ($this->allElements as $elem) 
+		{
+			if (in_array($elem->element, ['html']))
+				$htmlNumber++;
+			if (in_array($elem->element, ['head']))
+				$headNumber++;
+			if (in_array($elem->element, ['body']))
+				$bodyNumber++;
 		}
-	
-		if ($this->allElements[0]->element != 'head' || $this->allElements[1]->element != 'body') {
+		if ($htmlNumber != 1 || $headNumber != 1 || $bodyNumber != 1)
 			return false;
-		}
-		$head = $this->allElements[0];
-		$body = $this->allElements[1];
-		$metaCount = 0;
-		$titleCount = 0;
-		$elseCount = 0;
-	
-		foreach ($head->allElements as $child) 
+		// VERIFICATION DE LA PRESENCE ET L'ABSENCE DE HEAD ET BODY
+		foreach ($this->allElements as $elem)
 		{
-			if ($child->element == 'meta') 
+			if (in_array($elem->element, ['head']))
 			{
-				if (count($child->attributes) == 1 && isset($child->attributes['charset']) && strtolower($child->attributes['charset']) == 'utf-8')
-					$metaCount++;
-				else
-					return false; // Retourne false si la condition n'est pas remplie
-				//$metaCount++;
-			} 
-			else if ($child->element == 'title')
-				$titleCount++;
-			else
-				$elseCount++;
-		}
-	
-		foreach ($body->allElements as $child) 
-		{
-			if ($child->element == 'p') 
-			{
-				foreach ($child->allElements as $pChild) 
+				foreach ($elem->allElements as $childElement)
 				{
-					if ($pChild instanceof Elem) 
-						return false; // Balise <p> ne devrait contenir que du texte
+					if (in_array($childElement->element, ['title']))
+						$titleNumber++;
+					if (in_array($childElement->element, ['meta']))
+						$metaNumber++;
 				}
 			}
-	
-			if (in_array($child->element, ["tr", "th", "td"])) 
+			if (in_array($elem->element, ['body']))
 			{
-				return false; // Ces balises ne doivent pas être directement dans body
-			}
-	
-			if ($child->element == "table") 
-			{
-				foreach ($child->allElements as $tableChild) 
+				foreach ($elem->allElements as $childElement)
 				{
-					if ($tableChild->element != "tr")
-						return false; // Les enfants de table doivent être des tr
-					foreach ($tableChild->allElements as $trChild) 
-					{
-						if (!($trChild->element == "th" || $trChild->element == "td"))
-							return false; // Les enfants de tr doivent être des th ou td
-					}
-				}
-			}
-
-			if ($child->element == "ul" || $child->element == "ol")
-			{
-				foreach ($child->allElements as $listChild)
-				{
-					if ($listChild->element != "li")
+					if (in_array($childElement->element, ['title']))
+						return false;
+					if (in_array($childElement->element, ['meta']))
 						return false;
 				}
 			}
 		}
-	
-		if ($metaCount != 1 || $titleCount != 1 || $elseCount != 0) {
+		if ($titleNumber != 1 || $metaNumber != 1)
 			return false;
+		// VERIFICATION DE P TABLE TR TD TH, UL OL ET LI
+		foreach ($this->allElements as $elem)
+		{
+			foreach ($elem->allElements as $childElem)
+			{
+			if (in_array($childElem->element, ['p']))
+			{
+				foreach ($childElem->allElements as $childElement)
+				{
+					if ($childElement instanceof Elem) 
+						return false; // Balise <p> ne devrait contenir que du texte
+				}
+			}
+			if (in_array($childElem->element, ["tr", "th", "td"])) 
+				return false; // Ces balises ne doivent pas être directement dans body
+			echo "lolo";
+			if (in_array($childElem->element, ["table"]))
+			{
+				echo "toto";
+				foreach ($childElem->allElements as $childElement)
+				{
+					echo $childElement->element;
+					if ($childElement->element != "tr")
+						return false;
+					foreach ($childElement->allElements as $grandChildElement)
+					{
+						if (!($grandChildElement->element == "th" || $grandChildElement->element == "td"))
+							return false; // Les enfants de tr doivent être des th ou td
+					}
+				}
+			}
+			if (in_array($childElem->element, ["ul", "ol"]))
+			{
+				foreach ($childElem->allElements as $childElement)
+				{
+					if ($childElement->element != "li")
+						return false; // les enfants de ul et ol doivent etre li
+				}
+			}
 		}
+		
+		} 
+		//echo $htmlNumber . ' ' . $headNumber . ' ' . $bodyNumber . "\n";
+		//echo $titleNumber . ' ' . $metaNumber . ' ' . "\n";
 		return true;
 	}
-	
-
-    public function displayAllElements() {
-        foreach ($this->allElements as $childElement) {
-            echo "Element: " . $childElement->element . ", Content: " . $childElement->content . "\n";
-            // Affiche également les attributs s'il y en a
-            if (!empty($childElement->attributes)) {
-                echo "Attributes: ";
-                foreach ($childElement->attributes as $key => $value) {
-                    echo "$key=\"$value\" ";
-                }
-                echo "\n";
-            }
-            // Appel récursif pour afficher les enfants des enfants
-            $childElement->displayAllElements();
-        }
-    }
 }
 
 ?>

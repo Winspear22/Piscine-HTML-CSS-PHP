@@ -11,24 +11,28 @@ require_once 'Elem.php';
 
 class TemplateEngine
 {
-
-    private $elem;
-
-    function __construct(
-        Elem $elem
-    )
+	private Elem $elem;
+    public function __construct(Elem $elem)
     {
-        $this->elem = $elem;
+		$this->elem = $elem;
         print(COLOR_GREEN . 'Constructor TemplateEngine called' . COLOR_RESET . PHP_EOL);
     }
 
-    function __destruct()
+    public function __destruct()
     {
-        print(COLOR_BLUE . 'Destructor TemplateEngine called' . COLOR_RESET . PHP_EOL);
+		print(COLOR_BLUE . 'Destructor TemplateEngine called' . COLOR_RESET . PHP_EOL);  
     }
 
-    public function createFile(string $fileName)
-    {
-        file_put_contents($fileName, $this->elem->getHTML());
-    }
+	public function createFile(string $fileName)
+	{
+		try
+		{
+			file_put_contents($fileName, $this->elem->getHTML());
+		}
+		catch (Exception $e)
+		{
+            echo COLOR_RED . "Error: " . $e->getMessage() . COLOR_RESET . PHP_EOL;
+		}
+	}
 }
+?>

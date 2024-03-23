@@ -1,8 +1,10 @@
 <?php
-require_once 'Elem.php';
-require_once 'TemplateEngine.php';
 
+require_once "Elem.php";
+require_once "TemplateEngine.php";
 try {
+
+
     $html = new Elem('html', '');
 
     // Ajout de l'élément head avec un titre
@@ -26,22 +28,21 @@ try {
     $body->pushElement($paragraph2);
 
     // Ajout d'une image
-    $image = new Elem('img', '');
-    $image->element = 'img src="https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp" alt="Naruto image"';
+    $image = new Elem('img', 'src="https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp" alt="Naruto image"');
     $body->pushElement($image);
 
     // Ajout d'un pied de page
-    //$footer = new Elem('footer', 'Pied de page de mon site Web');
-    //$body->pushElement($footer);
+    $footer = new Elem('footer', 'Pied de page de mon site Web');
+    $body->pushElement($footer);
 
     $html->pushElement($body);
 
-    // Utilisation de TemplateEngine pour générer le fichier HTML
-    $templateEngine = new TemplateEngine($html);
-    $templateEngine->createFile("output.html");
-} 
-catch (Exception $e) 
-{
-    echo "Error: " . $e->getMessage();
+$templateEngine = new TemplateEngine($html);
+$templateEngine->createFile("output.html");
 }
+catch (Exception $e)
+{
+    echo "popo " . $e->getMessage();
+}
+
 ?>

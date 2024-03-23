@@ -1,46 +1,43 @@
 <?php
-/*define("COLOR_RED", "\033[31m");
-define("COLOR_GREEN", "\033[32m");
-define("COLOR_YELLOW", "\033[33m");
-define("COLOR_BLUE", "\033[34m");
-define("COLOR_MAGENTA", "\033[35m");
-define("COLOR_CYAN", "\033[36m");
-define("COLOR_RESET", "\033[0m");*/
 
-
-require_once 'Tea.php';
-require_once 'Coffee.php';
+require_once 'TemplateEngine.php';
 
 class HotBeverage
 {
-    function __construct(
-        protected string $nom,
-        protected float $price,
-        protected int $resistance
-    ) 
-    {
-        print(COLOR_CYAN . 'Constructor HotBeverage called' . COLOR_RESET . PHP_EOL);
-        $this->nom = $nom;
+	// Propriete protected car elles vont etre heritees par Tea et Coffee
+	protected $nom;
+	protected $price;
+	protected $resistance;
+
+	// Constructeur classique
+    public function __construct(string $name, float $price, int $resistance)
+	{
+		$this->nom = $name;
         $this->price = $price;
         $this->resistance = $resistance;
-    }
+        print(COLOR_MAGENTA . 'Constructor HotBeverage called' . COLOR_RESET . PHP_EOL);
+	}
 
-    function __destruct()
-    {
-        print(COLOR_CYAN . 'Destructor HotBeverage called' . COLOR_RESET . PHP_EOL);
-    }
+	public function __destruct()
+	{
+        print(COLOR_MAGENTA . 'Destructor HotBeverage called' . COLOR_RESET . PHP_EOL);
+	}
 
-    public function getNom(): string {
-        return $this->nom;
-    }
+	// Getters classiques
+	public function getNom()
+	{
+		return $this->nom;
+	}
 
-    public function getPrice(): float {
-        return $this->price;
-    }
+	public function getPrice()
+	{
+		return $this->price;
+	}
 
-    public function getResistance(): int {
-        return $this->resistance;
-    }
+	public function getResistance()
+	{
+		return $this->resistance;
+	}
 }
 
 ?>

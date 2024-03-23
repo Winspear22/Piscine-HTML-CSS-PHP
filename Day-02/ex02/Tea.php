@@ -4,34 +4,36 @@ require_once 'HotBeverage.php';
 
 class Tea extends HotBeverage
 {
-	function __construct(
-        private string $description,
-        private string $comment,
-    ) 
-    {
-		parent::__construct('Tea', 2.5, 1);
+	private $description;
+	private $comment;
 
-        print(COLOR_YELLOW . 'Constructor Tea called' . COLOR_RESET . PHP_EOL);
+    public function __construct(string $name, float $price, int $resistance, string $description, string $comment)
+	{
+		// On appelle le constructeur de la classe parent, l'appel se fait automatiquement, mais c'est une bonne pratique
+        parent::__construct($name, $price, $resistance);
 		$this->description = $description;
-        $this->comment = $comment;
+		$this->comment = $comment;
+        print(COLOR_CYAN . 'Constructor Tea called' . COLOR_RESET . PHP_EOL);
 	}
 
-	function __destruct()
-    {
-        print(COLOR_YELLOW . 'Destructor Tea called' . COLOR_RESET . PHP_EOL);
+	public function __destruct()
+	{
+		// Pareil pour le destructeur
 		parent::__destruct();
+        print(COLOR_CYAN . 'Destructor Tea called' . COLOR_RESET . PHP_EOL);
+	}
 
-    }
-
-	public function getdescription()
+	// De simples getters
+	public function getDescription()
 	{
 		return $this->description;
 	}
 
-	public function getcomment()
+	public function getComment()
 	{
 		return $this->comment;
 	}
+
 }
 
 ?>

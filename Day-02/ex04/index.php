@@ -1,71 +1,57 @@
 <?php
-require_once 'Elem.php';
-require_once 'TemplateEngine.php';
 
-	/*try 
-	{
-    	// Création de la structure HTML de base
-    	$html = new Elem('html', '');
-    	$head = new Elem('head', '');
-    	$title = new Elem('title', 'Mon site sur Naruto');
-    	$head->pushElement($title);
-    	$html->pushElement($head);
+require_once "Elem.php";
+require_once "TemplateEngine.php";
 
-    	// Création du corps de la page
-    	$body = new Elem('body', '');
-    	$header = new Elem('h1', 'Naruto - Le Ninja Légendaire');
-    	$body->pushElement($header);
 
-    	// Ajout de paragraphes avec des attributs
-    	$paragraph1 = new Elem('p', 'Découvrez l\'univers de Naruto Uzumaki.', ['class' => 'introduction']);
-    	$body->pushElement($paragraph1);
-
-    	// Ajout d'une liste non ordonnée
-    	$ul = new Elem('ul', '');
-    	$li1 = new Elem('li', 'Ninja de Konoha');
-    	$li2 = new Elem('li', 'Membre du clan Uzumaki');
-    	$ul->pushElement($li1);
-    	$ul->pushElement($li2);
-    	$body->pushElement($ul);
-
-    	// Ajout d'un tableau
-    	$table = new Elem('table', '');
-    	$tr = new Elem('tr', '');
-    	$th = new Elem('th', 'Caractéristiques');
-    	$td = new Elem('td', 'Description');
-    	$tr->pushElement($th);
-    	$tr->pushElement($td);
-    	$table->pushElement($tr);
-    	$body->pushElement($table);
-
-    	// Ajout d'une image
-    	$image = new Elem('img', '', ['src' => 'https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp', 'alt' => 'Image de Naruto']);
-
-    	$body->pushElement($image);
-
-    	// Pour tester le lancement de l'exception, décommente la ligne suivante
-    	// $testException = new Elem('undefinedElement', 'Ceci devrait lancer une exception.');
-    	$html->pushElement($body);
-
-    	// Génération du fichier HTML
-    	$templateEngine = new TemplateEngine($html);
-    	$templateEngine->createFile("output.html");
-	} 
-	catch (Exception $e) 
-	{
-    	echo "Error: " . $e->getMessage();
-	}*/
-
-	try {
-		$elem = new Elem('html');
-		$body = new Elem('body');
-		$body->pushElement(new Elem('p', 'Lorem ipsum', ['class' => 'text-muted']));
-		$elem->pushElement($body);
-		echo $elem->getHTML();
-		$elem = new Elem('undefined'); // Leve une exception de type MyException$
-	}
-catch (Exception $e)
+try 
 {
-	echo "Error: " . $e->getMessage();
+    $html = new Elem('html');
+    $head = new Elem('head');
+    $head->pushElement(new Elem('meta', '', ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']));
+    $head->pushElement(new Elem('title', 'Test avec Attributs'));
+
+    $body = new Elem('body', '', ['style' => 'background-color: #f0f0f0;']);
+    $body->pushElement(new Elem('h1', 'Titre principal', ['style' => 'color: blue;']));
+    $body->pushElement(new Elem('h2', 'Sous-titre', ['style' => 'color: green;']));
+    $body->pushElement(new Elem('p', 'Paragraphe avec style.', ['style' => 'color: #333; font-size: 16px;']));
+
+    $img = new Elem('img', '', ['src' => 'https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp', 'alt' => 'Image de Naruto', 'style' => 'width: 200px;']);
+    $body->pushElement($img);
+
+    $body->pushElement(new Elem('hr', '', ['style' => 'margin-top: 20px;']));
+
+    $list = new Elem('ul');
+    $list->pushElement(new Elem('li', 'Item 1'));
+    $list->pushElement(new Elem('li', 'Item 2'));
+    $body->pushElement($list);
+
+    $table = new Elem('table', '', ['border' => '1', 'style' => 'border-collapse: collapse;']);
+    $tr = new Elem('tr');
+    $tr->pushElement(new Elem('th', 'Entête 1'));
+    $tr->pushElement(new Elem('th', 'Entête 2'));
+    $table->pushElement($tr);
+
+    $tr = new Elem('tr');
+    $tr->pushElement(new Elem('td', 'Donnée 1', ['style' => 'text-align: center;']));
+    $tr->pushElement(new Elem('td', 'Donnée 2', ['style' => 'text-align: center;']));
+    $table->pushElement($tr);
+    $body->pushElement($table);
+
+    $body->pushElement(new Elem('br'));
+    $body->pushElement(new Elem('p', 'Paragraphe après un saut de ligne.', ['class' => 'text-muted']));
+
+    $html->pushElement($head);
+    $html->pushElement($body);
+
+    echo $html->getHTML();
+    $templateEngine = new TemplateEngine($html);
+    $templateEngine->createFile("output.html");
+} 
+catch (Exception $e) 
+{
+    echo "Error: " . $e->errorMessage();
 }
+
+
 ?>

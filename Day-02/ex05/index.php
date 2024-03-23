@@ -1,143 +1,205 @@
 <?php
-require_once 'Elem.php';
-require_once 'TemplateEngine.php';
 
-	try 
-	{
-    	// Création de la structure HTML de base
-    	$html = new Elem('html', '');
-    	$head = new Elem('head', '');
-    	$title = new Elem('title', 'Mon site sur Naruto');
-		$metaCharset = new Elem('meta', '', ['charset' => 'UTF-8']);
-		//$popo = new Elem('p', 'popopololo');
+require_once "Elem.php";
+require_once "TemplateEngine.php";
 
-		$head->pushElement($metaCharset);
-		$head->pushElement($title);
-		//$head->pushElement($popo);
+$testNumber = 0;
 
-    	$html->pushElement($head);
+// ESSAIE VALIDE 
+try 
+{
+    $html = new Elem('html');
+    $head = new Elem('head');
+    $head->pushElement(new Elem('meta', '', ['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']));
+    $head->pushElement(new Elem('title', 'Test avec Attributs'));
 
-    	// Création du corps de la page
-    	$body = new Elem('body', '');
-    	$header = new Elem('h1', 'Naruto - Le Ninja Légendaire');
-    	$body->pushElement($header);
+    $body = new Elem('body', '', ['style' => 'background-color: #f0f0f0;']);
+    $body->pushElement(new Elem('h1', 'Titre principal', ['style' => 'color: blue;']));
+    $body->pushElement(new Elem('h2', 'Sous-titre', ['style' => 'color: green;']));
+    $body->pushElement(new Elem('p', 'Paragraphe avec style.', ['style' => 'color: #333; font-size: 16px;']));
 
-    	// Ajout de paragraphes avec des attributs
-    	$paragraph1 = new Elem('p', 'Découvrez l\'univers de Naruto Uzumaki.', ['class' => 'introduction']);
-    	$body->pushElement($paragraph1);
+    $img = new Elem('img', '', ['src' => 'https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp', 'alt' => 'Image de Naruto', 'style' => 'width: 200px;']);
+    $body->pushElement($img);
 
-    	// Ajout d'une liste non ordonnée
-    	$ul = new Elem('ul', '');
-    	$li1 = new Elem('li', 'Ninja de Konoha');
-    	$li2 = new Elem('li', 'Membre du clan Uzumaki');
-    	$ul->pushElement($li1);
-    	$ul->pushElement($li2);
-    	$body->pushElement($ul);
-		
-    	// Ajout d'un tableau
-    	$table = new Elem('table', '');
-    	$tr = new Elem('tr', '');
-    	$th = new Elem('th', 'Caractéristiques');
-    	$td = new Elem('td', 'Description');
-    	$tr->pushElement($th);
-    	$tr->pushElement($td);
-    	$table->pushElement($tr);
-    	$body->pushElement($table);
+    $body->pushElement(new Elem('hr', '', ['style' => 'margin-top: 20px;']));
 
-    	// Ajout d'une image
-    	$image = new Elem('img', '', ['src' => 'https://cdn-uploads.gameblog.fr/img/news/436165_64be6a5c80cb0.webp', 'alt' => 'Image de Naruto']);
+    $list = new Elem('ul');
+    $list->pushElement(new Elem('li', 'Item 1'));
+    $list->pushElement(new Elem('li', 'Item 2'));
+    $body->pushElement($list);
 
-    	$body->pushElement($image);
+    $table = new Elem('table', '', ['border' => '1', 'style' => 'border-collapse: collapse;']);
+    $tr = new Elem('tr');
+    $p = new Elem('p');
+    $tr->pushElement(new Elem('th', 'Entête 1'));
+    $tr->pushElement(new Elem('th', 'Entête 2'));
+    $table->pushElement($p);
+    $table->pushElement($tr);
 
-		/*****************************************/
-		/* AJOUTER UNE BALISE DANS UNE BALISE <P>*/
-		/*****************************************/
-		/*$pElem = new Elem('p', '');
-		// Création de l'élément interne, par exemple <span>
-		$spanElem = new Elem('br', 'Texte dans span');
+    $tr = new Elem('tr');
+    $tr->pushElement(new Elem('td', 'Donnée 1', ['style' => 'text-align: center;']));
+    $tr->pushElement(new Elem('td', 'Donnée 2', ['style' => 'text-align: center;']));
+    $table->pushElement($tr);
+    $body->pushElement($table);
 
-		// Ajout de l'élément <span> à l'intérieur de l'élément <p>
-		$pElem->pushElement($spanElem);
-		$body->pushElement($pElem);*/
-		/*****************************************/
+    $body->pushElement(new Elem('br'));
+    $body->pushElement(new Elem('p', 'Paragraphe après un saut de ligne.', ['class' => 'text-muted']));
+    $html->pushElement($head);
 
-		/*****************************************/
-		/*********FAIRE UN TABLEAU MAUVAIS********/
-		/*****************************************/
-		/*$tableIncorrect = new Elem('table', '');
-		$trIncorrect = new Elem('tr', '');
-		$pIncorrect = new Elem('p', 'Paragraphe dans tr');
-		$trIncorrect->pushElement($pIncorrect);
-		$tableIncorrect->pushElement($trIncorrect);
-		$body->pushElement($tableIncorrect);*/
+    $html->pushElement($body);
 
-		// Table contenant directement une balise th sans tr
-		//$tableWithTh = new Elem('table', '');
-		//$thDirect = new Elem('th', 'Caractéristiques Directes');
-		//$tableWithTh->pushElement($thDirect);
-		//$body->pushElement($tableWithTh);
-		//---------------------------------------------------
+    if ($html->validPage()) 
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else 
+        echo "TEST $testNumber : Page HTML non valide.\n";
+    $templateEngine = new TemplateEngine($html);
+    $templateEngine->createFile("output.html");
+} 
+catch (Exception $e) 
+{
+    echo "Error: " . $e->errorMessage();
+}
 
-		// Table avec tr contenant une balise p
-		//$tableWithP = new Elem('table', '');
-		//$trWithP = new Elem('tr', '');
-		//$pInTr = new Elem('p', 'Paragraphe dans tr');
-		//$trWithP->pushElement($pInTr);
-		//$tableWithP->pushElement($trWithP);
-		//$body->pushElement($tableWithP);
-		//--------------------------------------------------
+// ESSAIS INVALIDES : 
 
-		// Table sans aucune balise tr à l'intérieur MARCHAIS
-		//$emptyTable = new Elem('table', '');
-		//$body->pushElement($emptyTable);
-		//--------------------------------------------------
+// Essai avec plusieurs HTML TEST 1
+$testNumber++;
+try 
+{
+    $html = new Elem('html');
+    $html->pushElement(new Elem('html')); // Invalide : ajout d'un deuxième élément html
 
-		// Tr placé directement dans le body et non dans une table MARCHE
-		//$trOutsideTable = new Elem('tr', '');
-		//$thForTr = new Elem('th', 'TH en dehors de Table');
-		//$trOutsideTable->pushElement($thForTr);
-		//$body->pushElement($trOutsideTable);
-		//--------------------------------------------------
+    if ($html->validPage())
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : plusieurs éléments <html>.\n";
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
 
-		// Tr contenant à la fois th et une balise incorrecte comme div
-		//$tableWithMixedContent = new Elem('table', '');
-		//$trMixed = new Elem('tr', '');
-		//$thMixed = new Elem('th', 'TH Mixte');
-		//$divInTr = new Elem('div', 'DIV dans TR');
-		//$trMixed->pushElement($thMixed);
-		//$trMixed->pushElement($divInTr);
-		//$tableWithMixedContent->pushElement($trMixed);
-		//$body->pushElement($tableWithMixedContent);
+$testNumber++;
 
-		/*****************************************/
+// Essai avec p contenant une balise TEST 2
+try 
+{
+    $html = new Elem('html');
+    $body = new Elem('body');
+    $paragraph = new Elem('p');
+    $paragraph->pushElement(new Elem('span', 'Ceci ne devrait pas être valide')); // Invalide : <p> contient une balise
+    $body->pushElement($paragraph);
+    $html->pushElement($body);
 
-		/*****************************************/
-		/*************FAIRE UNE LI NULLE**********/
-		/*****************************************/
-		//$ul = new Elem('ul', '');
-		//$li = new Elem('li', 'Item 1');
-		//$p = new Elem('p', 'Ceci n\'est pas autorisé ici');
-		//$ul->pushElement($li);
-		//$ul->pushElement($p); // Ceci est incorrect
-		//$body->pushElement($ul);
-		
+    if ($html->validPage())
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : <p> contient une balise.\n";
 
-		/*****************************************/
-    	// Pour tester le lancement de l'exception, décommente la ligne suivante
-    	// $testException = new Elem('undefinedElement', 'Ceci devrait lancer une exception.');
-    	$html->pushElement($body);
-		$html->displayAllElements();
-    	// Génération du fichier HTML
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
 
-		if ($html->validPage()) {
-			$templateEngine = new TemplateEngine($html);
-			$templateEngine->createFile("output.html");
-		} else {
-			echo "La structure HTML n'est pas valide.";
-		}
-	} 
-	catch (Exception $e) 
-	{
-    	echo "Error: " . $e->getMessage();
-	}
+$testNumber++;
+// Essai avec une structure de table incorrecte TEST 3
+try 
+{
+    $html = new Elem('html');
+    $body = new Elem('body');
+    $table = new Elem('table');
+    $tr = new Elem('tr');
+    $tr->pushElement(new Elem('p', 'Ceci ne devrait pas être valide')); // Invalide : <tr> contient une balise <p>
+    $table->pushElement($tr);
+    $body->pushElement($table);
+    $html->pushElement($body);
+
+    if ($html->validPage())
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : structure de table incorrecte.\n";
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
+
+$testNumber++;
+// Essai avec plusieurs title dans head TEST 4
+try 
+{
+    $html = new Elem('html');
+    $head = new Elem('head');
+    $head->pushElement(new Elem('title', 'Premier titre'));
+    $head->pushElement(new Elem('title', 'Deuxième titre')); // Invalide : deuxième élément title
+    $body = new Elem('body');
+    $html->pushElement($head);
+    $html->pushElement($body);
+
+    if ($html->validPage())
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : plusieurs éléments <title>.\n";
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
+
+$testNumber++;
+//Échec avec plusieurs <meta charset> dans <head> TEST 5
+
+try 
+{
+    $html = new Elem('html');
+    $head = new Elem('head');
+    $head->pushElement(new Elem('title', 'Titre unique'));
+    $head->pushElement(new Elem('meta', '', ['charset' => 'UTF-8']));
+    $head->pushElement(new Elem('meta', '', ['charset' => 'ISO-8859-1'])); // Invalide : deuxième élément meta charset
+    $body = new Elem('body');
+    $html->pushElement($head);
+    $html->pushElement($body);
+
+    if ($html->validPage())
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : plusieurs éléments <meta charset>.\n";
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
+
+
+$testNumber++;
+//Echec une structure valide pour <ul> et <ol> TEST 6
+try 
+{
+    $html = new Elem('html');
+    $body = new Elem('body');
+    $ul = new Elem('ul');
+    $ul->pushElement(new Elem('li', 'Premier élément'));
+    $ul->pushElement(new Elem('li', 'Deuxième élément'));
+    $ol = new Elem('ol');
+    $ol->pushElement(new Elem('p', 'Premier élément ordonné'));
+    $ol->pushElement(new Elem('li', 'Deuxième élément ordonné'));
+    $body->pushElement($ul);
+    $body->pushElement($ol);
+    $html->pushElement($body);
+
+    if ($html->validPage()) 
+        echo "TEST $testNumber : Page HTML valide.\n";
+    else
+        echo "TEST $testNumber : Page HTML non valide : éléments interdits dans la liste\n";
+} 
+catch (Exception $e) 
+{
+    echo "Erreur : " . $e->getMessage() . "\n";
+}
+
+
+
+
+
 ?>
