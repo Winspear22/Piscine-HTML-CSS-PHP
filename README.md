@@ -155,11 +155,57 @@ Le but de cet exercice est de créer un checker pour vérifier si la page HTML e
 ![Note finale](images/PHP-00-Success.png)
 
 ## PHP-03 - Composer
+Lors de cette quatrieme journée, on va apprendre a utiliser Composer. Composer est un outil de gestion des dépendances pour PHP, permettant de faciliter l'installation et la mise à jour de bibliothèques ou packages utilisés dans des projets PHP. Il automatise le processus de téléchargement, d'installation et de mise à jour des bibliothèques, en se basant sur un fichier composer.json qui décrit les dépendances du projet.
+
+On utilise notamment quatres fonctions principales avec Composer : 
+```composer require```, qui ajoute une nouvelle dépendance au fichier composer.json et installe le package spécifié, mettant également à jour le fichier composer.lock.
+```composer install``` installe les dépendances spécifiées dans le fichier composer.lock du projet, garantissant que l'environnement de développement reste cohérent entre tous les membres de l'équipe et les déploiements.
+```composer update``` met à jour les dépendances du projet en fonction des versions disponibles les plus récentes compatibles avec les spécifications du fichier composer.json, et met à jour le fichier composer.lock en conséquence.
+```composer remove``` permet de supprimer une dépendance du projet, en mettant à jour les fichiers composer.json et composer.lock pour refléter la suppression.
 
 ### ex00 - Installer le Composer au niveau global :
+Le but du premier exercice est simple : installer Composer globalement sur l'ordinateur afin qu'il soit utilisable partout. Pour ce faire, le site de Composer a un tutoriel assez simple à suivre :
+
+```https://getcomposer.org/download/```
+
+Pour simplifier la chose, j'ai écrit un script (il faut absolument les droits ```sudo```).
+
 ### ex01 - La spécification des versions :
+Le but de cet exercice est de nous enseigner les spécifications des versions. On va apprendre à installer n'importe quelle version que l'on veut avec ```composer require``` en utilisant certains opérateurs dont voici les explications :
+
+^ (Caret): Met à jour à la dernière version mineure ou patch. Par exemple, ^2.0.0 permettra les mises à jour jusqu'à <3.0.0, excluant cette dernière.
+
+~ (Tilde): Permet les mises à jour de versions mineures. Par exemple, ~2.0.0 permet les mises à jour jusqu'à <2.1.0, excluant cette dernière.
+
+> (Plus grand que): Spécifie que la version doit être supérieure à la version donnée.
+
+< (Plus petit que): Indique que la version doit être inférieure à la version spécifiée.
+
+>= (Plus grand ou égal): Signifie que la version doit être égale ou supérieure à la version donnée.
+
+<= (Plus petit ou égal): Indique que la version doit être égale ou inférieure à la version spécifiée.
+
+* (Joker): Remplace n'importe quel nombre. Utilisé pour spécifier une plage de versions. Par exemple, 2.* correspond à toutes les versions commençant par 2..
+
 ### ex02 - Development requirement :
+Le but de cet exercice est d'installer la version LTS de PhpUnit. Pour voir cette version, aller sur ce site : 
+
+```https://phpunit.de/supported-versions.html```
+
 ### ex03 - Composer install vs. composer update :
+Le but de cet exercice est de nous enseigner la difference entre ```composer install``` et ```composer update```.
+```composer install``` est utilisé pour installer les dépendances du projet telles qu'elles sont définies dans le fichier composer.lock, assurant la cohérence des versions des paquets entre différents environnements. Si composer.lock n'existe pas, ```composer install``` se base sur composer.json et crée un composer.lock avec les versions installées. ```composer update```, quant à lui, met à jour les dépendances du projet en fonction des versions spécifiées dans composer.json, et met à jour composer.lock en conséquence. Cette commande peut donc modifier les versions des paquets installés, contrairement à ```composer install``` qui vise à maintenir une stabilité.
+
+"Pour faire marcher l'exercice, allez dans le dossier install et tapez y ```composer install``` puis dans le dossier update et tapez y ```composer update```. Puis, lancez les fichiers index.php dans chacun des dossiers.
+Pour le dossier install vous aurez ce résultat : 
+
+```composer install``` :
+
+Pour le dossier update vous aurez ce résultat :
+
+```composer update``` :
+
+J'ai installé exprès un paquet ```alexradyuk/hellopackage``` à la version 1.0.1 qui contient la fonction ```greet``` qui affiche un simple 'Hello world!', or, ce paquet, à sa version ultérieure change le nom de cette fonction en ```hello```. Le nom de la fonction ayant changé, mais le index.php n'ayant pas pris en compte cette différence, car il appelle la fonction ```greet```, le fait d'utiliser ```composer update```, installant la version la plus récente du paquet ```alexradyuk/hellopackage```, le rend incompatible avec mon code car sa version ultérieure (la version 1.0.2) change le nom de la fonction ```greet```. Or, ```composer install```, lui, installe la version indiquée telle quelle dans le fichier ```composer.lock```, version dans laquelle la fonction ```greet``` existe."
 
 ## PHP-04 - La base de Symfony
 ### ex00 - Première page :
