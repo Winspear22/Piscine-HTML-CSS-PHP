@@ -196,16 +196,18 @@ Le but de cet exercice est d'installer la version LTS de PhpUnit. Pour voir cett
 Le but de cet exercice est de nous enseigner la difference entre ```composer install``` et ```composer update```.
 ```composer install``` est utilisé pour installer les dépendances du projet telles qu'elles sont définies dans le fichier composer.lock, assurant la cohérence des versions des paquets entre différents environnements. Si composer.lock n'existe pas, ```composer install``` se base sur composer.json et crée un composer.lock avec les versions installées. ```composer update```, quant à lui, met à jour les dépendances du projet en fonction des versions spécifiées dans composer.json, et met à jour composer.lock en conséquence. Cette commande peut donc modifier les versions des paquets installés, contrairement à ```composer install``` qui vise à maintenir une stabilité.
 
-"Pour faire marcher l'exercice, allez dans le dossier install et tapez y ```composer install``` puis dans le dossier update et tapez y ```composer update```. Puis, lancez les fichiers index.php dans chacun des dossiers.
-Pour le dossier install vous aurez ce résultat : 
+Pour comprendre l'impact des commandes ```composer install``` et ```composer update```, réalisons un exercice pratique. Commencez par naviguer dans le dossier `install` et exécutez ```composer install```, puis dans le dossier `update`, tapez ```composer update```. Ensuite, exécutez les fichiers `index.php` présents dans chacun des dossiers.
 
-```composer install``` :
+Résultat attendu pour le dossier `install` : 
 
-Pour le dossier update vous aurez ce résultat :
+```composer install``` installe les dépendances telles qu'elles sont spécifiées dans le fichier `composer.lock`, assurant ainsi la compatibilité et la stabilité des paquets avec votre projet.
 
-```composer update``` :
+Résultat attendu pour le dossier `update` : 
 
-J'ai installé exprès un paquet ```alexradyuk/hellopackage``` à la version 1.0.1 qui contient la fonction ```greet``` qui affiche un simple 'Hello world!', or, ce paquet, à sa version ultérieure change le nom de cette fonction en ```hello```. Le nom de la fonction ayant changé, mais le index.php n'ayant pas pris en compte cette différence, car il appelle la fonction ```greet```, le fait d'utiliser ```composer update```, installant la version la plus récente du paquet ```alexradyuk/hellopackage```, le rend incompatible avec mon code car sa version ultérieure (la version 1.0.2) change le nom de la fonction ```greet```. Or, ```composer install```, lui, installe la version indiquée telle quelle dans le fichier ```composer.lock```, version dans laquelle la fonction ```greet``` existe."
+```composer update``` met à jour les paquets vers leurs dernières versions compatibles selon les contraintes définies dans `composer.json` et génère un nouveau `composer.lock`. Cela peut introduire des changements incompatibles si les paquets ont évolué entre-temps.
+
+Dans cet exercice, j'ai intentionnellement utilisé le paquet ```alexradyuk/hellopackage``` en version 1.0.1, qui propose une fonction ```greet``` affichant "Hello world!". Cependant, une mise à jour ultérieure de ce paquet (version 1.0.2) a renommé cette fonction en ```hello```. Lorsque nous utilisons ```composer update```, la version la plus récente du paquet est installée, ce qui peut rendre le code incompatible si ce dernier attendait la fonction ```greet``` de la version 1.0.1. À l'inverse, ```composer install``` va simplement installer les versions des paquets telles qu'elles sont précisées dans `composer.lock`, maintenant ainsi la fonction ```greet``` et assurant la compatibilité avec notre code.
+
 
 ## PHP-04 - La base de Symfony
 ### ex00 - Première page :
