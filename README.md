@@ -138,6 +138,7 @@ Voici mon résultat :
 
 ### ex04 - Générer HTML 2 :
 Le but de cet exercice est le même que le précédant à l'exception que la liste de balises autorisées s'accroît et qu'il faut désormais créer sa propre exception personnalisée.
+Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex04-result.png)
 
