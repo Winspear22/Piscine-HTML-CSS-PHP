@@ -132,10 +132,10 @@ Voici mon résultat :
 ![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
 ### ex04 - Générer HTML 2 :
 
-![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
+![Affichage de mon résultat résultat](images/PHP-02-ex04-result.png)
 ### ex05 - Valider HTML :
 
-![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
+![Affichage de mon résultat résultat](images/PHP-02-ex05-result.png)
 ### Résultat final :
 
 ![Note finale](images/PHP-00-Success.png)
