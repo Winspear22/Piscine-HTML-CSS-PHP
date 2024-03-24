@@ -54,8 +54,41 @@ Cet exercice apprend à lire et traiter des données stockées dans un fichier t
 
 
 Voici mon résultat :
+
 ![Affichage de mon résultat résultat](images/PHP-01-ex01-result.png)
 
+### ex02 - Anciens temps :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-01-ex02-exemple.png)
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-01-ex02-result.png)
+### ex03 - Temps du tri :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-01-ex03-exemple.png)
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-01-ex03-result.png)
+### ex04 - Etats & Capitales :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-01-ex04-exemple.png)
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-01-ex04-result.png)
+### ex05 - Recherche d’états ou capitales :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-01-ex05-exemple.png)
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-01-ex05-result.png)
+### ex06 - Mendeleiev table :
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-01-ex06-result.png)
 
 ### Résultat final :
 
