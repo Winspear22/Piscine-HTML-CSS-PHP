@@ -103,13 +103,39 @@ Voici mon résultat :
 
 
 ## PHP-02 - Oob
+Lors de cette troisieme journee, on va apprendre l'aspect orientee objet du langage PHP. On va creer nos premieres classes pour generer des pages HTML et en modifier le contenu dynamiquement. On va meme creer un checker de page HTML sommaire afin de pousser la difficulte un peu plus loin.
 
-### ex00 -  Les paramètres HTML :
+### ex00 - Les paramètres HTML :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-02-ex00-exemple.png)
+
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex00-result.png)
 ### ex01 - Affichage de l’object :
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex01-result.png)
 ### ex02 - Affichage de l’object 2 :
+Voici le résultat attendu : 
+
+![Affichage du resultat de l'ecole](images/PHP-02-ex02-exemple.png)
+
+Voici mon résultat :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex02-result.png)
+
+![Affichage de mon résultat résultat](images/PHP-02-ex02-result2.png)
 ### ex03 - Générer HTML :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
 ### ex04 - Générer HTML 2 :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
 ### ex05 - Valider HTML :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
 ### Résultat final :
 
 ![Note finale](images/PHP-00-Success.png)

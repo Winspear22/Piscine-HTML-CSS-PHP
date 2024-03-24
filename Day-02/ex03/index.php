@@ -32,8 +32,8 @@ try {
     $body->pushElement($image);
 
     // Ajout d'un pied de page
-    $footer = new Elem('footer', 'Pied de page de mon site Web');
-    $body->pushElement($footer);
+    //$footer = new Elem('footer', 'Pied de page de mon site Web');
+    //$body->pushElement($footer);
 
     $html->pushElement($body);
 

@@ -148,10 +148,8 @@ class Elem
 			}
 			if (in_array($childElem->element, ["tr", "th", "td"])) 
 				return false; // Ces balises ne doivent pas être directement dans body
-			echo "lolo";
 			if (in_array($childElem->element, ["table"]))
 			{
-				echo "toto";
 				foreach ($childElem->allElements as $childElement)
 				{
 					echo $childElement->element;
