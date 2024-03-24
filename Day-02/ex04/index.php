@@ -40,7 +40,8 @@ try
 
     $body->pushElement(new Elem('br'));
     $body->pushElement(new Elem('p', 'Paragraphe après un saut de ligne.', ['class' => 'text-muted']));
-
+    //$footer = new Elem('footer', 'Pied de page de mon site Web');
+    //$body->pushElement($footer);
     $html->pushElement($head);
     $html->pushElement($body);
 
@@ -50,7 +51,7 @@ try
 } 
 catch (Exception $e) 
 {
-    echo "Error: " . $e->errorMessage();
+    echo "Error: " . $e->getMessage();
 }
 
 

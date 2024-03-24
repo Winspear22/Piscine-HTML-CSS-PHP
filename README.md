@@ -142,6 +142,10 @@ Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex04-result.png)
 
+Et voici l'exception personnalisée :
+
+![Affichage de mon résultat résultat](images/PHP-02-ex04-result2.png)
+
 ### ex05 - Valider HTML :
 Le but de cet exercice est de créer un checker pour vérifier si la page HTML est conforme à un certain standard HTML très simple que l'on doit coder soi-même et qui est dicté par l'école. Si la page HTML est mauvaise, une erreur est renvoyée, sinon, une page HTML est générée (les exemples utilisés dans l'exercice ne sont pas très bons).
 
