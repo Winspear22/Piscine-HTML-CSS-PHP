@@ -52,40 +52,47 @@ Cet exercice apprend à lire et traiter des données stockées dans un fichier t
 
 ![Affichage du resultat de l'ecole](images/PHP-01-ex01-exemple.png)
 
-
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex01-result.png)
 
 ### ex02 - Anciens temps :
-Voici le résultat attendu : 
+Le but de cet exercice est d'apprendre à créer et utiliser les tableaux associatifs en utilisant une liste d'individus avec un nom et un âge et d'en afficher le résultat. Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-01-ex02-exemple.png)
+
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex02-result.png)
 ### ex03 - Temps du tri :
+Le but de cet exercice est le même que l'exercice précédent, la différence étant qu'il faut inverser la clé et la valeur dans le tableau (le nom et l'âge sont inversés) et il faut également trier le résultat (le nom) en ordre alphabétique inverse (Z-A).
 Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-01-ex03-exemple.png)
+
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex03-result.png)
 ### ex04 - Etats & Capitales :
+On est toujours dans de la manipulation de tableaux grâce à l'exemple des états américains. Le but de cet exercice est de trouver une clé dans un tableau (states), d'en obtenir la valeur, puis au travers de cette valeur, chercher une 2e clé dans un 2e tableau (capitals) qui nous donnera la valeur finale, de telle sorte que l'on a ça : California --> CN | CN --> Sacramento.
 Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-01-ex04-exemple.png)
+
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex04-result.png)
 ### ex05 - Recherche d’états ou capitales :
+Exercice similaire à celui précédant, mais plus poussé car il faut faire un système sensible à la casse et pouvoir trouver l'état à travers la capitale de l'état.
 Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-01-ex05-exemple.png)
+
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex05-result.png)
 ### ex06 - Mendeleiev table :
+C'est l'exercice final de ce jour. Il faut reproduire un tableau de Mendeleïev grâce à des fonctions en PHP qui vont générer du code HTML, qui va être inscrit dans un fichier .html et afficher une page HTML avec un tableau de Mendeleïev.
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-01-ex06-result.png)
