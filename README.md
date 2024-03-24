@@ -173,19 +173,19 @@ Pour simplifier la chose, j'ai écrit un script (il faut absolument les droits `
 ### ex01 - La spécification des versions :
 Le but de cet exercice est de nous enseigner les spécifications des versions. On va apprendre à installer n'importe quelle version que l'on veut avec ```composer require``` en utilisant certains opérateurs dont voici les explications :
 
-^ (Caret): Met à jour à la dernière version mineure ou patch. Par exemple, ^2.0.0 permettra les mises à jour jusqu'à <3.0.0, excluant cette dernière.
+- `^` (Caret): Met à jour à la dernière version mineure ou patch. Par exemple, `^2.0.0` permettra les mises à jour jusqu'à `<3.0.0`, excluant cette dernière.
 
-~ (Tilde): Permet les mises à jour de versions mineures. Par exemple, ~2.0.0 permet les mises à jour jusqu'à <2.1.0, excluant cette dernière.
+- `~` (Tilde): Permet les mises à jour de versions mineures. Par exemple, `~2.0.0` permet les mises à jour jusqu'à `<2.1.0`, excluant cette dernière.
 
-> (Plus grand que): Spécifie que la version doit être supérieure à la version donnée.
+- `>` (Plus grand que): Spécifie que la version doit être supérieure à la version donnée.
 
-< (Plus petit que): Indique que la version doit être inférieure à la version spécifiée.
+- `<` (Plus petit que): Indique que la version doit être inférieure à la version spécifiée.
 
->= (Plus grand ou égal): Signifie que la version doit être égale ou supérieure à la version donnée.
+- `>=` (Plus grand ou égal): Signifie que la version doit être égale ou supérieure à la version donnée.
 
-<= (Plus petit ou égal): Indique que la version doit être égale ou inférieure à la version spécifiée.
+- `<=` (Plus petit ou égal): Indique que la version doit être égale ou inférieure à la version spécifiée.
 
-* (Joker): Remplace n'importe quel nombre. Utilisé pour spécifier une plage de versions. Par exemple, 2.* correspond à toutes les versions commençant par 2..
+- `*` (Joker): Remplace n'importe quel nombre. Utilisé pour spécifier une plage de versions. Par exemple, `2.*` correspond à toutes les versions commençant par 2..
 
 ### ex02 - Development requirement :
 Le but de cet exercice est d'installer la version LTS de PhpUnit. Pour voir cette version, aller sur ce site : 
