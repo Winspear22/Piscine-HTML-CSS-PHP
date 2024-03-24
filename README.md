@@ -103,9 +103,10 @@ Voici mon résultat :
 
 
 ## PHP-02 - Oob
-Lors de cette troisieme journee, on va apprendre l'aspect orientee objet du langage PHP. On va creer nos premieres classes pour generer des pages HTML et en modifier le contenu dynamiquement. On va meme creer un checker de page HTML sommaire afin de pousser la difficulte un peu plus loin.
+Lors de cette troisième journée, on va apprendre l'aspect orienté objet du langage PHP. On va créer nos premières classes pour générer des pages HTML et en modifier le contenu dynamiquement. On va même créer un checker de page HTML sommaire afin de pousser la difficulté un peu plus loin.
 
 ### ex00 - Les paramètres HTML :
+Le but de cet exercice est de créer une classe à laquelle on peut donner un fichier template qui peut y remplacer certains éléments et générer un nouveau fichier .html afin de créer une nouvelle page.
 Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-02-ex00-exemple.png)
@@ -114,10 +115,12 @@ Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex00-result.png)
 ### ex01 - Affichage de l’object :
+Le but de cet exercice est de nous enseigner à ajouter une balise fermante html (<p> et </p>) à travers une classe PHP dans un fichier et de le générer afin d'afficher une suite de paragraphes.
 Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex01-result.png)
 ### ex02 - Affichage de l’object 2 :
+Le but de cet exercice est similaire à l'exercice 2 à l'exception que l'on doit maintenant utiliser la classe ReflectionClass qui nous permet d'avoir accès à des variables et des fonctions privées présentes dans des classes. Cet exercice nous enseigne également le concept d'héritage en PHP.
 Voici le résultat attendu : 
 
 ![Affichage du resultat de l'ecole](images/PHP-02-ex02-exemple.png)
@@ -128,12 +131,18 @@ Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex02-result2.png)
 ### ex03 - Générer HTML :
+Le but de cet exercice est de générer une page HTML entière à l'aide d'une série de balises autofermantes et de balises à contenu. On nous apprend également à throw et catch une exception si une balise autre que celles autorisées est utilisée.
+Voici mon résultat :
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex03-result.png)
+
 ### ex04 - Générer HTML 2 :
+Le but de cet exercice est le même que le précédant à l'exception que la liste de balises autorisées s'accroît et qu'il faut désormais créer sa propre exception personnalisée.
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex04-result.png)
+
 ### ex05 - Valider HTML :
+Le but de cet exercice est de créer un checker pour vérifier si la page HTML est conforme à un certain standard HTML très simple que l'on doit coder soi-même et qui est dicté par l'école. Si la page HTML est mauvaise, une erreur est renvoyée, sinon, une page HTML est générée (les exemples utilisés dans l'exercice ne sont pas très bons).
 
 ![Affichage de mon résultat résultat](images/PHP-02-ex05-result.png)
 ### Résultat final :
