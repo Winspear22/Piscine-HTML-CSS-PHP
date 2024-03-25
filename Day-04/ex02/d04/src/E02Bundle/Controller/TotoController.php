@@ -24,10 +24,13 @@ class TotoController extends AbstractController
         $includeTimestamp = $request->request->get('timestamp') === 'yes';
 
         // Valider les données (par exemple, vérifier que le message n'est pas vide)
-        if (empty($message)) {
-            // Gérer l'erreur, par exemple en réaffichant le formulaire avec un message d'erreur
-        }
+        if (empty($message)) 
+		{
+			$this->addFlash('error', 'Le message ne peut pas être vide.');
+			return $this->redirectToRoute('form_page');
+		}
 
+		
         // Traiter les données
         $content = $message;
         if ($includeTimestamp) {
@@ -45,7 +48,7 @@ class TotoController extends AbstractController
 	/**
     * @Route("/e02", name="form_page")
     */
-    public function showForm(Request $request)
+	public function showForm(Request $request)
 	{
 		$form = $this->createFormBuilder()
 			->add('message', TextType::class)
@@ -57,17 +60,28 @@ class TotoController extends AbstractController
 			])
 			->add('send', SubmitType::class)
 			->getForm();
-
+	
 		$form->handleRequest($request);
-
+	
 		if ($form->isSubmitted() && $form->isValid()) {
 			$data = $form->getData();
 			// Gérez la soumission ici
 		}
-
+	
+		// Utiliser le paramètre pour obtenir le chemin du fichier
+		$filePath = $this->getParameter('message_file_path');
+	
+		// Vérifier si le fichier existe avant de tenter de lire
+		$lastLine = '';
+		if (file_exists($filePath)) {
+			$lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+			$lastLine = end($lines);
+		}
+	
+		// Passer la dernière ligne au template
 		return $this->render('E02Bundle/main.html.twig', [
 			'form' => $form->createView(),
+			'lastMessage' => $lastLine,
 		]);
 	}
-
 }

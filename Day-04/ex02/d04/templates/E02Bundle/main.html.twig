@@ -10,7 +10,12 @@
         <option value="yes">Yes</option>
         <option value="no">No</option>
     </select>
-
     <input type="submit" value="Submit">
+    {% for message in app.flashes('error') %}
+    <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
 </form>
+{% if lastMessage %}
+    <div class="last-message">Dernier message : {{ lastMessage }}</div>
+{% endif %}
 {% endblock %}
