@@ -10,9 +10,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Psr\Log\LoggerInterface;
 
 class TotoController extends AbstractController
 {
+	private string $previousMsg = '';
+	private $previousChoice = true;
 
     /**
     * @Route("/submit-form", name="submit_form")
@@ -45,43 +48,83 @@ class TotoController extends AbstractController
         return $this->redirectToRoute('form_page'); // Assurez-vous que la route 'form_page' existe
     }
 
+
 	/**
     * @Route("/e02", name="form_page")
     */
-	public function showForm(Request $request)
+	public function showForm(Request $request, LoggerInterface $logger)
 	{
+		$session = $request->getSession();
+		$defaultMessage = $session->get('message', '');
+		$defaultChoice = $session->get('include_timestamp', 'no');
+
+		if ($this->previousMsg ==! '')
+			$defaultMessage = $this->previousMsg;
+		if ($this->previousChoice === true)
+			$defaultChoice = $this->previousChoice;
+
 		$form = $this->createFormBuilder()
-			->add('message', TextType::class)
-			->add('include_timestamp', ChoiceType::class, [
-				'choices' => [
-					'Yes' => 'yes',
-					'No' => 'no',
-				],
-			])
-			->add('send', SubmitType::class)
-			->getForm();
+		->add('message', TextType::class, ['data' => $defaultMessage])
+		->add('include_timestamp', ChoiceType::class, [
+			'choices' => ['Yes' => 'yes', 'No' => 'no'],
+			'data' => $defaultChoice,
+		])
+            ->add('send', SubmitType::class)
+            ->getForm();
 	
 		$form->handleRequest($request);
 	
-		if ($form->isSubmitted() && $form->isValid()) {
+		if ($form->isSubmitted() && $form->isValid()) 
+		{
 			$data = $form->getData();
-			// Gérez la soumission ici
+			$session->set('message', $data['message']);
+			$session->set('include_timestamp', $data['include_timestamp']);
+
+			// Traiter les données ici (par exemple, sauvegarde dans un fichier)
+
+			// Rediriger vers la même page pour montrer le formulaire prérempli
+
+			$filePath = $this->getParameter('message_file_path');
+		
+			// Vérifier si le fichier existe avant de tenter de lire
+			$lastLine = '';
+			if (file_exists($filePath)) 
+			{
+				$lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+				$lastLine = end($lines);
+			}
+			$this->previousMsg = $data['message'];
+			$this->previousChoice = $data['include_timestamp'];
+			if ($this->previousChoice)
+				$this->previousChoice = true;
+			else
+				$this->previousChoice = false;
+			return $this->redirectToRoute('form_page');
 		}
-	
+
 		// Utiliser le paramètre pour obtenir le chemin du fichier
 		$filePath = $this->getParameter('message_file_path');
 	
 		// Vérifier si le fichier existe avant de tenter de lire
 		$lastLine = '';
-		if (file_exists($filePath)) {
+		$lastChoice = $form->getData();
+		if (file_exists($filePath)) 
+		{
 			$lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 			$lastLine = end($lines);
 		}
-	
+
+		$this->previousMsg = $lastLine;
+		$this->previousChoice = $lastChoice;
+		$defaultMessage = $lastLine;
+		$defaultChoice = $lastChoice;
+		echo $_GET['timestamp'];
 		// Passer la dernière ligne au template
 		return $this->render('E02Bundle/main.html.twig', [
 			'form' => $form->createView(),
 			'lastMessage' => $lastLine,
+			'defaultMessage' => $defaultMessage,
+			'defaultChoice' => $defaultChoice
 		]);
 	}
 }

@@ -3,12 +3,12 @@
 {% block body %}
 <form action="{{ path('submit_form') }}" method="post">
     <label for="message">Message:</label>
-    <input type="text" id="message" name="message">
+    <input type="text" id="message" name="message" value="{{ defaultMessage }}">
 
     <label for="timestamp">Include timestamp:</label>
     <select id="timestamp" name="timestamp">
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
+        <option value="yes" {% if defaultChoice == 'yes' %}selected{% endif %}>Yes</option>
+        <option value="no" {% if defaultChoice == 'no' %}selected{% endif %}>No</option>
     </select>
     <input type="submit" value="Submit">
     {% for message in app.flashes('error') %}
@@ -18,4 +18,11 @@
 {% if lastMessage %}
     <div class="last-message">Dernier message : {{ lastMessage }}</div>
 {% endif %}
+{% if defaultChoice %}
+    <div class="last-message">Choix par défaut : {{ defaultChoice }}</div>
+{% endif %}
+{% if defaultMessage %}
+    <div class="last-message">Message par défaut : {{ defaultMessage }}</div>
+{% endif %}
 {% endblock %}
+
