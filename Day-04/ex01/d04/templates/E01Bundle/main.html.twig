@@ -1,20 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}E01 Main Page{% endblock %}
+{% block title %}TOTO {% endblock %}
 
 {% block body %}
-<header>
-    <h1>Welcome to E01 Main Page!</h1>
-</header>
-<section>
-    <h2>Articles</h2>
-    <ul>
-        <li><a href="/e01/goeland">Goéland</a></li>
-        <li><a href="/e01/mouette">Mouette</a></li>
-        <li><a href="/e01/pelican">Pélican</a></li>
-    </ul>
-</section>
-<footer>
-    <p>&copy; 2024 My Symfony Application</p>
-</footer>
+    <p>VOUS ETES SUR LA PAGE PRINCIPALE...</p>
+
+    {% include '/E01Bundle/liens.html.twig' %}
 {% endblock %}

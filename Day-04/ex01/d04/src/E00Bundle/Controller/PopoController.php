@@ -17,7 +17,7 @@ class PopoController extends AbstractController
     }
 
     /**
-    * @Route("/{url}", requirements={"url"=".+"})
+    * @Route("/e00/{url}", requirements={"url"=".+"})
     */
     public function index(): Response
     {
