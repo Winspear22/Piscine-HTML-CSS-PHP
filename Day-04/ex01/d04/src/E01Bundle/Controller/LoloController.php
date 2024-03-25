@@ -32,4 +32,3 @@ class LoloController extends AbstractController
         return $this->render("E01Bundle/{$articleName}.html.twig");
     }
 }
-
