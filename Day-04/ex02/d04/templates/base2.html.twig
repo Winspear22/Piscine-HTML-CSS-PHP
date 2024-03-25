@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}E02 exercice!{% endblock %}</title>
+        {% block img %}
+            <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1152/1152762.png">
+        {% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('style.css') }}">
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+    </head>
+    <body>
+        {% block header %}
+        <header>
+            <h1>(HEADER) Welcome to E02 Website!</h1>
+        </header>
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
+        {% block footer %}
+            <footer>
+                <p>FOOTER adaloui. Tous droits réservés.</p>
+            </footer>
+        {% endblock %}
+    </body>
+</html>

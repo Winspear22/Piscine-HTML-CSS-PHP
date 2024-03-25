@@ -1,0 +1,16 @@
+{% extends 'base2.html.twig' %}
+
+{% block body %}
+<form action="{{ path('submit_form') }}" method="post">
+    <label for="message">Message:</label>
+    <input type="text" id="message" name="message">
+
+    <label for="timestamp">Include timestamp:</label>
+    <select id="timestamp" name="timestamp">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+    </select>
+
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

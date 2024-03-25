@@ -233,10 +233,16 @@ Pour obtenir le résultat des routs, on peut utiliser :
 
 Pour autoriser les annotations, il faut aller dans le fichier ```framework.yaml``` et mettre annotations à true. Puis installer ce paquet : ```composer require doctrine/annotations```
 
-### ex01  Pages multiples :
+### ex01 - Pages multiples :
 
 Il faut installer ```composer require symfony/twig-bundle``` pour pouvoir obtenir le dossier template et avoir les outils pour créer des pages multiples.
 
 On modifie ensuite le contenu de PopoController pour pouvoir afficher plusieurs pages.
 
+Pour permettre l'utilisation de fichiers ```style.css```, ces derniers doivent être mis dans le dossier ```public``` qui se trouve à la racine du projet, et il faut installer le paquet ```asset``` avec cette commande : 
+```composer require symfony/asset```.
+
+### ex02 - Premier formulaire :
+
+```composer require symfony/form``` pour pouvoir utiliser les commandes natives de symfony au regard des formulaires
 

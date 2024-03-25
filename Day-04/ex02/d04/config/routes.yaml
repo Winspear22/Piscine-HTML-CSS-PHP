@@ -1,0 +1,19 @@
+# config/routes.yaml
+
+controllers_02:
+    resource: 
+        path: ../src/E02Bundle/
+        namespace: App\E02Bundle
+    type: annotation
+
+controllers_01:
+    resource: 
+        path: ../src/E01Bundle/
+        namespace: App\E01Bundle
+    type: annotation
+
+controller_00:
+    resource: 
+        path: ../src/E00Bundle/
+        namespace: App\E00Bundle
+    type: annotation
