@@ -51,3 +51,55 @@ ul {
 ul li {
     margin: 10px 0;
 }
+
+.form-control {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-control input,
+.form-control select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-error {
+    color: #ff3860;
+    font-size: 0.875em;
+}
+
+.form-help {
+    font-size: 0.875em;
+    color: #6c757d;
+}
+
+.form-text,
+.form-isDated {
+    display: inline-block;
+    margin-right: 10px;
+    color: #007bff;
+}
+
+/* Styles for small screens and mobile */
+@media (max-width: 768px) {
+    .form-control {
+        padding: 10px;
+    }
+
+    header, footer {
+        text-align: center;
+    }
+}

@@ -244,5 +244,17 @@ Pour permettre l'utilisation de fichiers ```style.css```, ces derniers doivent Ã
 
 ### ex02 - Premier formulaire :
 
-```composer require symfony/form``` pour pouvoir utiliser les commandes natives de symfony au regard des formulaires
+Voici une page tres interessante pour accomplir cet exercice, la documentation seule suffit a faire l'exercice :
 
+https://symfony.com/doc/6.4/forms.html#form-types
+
+Il faut d'abord installer la librairie propre a symfony pour gerer les formulaires :
+```composer require symfony/form```
+Ensuite, il faut selectionner les formulaires qu'il faut pour notre exercice. Il nous en faut deux :
+
+```TextType``` ou ```TextareaType``` et ```ChoiceType```
+
+Il faut utiliser la fonction ```createFormBuilder``` qui fait partie de l'instane de la classe TotoController qui a herite de AbstractController et lui inscrire tous les types de formulaire que l'on desire
+
+Pour gerer les erreurs, il faut rajouter :
+```composer require symfony/validator```
