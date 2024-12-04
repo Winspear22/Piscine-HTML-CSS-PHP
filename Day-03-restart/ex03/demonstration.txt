@@ -1,5 +1,5 @@
 1. Pour creer le composer.json
-composer init --name="php03/ex03" --description="Exemple pour l'ex03 pour voir la difference entre update et install" --require="monolog/monolog:^2.3" --no-interaction
+composer init --name="php03/ex03" --description="Exemple pour l'ex03 pour voir la difference entre update et install" --require="monolog/monolog:2.3" --no-interaction
 
 2. Copier coller le composer.json dans les 2 dossiers
 
