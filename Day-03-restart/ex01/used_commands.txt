@@ -1,0 +1,23 @@
+# Installation des versions spécifiques de Monolog avec Composer
+
+## Tâche 1 : Version supérieure à 2.3.0
+composer require monolog/monolog:">2.3.0"
+
+## Tâche 2 : Version supérieure à 2.2.0 et inférieure ou égale à 2.3.5
+composer require monolog/monolog:">2.2.0 <=2.3.5"
+
+## Tâche 3 : Version entre 2.1.0 et 2.2.0
+composer require monolog/monolog:">=2.1.0 <=2.2.0"
+
+## Tâche 4 : Version supérieure ou égale à 2.0.0 et inférieure à 2.0.2
+composer init --name="task04/project" --require="monolog/monolog:>=2.0.0 <2.0.2" --no-interaction
+composer config platform.php 7.2.5
+composer install
+
+## Tâche 5 : Version supérieure à 2.0.0 et inférieure à 2.3.5
+composer require monolog/monolog:">2.0.0 <2.3.5"
+
+# Notes
+- La commande `composer config platform.php 7.2.5` permet de simuler une version de PHP spécifique pour satisfaire les contraintes des dépendances.
+- Les commandes `composer init` et `composer install` ont été utilisées pour initialiser les projets et installer les dépendances respectivement.
+- Pour la tâche 4, `composer init` a été utilisé pour générer directement le fichier composer.json avec les contraintes de version spécifiées.
