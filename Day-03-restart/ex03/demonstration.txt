@@ -1,2 +1,16 @@
-Pour creer le composer.json
+1. Pour creer le composer.json
 composer init --name="php03/ex03" --description="Exemple pour l'ex03 pour voir la difference entre update et install" --require="monolog/monolog:^2.3" --no-interaction
+
+2. Copier coller le composer.json dans les 2 dossiers
+
+3. Générer composer.lock dans task01
+cd task01
+composer install
+Cela va creer un fichier composer.lock
+supprimer le dossier vendor
+
+4. Copier composer.lock dans task02
+cp composer.lock ../task02/
+
+5. Executer composer install et composer update dans les deux dossiers
+
