@@ -1,0 +1,4 @@
+composer install --no-dev pour installer sans les dependances liees au dev
+composer install pour tout installer
+rajouter composer require monolog/monolog:^2.3.1 pour demontrer qu'il y'a le dev et la prod
+
