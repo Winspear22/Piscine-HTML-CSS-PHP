@@ -1,0 +1,7 @@
+{
+    "name": "php03/ex03",
+    "description": "Exemple pour l'ex03 pour voir la difference entre update et install",
+    "require": {
+        "monolog/monolog": "^2.3"
+    }
+}
