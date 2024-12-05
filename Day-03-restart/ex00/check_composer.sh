@@ -8,19 +8,19 @@ BLUE="\033[0;34m"
 CYAN="\033[0;36m"
 RESET="\033[0m"
 
-echo -e "${CYAN}========================"
-echo -e "Vérification de Composer"
-echo -e "========================${RESET}"
+echo "${CYAN}========================"
+echo "Vérification de Composer"
+echo "========================${RESET}"
 
 # Vérifie si Composer est installé
 if command -v composer >/dev/null 2>&1; then
-    echo -e "${GREEN}✅ Composer est installé globalement.${RESET}"
-    echo -e "${BLUE}Version de Composer :${RESET}"
-    echo -e "${YELLOW}$(composer --version)${RESET}"
-    echo -e "${BLUE}Emplacement de Composer :${RESET}"
-    echo -e "${YELLOW}$(command -v composer)${RESET}"
+    echo "${GREEN}✅ Composer est installé globalement.${RESET}"
+    echo "${BLUE}Version de Composer :${RESET}"
+    echo "${YELLOW}$(composer --version)${RESET}"
+    echo "${BLUE}Emplacement de Composer :${RESET}"
+    echo "${YELLOW}$(command -v composer)${RESET}"
 else
-    echo -e "${RED}❌ Composer n'est pas installé globalement.${RESET}"
+    echo "${RED}❌ Composer n'est pas installé globalement.${RESET}"
 fi
 
-echo -e "${CYAN}======================${RESET}"
+echo "${CYAN}======================${RESET}"
