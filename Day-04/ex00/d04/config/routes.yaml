@@ -1,2 +1,9 @@
-imports:
-    resource: 'routing.yaml'
+controllers:
+    resource:
+        path: ../src/E00Bundle/
+        namespace: App\E00Bundle
+    type: annotation
+
+#controllers:
+#    resource: '../src/E00Bundle/Controller/'
+#    type: annotation

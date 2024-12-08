@@ -1,7 +1,0 @@
-e00:
-  resource: '../src/E00Bundle/Controller/'
-  type: attribute
-
-fallback:
-  resource: '../src/E00Bundle/Controller/FallbackController.php'
-  type: attribute
