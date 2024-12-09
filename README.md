@@ -237,7 +237,7 @@ Pour autoriser les annotations, il faut aller dans le fichier ```framework.yaml`
 
 Il faut installer ```composer require symfony/twig-bundle``` pour pouvoir obtenir le dossier template et avoir les outils pour créer des pages multiples.
 
-On modifie ensuite le contenu de PopoController pour pouvoir afficher plusieurs pages.
+On modifie ensuite le contenu de E00Controller pour pouvoir afficher plusieurs pages.
 
 Pour permettre l'utilisation de fichiers ```style.css```, ces derniers doivent être mis dans le dossier ```public``` qui se trouve à la racine du projet, et il faut installer le paquet ```asset``` avec cette commande : 
 ```composer require symfony/asset```.

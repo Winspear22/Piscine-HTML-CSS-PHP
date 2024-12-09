@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Ma page E01{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Mon Application E01  (JE SUIS LE HEADER)</h1>
+        <nav>
+            <ul>
+                <li><a href="/e01">Accueil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <p>JE SUIS LE BODY</p>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 - Mon Application - JE SUIS LE FOOTER</p>
+    </footer>
+</body>
+</html>
