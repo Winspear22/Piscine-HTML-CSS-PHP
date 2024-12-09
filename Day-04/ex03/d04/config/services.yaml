@@ -6,6 +6,8 @@
 #parameters:
 parameters:
     app.log_file: '%kernel.project_dir%/messages.log'
+    e03.number_of_colors: 10
+
 
 
 services:

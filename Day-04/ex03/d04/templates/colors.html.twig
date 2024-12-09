@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuances de couleurs{% endblock %}
+
+{% block content %}
+<h2>Nuances de couleurs</h2>
+
+<p>Nombre de nuances : {{ number_of_colors }}</p>
+
+<table border="1" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+            {% for color in colors %}
+                <th>{{ color }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in range(0, number_of_colors - 1) %}
+            <tr>
+                {% for color in colors %}
+                    {# shade = shades[color][i] #}
+                    <td style="background-color: {{ shades[color][i] }}; height:40px; width:80px;">
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
