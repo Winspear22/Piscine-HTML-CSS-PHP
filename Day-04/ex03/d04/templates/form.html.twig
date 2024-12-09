@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire E02{% endblock %}
+
+{% block content %}
+<h2>Formulaire E02</h2>
+
+{{ form_start(form) }}
+    {{ form_row(form.message) }}
+    {{ form_row(form.include_timestamp) }}
+    <button type="submit">Envoyer</button>
+{{ form_end(form) }}
+
+{% if last_line is defined and last_line %}
+    <p><strong>Dernière ligne ajoutée :</strong> {{ last_line }}</p>
+{% endif %}
+{% endblock %}

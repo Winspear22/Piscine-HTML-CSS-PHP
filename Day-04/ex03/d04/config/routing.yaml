@@ -1,0 +1,17 @@
+# config/routes.yaml POUR LA METHODE SUR YAML
+#index:
+#    path: /e01
+    # the controller value has the format 'controller_class::method_name'
+#    controller: App\E01Bundle\Controller\E01Controller::index
+e03:
+  resource: '../src/E03Bundle/Controller/'
+  type: annotation
+e02:
+  resource: '../src/E02Bundle/Controller/'
+  type: annotation
+e01:
+  resource: '../src/E01Bundle/Controller/'
+  type: annotation
+e00:
+  resource: '../src/E00Bundle/Controller/'
+  type: annotation

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article : {{ article_title }}{% endblock %}
+
+{% block content %}
+<h2>{{ article_title }}</h2>
+<p>{{ article_content }}</p>
+<a href="/e01">Retourner à l'index.</a>
+
+{% endblock %}
