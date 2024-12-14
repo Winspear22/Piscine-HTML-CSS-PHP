@@ -2,11 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Ma page E01{% endblock %}</title>
+    <title>{% block title %}ex01{% endblock %}</title>
 </head>
 <body>
     <header>
-        <h1>Mon Application E01  (JE SUIS LE HEADER)</h1>
+        <h1>{% block header %} Index E01  (JE SUIS LE HEADER){% endblock %}</h1>
     </header>
 
     <main>
@@ -15,7 +15,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 - Mon Application - JE SUIS LE FOOTER</p>
+        <p>&copy; 2024 - JE SUIS LE FOOTER</p>
     </footer>
 </body>
 </html>
