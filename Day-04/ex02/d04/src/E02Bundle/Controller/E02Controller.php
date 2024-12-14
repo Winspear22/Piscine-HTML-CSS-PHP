@@ -44,18 +44,21 @@ class E02Controller extends AbstractController
 
         $lastLine = null; // Pour afficher la dernière ligne ajoutée
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
             $data = $form->getData();
             $logFile = $this->getParameter('app.log_file');
 
             // Vérifier l'existence du fichier, sinon le créer
-            if (!file_exists($logFile)) {
+            if (!file_exists($logFile)) 
+            {
                 touch($logFile);
             }
 
             // Construire la ligne à ajouter
             $line = $data['message'];
-            if ($data['include_timestamp'] === 'Yes') {
+            if ($data['include_timestamp'] === 'Yes') 
+            {
                 $line .= ' | ' . (new \DateTime())->format('Y-m-d H:i:s');
             }
 
@@ -64,10 +67,13 @@ class E02Controller extends AbstractController
 
             // Lire la dernière ligne du fichier pour l'afficher
             $lines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            if ($lines && count($lines) > 0) {
+            if ($lines && count($lines) > 0) 
+            {
                 $lastLine = end($lines);
             }
-        } elseif ($form->isSubmitted() && !$form->isValid()) {
+        } 
+        elseif ($form->isSubmitted() && !$form->isValid()) 
+        {
             // Le formulaire a été soumis mais n'est pas valide
             // Le champ 'message' est vide par exemple
             // On reste sur la même page, le form affichera l'erreur
