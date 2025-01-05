@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de la table</title>
+</head>
+<body>
+    <h1>Gestion de la table 'users'</h1>
+
+    <form method="get" action="{{ path('ex00_table_actions') }}">
+        <button type="submit" name="action" value="create_table">Créer la table</button>
+        <button type="submit" name="action" value="delete_table">Supprimer la table</button>
+    </form>
+
+    {% if message is defined and message is not null %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
