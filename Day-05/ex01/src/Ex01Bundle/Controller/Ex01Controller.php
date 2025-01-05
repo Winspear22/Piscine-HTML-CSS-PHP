@@ -3,6 +3,7 @@
 namespace App\Ex01Bundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,22 +15,25 @@ class Ex01Controller extends AbstractController
      */
     public function createTable(EntityManagerInterface $entityManager): Response
     {
+        $schemaTool = new SchemaTool($entityManager);
+        $metadata = $entityManager->getMetadataFactory()->getAllMetadata();
         $message = null;
 
-        try 
-		{
-            // Vérifie si la table existe via les métadonnées de Doctrine
-            $schemaManager = $entityManager->getConnection()->createSchemaManager();
-            $tableExists = $schemaManager->tablesExist(['user']);
+        try {
+            if (empty($metadata)) {
+                throw new \Exception('Aucune entité définie. Impossible de créer des tables.');
+            }
 
-            if ($tableExists)
+            // Vérifie si la table existe déjà
+            $schemaManager = $entityManager->getConnection()->createSchemaManager();
+            if ($schemaManager->tablesExist(['user'])) {
                 $message = "La table 'user' existe déjà.";
-            else
-                $message = "Table 'user' créée avec succès via Doctrine."; // Doctrine gère déjà la création via les migrations
-        } 
-		catch (\Exception $e) 
-		{
-            $message = "Erreur lors de la vérification ou création de la table : " . $e->getMessage();
+            } else {
+                $schemaTool->createSchema($metadata);
+                $message = "Table 'user' créée avec succès !";
+            }
+        } catch (\Exception $e) {
+            $message = "Erreur lors de la création de la table : " . $e->getMessage();
         }
 
         return $this->render('create_table.html.twig', [
@@ -42,15 +46,18 @@ class Ex01Controller extends AbstractController
      */
     public function deleteTable(EntityManagerInterface $entityManager): Response
     {
+        $schemaTool = new SchemaTool($entityManager);
+        $metadata = $entityManager->getMetadataFactory()->getAllMetadata();
         $message = null;
 
-        try 
-		{
-            $entityManager->getConnection()->executeStatement("DROP TABLE IF EXISTS user");
+        try {
+            if (empty($metadata)) {
+                throw new \Exception('Aucune entité définie. Impossible de supprimer des tables.');
+            }
+
+            $schemaTool->dropSchema($metadata);
             $message = "Table 'user' supprimée avec succès.";
-        } 
-		catch (\Exception $e) 
-		{
+        } catch (\Exception $e) {
             $message = "Erreur lors de la suppression de la table : " . $e->getMessage();
         }
 
@@ -59,7 +66,5 @@ class Ex01Controller extends AbstractController
         ]);
     }
 }
-
-
 
 ?>
