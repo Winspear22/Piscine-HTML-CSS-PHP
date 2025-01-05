@@ -9,4 +9,4 @@
 #    type: annotation
 
 imports:
-    resource: 'routing.yaml'
+	resource: 'routing.yaml'
