@@ -1,0 +1,3 @@
+ex02:
+    resource: '../src/Ex02Bundle/Controller'
+    type: annotation
