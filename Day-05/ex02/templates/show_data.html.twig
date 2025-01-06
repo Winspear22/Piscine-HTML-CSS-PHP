@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des utilisateurs</title>
+</head>
+<body>
+    <h1>Liste des utilisateurs</h1>
+
+    {% if error is defined and error is not null %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if users is not empty %}
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Activé</th>
+                    <th>Date de naissance</th>
+                    <th>Adresse</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+                        <td>{{ user.birthdate }}</td>
+                        <td>{{ user.address }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun utilisateur trouvé.</p>
+    {% endif %}
+</body>
+</html>
