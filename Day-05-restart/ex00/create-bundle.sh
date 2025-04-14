@@ -31,15 +31,15 @@ EOL
 echo "Fichier ${BUNDLE_NAME}.php créé."
 
 # Étape 2 : Enregistrement dans bundles.php
-if ! grep -q "${BUNDLE_NAMESPACE}\\${BUNDLE_NAME}" "${BUNDLES_FILE}"; then
-  sed -i "/return \[/a \\    ${BUNDLE_NAMESPACE}\\${BUNDLE_NAME}::class => ['all' => true]," "${BUNDLES_FILE}"
+if ! grep -q "${BUNDLE_NAMESPACE}\\\\${BUNDLE_NAME}" "${BUNDLES_FILE}"; then
+  sed -i "/return \[/a \\    \\\\${BUNDLE_NAMESPACE}\\\\${BUNDLE_NAME}::class => ['all' => true]," "${BUNDLES_FILE}"
   echo "Bundle enregistré dans ${BUNDLES_FILE}."
 else
   echo "Le bundle est déjà enregistré dans ${BUNDLES_FILE}."
 fi
 
 # Étape 3 : Enregistrement dans routes.yaml
-if ! grep -q "${BUNDLE_NAME}" "${ROUTES_FILE}"; then
+if ! grep -q "${BUNDLE_NAME}:" "${ROUTES_FILE}"; then
   echo "" >> "${ROUTES_FILE}"
   echo "${BUNDLE_NAME}:" >> "${ROUTES_FILE}"
   echo "    resource: '../src/${BUNDLE_NAME}/Controller'" >> "${ROUTES_FILE}"
@@ -50,4 +50,3 @@ else
 fi
 
 echo "Le bundle ${BUNDLE_NAME} a été créé et enregistré avec succès."
-
