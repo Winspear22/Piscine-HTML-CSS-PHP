@@ -216,7 +216,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.Wu2Mx.2"/>
+      <argument type="service" id=".service_locator.SI.fOIM"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -1334,7 +1334,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.Wu2Mx.2"/>
+      <argument type="service" id=".service_locator.SI.fOIM"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -3028,15 +3028,19 @@
         <argument key="connection" type="service_closure" id="doctrine.dbal.default_connection"/>
       </argument>
     </service>
-    <service id=".service_locator.Wu2Mx.2" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.SI.fOIM" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Ex00Bundle\Controller\Ex00Controller::index" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller::createTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller::deleteTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller::showTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
-        <argument key="App\Ex00Bundle\Controller\Ex00Controller:index" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller:createTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller:deleteTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
+        <argument key="App\Ex00Bundle\Controller\Ex00Controller:showTable" type="service_closure" id=".service_locator.hUbu2Ln"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -3829,12 +3833,12 @@
     <service id="doctrine.migrations.metadata_storage" alias="doctrine.migrations.storage.table_storage"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.Wu2Mx.2"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.SI.fOIM"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.bJ.4HC5" alias=".service_locator.w7.f4fT"/>
-    <service id=".service_locator.NxlzvAL" alias=".service_locator.Wu2Mx.2"/>
+    <service id=".service_locator.4QpYzeV" alias=".service_locator.SI.fOIM"/>
     <service id=".service_locator.zOrwI6F" alias=".service_locator.nrgc8tJ"/>
     <service id=".service_locator.Za9MpXe" alias=".service_locator.y4dplYt"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>

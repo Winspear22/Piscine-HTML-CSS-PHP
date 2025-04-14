@@ -2,27 +2,34 @@
 
 namespace App\Ex00Bundle\Controller;
 
-use Doctrine\DBAL\Connection;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Connection;
 
 class Ex00Controller extends AbstractController
 {
     /**
-     * Méthode privée qui contient la logique de création
+     * @Route("/ex00", name="ex00_index")
      */
-    private function createTableLogic(Connection $connection): string
+    public function index(): Response
+    {
+        return $this->render('create_table.html.twig');
+    }
+
+    /**
+     * @Route("/ex00/create", name="ex00_create_table")
+     */
+    public function createTable(Connection $connection): Response
     {
         $message = "";
         try 
-        {
+		{
             $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users'")->rowCount();
-            if ($tableExists > 0) 
+            if ($tableExists > 0)
                 $message = "La table 'users' existe déjà.";
-            else 
-            {
+			else 
+			{
                 $sql = "CREATE TABLE users (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(255) UNIQUE NOT NULL,
@@ -36,26 +43,36 @@ class Ex00Controller extends AbstractController
                 $message = "Table 'users' créée avec succès.";
             }
         } 
-        catch (\Exception $e) 
-        {
+		catch (\Exception $e) 
+		{
             $message = "Erreur lors de la création de la table : " . $e->getMessage();
         }
 
-        return $message;
+        return $this->render('create_table.html.twig', ['message' => $message]);
     }
 
     /**
-     * @Route("/ex00", name="ex00_index")
+     * @Route("/ex00/delete", name="ex00_delete_table")
      */
-    public function index(Connection $connection, Request $request): Response
+    public function deleteTable(Connection $connection): Response
     {
-        $message = null;
+        $message = "";
+        try 
+		{
+            $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users'")->rowCount();
+            if ($tableExists === 0)
+                $message = "La table 'users' n'existe pas.";
+			else 
+			{
+                $connection->executeStatement("DROP TABLE users");
+                $message = "Table 'users' supprimée avec succès.";
+            }
+        } 
+		catch (\Exception $e) 
+		{
+            $message = "Erreur lors de la suppression de la table : " . $e->getMessage();
+        }
 
-        if ($request->query->has('create'))
-            $message = $this->createTableLogic($connection);
-
-        return $this->render('create_table.html.twig', [
-            'message' => $message
-        ]);
+        return $this->render('create_table.html.twig', ['message' => $message]);
     }
 }
