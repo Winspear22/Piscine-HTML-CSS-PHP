@@ -11,8 +11,9 @@
         <p>{{ message }}</p>
     {% endif %}
 
-    <form method="get" action="{{ path('ex00_index') }}">
-        <button type="submit">Créer la table</button>
-    </form>
+<form method="get" action="{{ path('ex00_index') }}">
+    <button type="submit" name="create" value="1">Créer la table</button>
+</form>
+
 </body>
 </html>

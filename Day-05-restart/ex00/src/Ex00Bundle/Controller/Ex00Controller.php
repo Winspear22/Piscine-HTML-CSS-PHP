@@ -2,10 +2,11 @@
 
 namespace App\Ex00Bundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\DBAL\Connection;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Ex00Controller extends AbstractController
 {
@@ -44,11 +45,14 @@ class Ex00Controller extends AbstractController
     }
 
     /**
-    * @Route("/ex00", name="ex00_index")
-    */
-    public function index(Connection $connection): Response
+     * @Route("/ex00", name="ex00_index")
+     */
+    public function index(Connection $connection, Request $request): Response
     {
-        $message = $this->createTableLogic($connection);
+        $message = null;
+
+        if ($request->query->has('create'))
+            $message = $this->createTableLogic($connection);
 
         return $this->render('create_table.html.twig', [
             'message' => $message

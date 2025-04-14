@@ -62,12 +62,13 @@ class __TwigTemplate_82c6b4ba20bfb21ac88c6b5e81869dde extends Template
         }
         // line 13
         yield "
-    <form method=\"get\" action=\"";
+<form method=\"get\" action=\"";
         // line 14
         yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("ex00_index");
         yield "\">
-        <button type=\"submit\">Créer la table</button>
-    </form>
+    <button type=\"submit\" name=\"create\" value=\"1\">Créer la table</button>
+</form>
+
 </body>
 </html>";
         
@@ -115,9 +116,10 @@ class __TwigTemplate_82c6b4ba20bfb21ac88c6b5e81869dde extends Template
         <p>{{ message }}</p>
     {% endif %}
 
-    <form method=\"get\" action=\"{{ path('ex00_index') }}\">
-        <button type=\"submit\">Créer la table</button>
-    </form>
+<form method=\"get\" action=\"{{ path('ex00_index') }}\">
+    <button type=\"submit\" name=\"create\" value=\"1\">Créer la table</button>
+</form>
+
 </body>
 </html>", "create_table.html.twig", "/home/user42/Desktop/13-04-2025/Day-05-restart/ex00/templates/create_table.html.twig");
     }
