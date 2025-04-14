@@ -8,6 +8,7 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
+        '/ex00' => [[['_route' => 'ex00_index', '_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::index'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

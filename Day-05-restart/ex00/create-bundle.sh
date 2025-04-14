@@ -49,4 +49,19 @@ else
   echo "Les routes du bundle sont déjà enregistrées dans ${ROUTES_FILE}."
 fi
 
+# Étape 4 : Activation des annotations dans framework.yaml
+FRAMEWORK_CONFIG="config/packages/framework.yaml"
+
+if grep -q "^framework:" "$FRAMEWORK_CONFIG"; then
+    if ! grep -q "annotations: true" "$FRAMEWORK_CONFIG"; then
+        echo "Activation des annotations dans $FRAMEWORK_CONFIG"
+        sed -i "/^framework:/a\    annotations: true" "$FRAMEWORK_CONFIG"
+    else
+        echo "Les annotations sont déjà activées dans $FRAMEWORK_CONFIG"
+    fi
+else
+    echo -e "framework:\n    annotations: true" >> "$FRAMEWORK_CONFIG"
+    echo "Bloc framework ajouté avec annotations activées."
+fi
+
 echo "Le bundle ${BUNDLE_NAME} a été créé et enregistré avec succès."

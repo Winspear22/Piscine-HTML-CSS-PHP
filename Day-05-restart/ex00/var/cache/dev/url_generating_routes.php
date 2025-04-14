@@ -4,4 +4,6 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
+    'ex00_index' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::index'], [], [['text', '/ex00']], [], [], []],
+    'App\Ex00Bundle\Controller\Ex00Controller::index' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::index'], [], [['text', '/ex00']], [], [], []],
 ];

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Créer la table</title>
+</head>
+<body>
+    <h1>Ex00 - Création de la table 'users'</h1>
+
+    {% if message is defined %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <form method="get" action="{{ path('ex00_index') }}">
+        <button type="submit">Créer la table</button>
+    </form>
+</body>
+</html>

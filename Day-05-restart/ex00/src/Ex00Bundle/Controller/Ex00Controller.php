@@ -7,20 +7,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\DBAL\Connection;
 
-
 class Ex00Controller extends AbstractController
 {
- /**
+    /**
      * Méthode privée qui contient la logique de création
      */
     private function createTableLogic(Connection $connection): string
     {
         $message = "";
-        try {
+        try 
+        {
             $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users'")->rowCount();
-            if ($tableExists > 0) {
+            if ($tableExists > 0) 
                 $message = "La table 'users' existe déjà.";
-            } else {
+            else 
+            {
                 $sql = "CREATE TABLE users (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     username VARCHAR(255) UNIQUE NOT NULL,
@@ -33,7 +34,9 @@ class Ex00Controller extends AbstractController
                 $connection->executeStatement($sql);
                 $message = "Table 'users' créée avec succès.";
             }
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) 
+        {
             $message = "Erreur lors de la création de la table : " . $e->getMessage();
         }
 
@@ -41,11 +44,14 @@ class Ex00Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex00", name="ex00_index")
-     */
+    * @Route("/ex00", name="ex00_index")
+    */
     public function index(Connection $connection): Response
     {
         $message = $this->createTableLogic($connection);
-        return new Response($message);
+
+        return $this->render('create_table.html.twig', [
+            'message' => $message
+        ]);
     }
 }
