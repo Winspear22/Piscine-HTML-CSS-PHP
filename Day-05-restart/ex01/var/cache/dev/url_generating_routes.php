@@ -4,6 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'ex01bundle_index' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::index'], [], [['text', '/ex01']], [], [], []],
+    'ex01_index' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::index'], [], [['text', '/ex01']], [], [], []],
+    'ex01_create_table' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::createTable'], [], [['text', '/ex01/create']], [], [], []],
+    'ex01_delete_table' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::deleteTable'], [], [['text', '/ex01/delete']], [], [], []],
     'App\Ex01Bundle\Controller\Ex01Controller::index' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::index'], [], [['text', '/ex01']], [], [], []],
+    'App\Ex01Bundle\Controller\Ex01Controller::createTable' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::createTable'], [], [['text', '/ex01/create']], [], [], []],
+    'App\Ex01Bundle\Controller\Ex01Controller::deleteTable' => [[], ['_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::deleteTable'], [], [['text', '/ex01/delete']], [], [], []],
 ];

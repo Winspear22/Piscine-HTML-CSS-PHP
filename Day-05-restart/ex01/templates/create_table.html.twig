@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ex01 - ORM</title>
+</head>
+<body>
+    <h1>Créer la table avec ORM</h1>
+
+    {% if message is defined %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <form method="get" action="{{ path('ex01_create_table') }}">
+        <button type="submit">Créer la table</button>
+    </form>
+    
+    <form method="get" action="{{ path('ex01_delete_table') }}">
+        <button type="submit">Supprimer la table</button>
+    </form>
+
+</body>
+</html>

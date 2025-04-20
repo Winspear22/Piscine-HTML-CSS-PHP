@@ -8,7 +8,9 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/ex01' => [[['_route' => 'ex01bundle_index', '_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::index'], null, null, null, false, false, null]],
+        '/ex01' => [[['_route' => 'ex01_index', '_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::index'], null, null, null, false, false, null]],
+        '/ex01/create' => [[['_route' => 'ex01_create_table', '_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::createTable'], null, null, null, false, false, null]],
+        '/ex01/delete' => [[['_route' => 'ex01_delete_table', '_controller' => 'App\\Ex01Bundle\\Controller\\Ex01Controller::deleteTable'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

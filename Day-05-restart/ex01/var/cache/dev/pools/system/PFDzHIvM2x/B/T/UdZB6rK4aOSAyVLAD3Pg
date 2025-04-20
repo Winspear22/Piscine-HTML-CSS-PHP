@@ -17,7 +17,7 @@ return [PHP_INT_MAX, static fn () => \Symfony\Component\VarExporter\Internal\Hyd
                 [],
             ],
             'name' => [
-                'ex01bundle_index',
+                'ex01_index',
             ],
             'requirements' => [
                 [],
