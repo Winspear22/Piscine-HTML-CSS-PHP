@@ -3,6 +3,7 @@
 namespace App\Ex02Bundle\Controller;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,15 +25,44 @@ class Ex02Controller extends AbstractController
         return $this->render('index.html.twig');
     }
 
+    private function createTableIfNotExists(Connection $connection): void
+    {
+        try
+        {
+            $message = "";
+            $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users_ex02'")->rowCount();
+            if ($tableExists === 0) 
+            {
+                $sql = "CREATE TABLE users_ex02 (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    username VARCHAR(255) UNIQUE NOT NULL,
+                    name VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    enable BOOLEAN NOT NULL,
+                    birthdate DATETIME NOT NULL,
+                    address LONGTEXT NOT NULL
+                )";
+                $connection->executeStatement($sql);
+            }
+        }
+        catch (\Exception $e)
+        {
+            $message = "Erreur lors de la creation de la table users_ex02.";
+        }
+    }
+
     /**
      * @Route("/ex02/insert", name="ex02insert")
      */
-    public function insert(): Response
+    public function insert(Request $request, Connection $connection): Response
     {
         $message = "";
         try
         {
-            $form = $this->createFormBuilder()
+            $this->createTableIfNotExists($connection); // ← APPEL ICI
+            $form = $this->createFormBuilder(null, [
+                'method' => 'POST',
+            ])
                 ->add('username', TextType::class)
                 ->add('name', TextType::class)
                 ->add('email', EmailType::class)
@@ -41,12 +71,33 @@ class Ex02Controller extends AbstractController
                 ->add('address', TextareaType::class)
                 ->add('submit', SubmitType::class, ['label' => 'Ajouter l’utilisateur'])
                 ->getForm();
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) 
+                {
+                    $data = $form->getData();
+                    try 
+                    {
+                        $connection->insert('users_ex02', [
+                            'username' => $data['username'],
+                            'name' => $data['name'],
+                            'email' => $data['email'],
+                            'enable' => $data['enable'] ? 1 : 0,
+                            'birthdate' => $data['birthdate']->format('Y-m-d H:i:s'),
+                            'address' => $data['address'],
+                        ]);
+                        $message = "Utilisateur ajouté avec succès.";
+                    } 
+                    catch (\Exception $e) 
+                    {
+                        $message = "Erreur liee a la base de donnees : " . $e->getMessage();
+                    }
+                }
         }
         catch (\Exception $e)
         {
             $message = "Erreur lors de l'usage de la commande INSERT : " . $e->getMessage();
         }
-        return $this->render('insert.html.twig', ['form' => $form->createView()]);
+        return $this->render('insert.html.twig', ['form' => $form->createView(), 'message' => $message]);
     }
 
     /**
