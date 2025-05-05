@@ -21,7 +21,6 @@ class Ex02Controller extends AbstractController
      */
     public function index(): Response
     {
-        //return new Response("Hello from ex02insert!");
         return $this->render('index.html.twig');
     }
 
@@ -95,17 +94,47 @@ class Ex02Controller extends AbstractController
     /**
      * @Route("/ex02/select", name="ex02select")
      */
-    public function select(): Response
-    {
-        $message = "";
-        try
-        {
-
-        }
-        catch (\Exception $e)
-        {
-            $message = "Erreur lors de l'usage de la commande SELECT : " . $e->getMessage();
-        }
-        //return new Response("Hello from ex02select!");
-    }
+	public function select(Connection $connection): Response
+	{
+		$users = [];
+		$message = null;
+	
+		try 
+		{
+			$users = $connection->fetchAllAssociative("SELECT * FROM users_ex02");
+		} 
+		catch (\Exception $e) 
+		{
+			$message = "Erreur lors du SELECT : " . $e->getMessage();
+		}
+	
+		return $this->render('select.html.twig', [
+			'users' => $users,
+			'message' => $message,
+		]);
+	}
+	
+	/**
+ 	 * @Route("/ex02/delete", name="ex02delete")
+ 	 */
+	public function deleteTable(Request $request, Connection $connection): Response
+	{
+		$message = "";
+		try 
+		{
+			$tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users_ex02'")->rowCount();
+			if ($tableExists === 0) 
+				$message = "La table 'users_ex02' n'existe pas.";
+			else 
+			{
+				$connection->executeStatement("DROP TABLE users_ex02");
+				$message = "La table 'users_ex02' a été supprimée avec succès.";
+			}
+		} 
+		catch (\Exception $e) 
+		{
+			$message = "Erreur lors de la suppression de la table : " . $e->getMessage();
+		}
+		return $this->redirectToRoute('ex02insert');
+	}
 }

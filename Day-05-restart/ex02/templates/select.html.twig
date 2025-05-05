@@ -1,0 +1,29 @@
+<h1>Liste des utilisateurs</h1>
+
+{% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+
+{% if users is defined and users|length > 0 %}
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                {% for key in users[0]|keys %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    {% for key, value in user %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Aucun utilisateur trouvé.</p>
+{% endif %}
+<a href="{{ path('ex02insert') }}">🔍 Ajouter des utilisateurs</a>

@@ -7,3 +7,8 @@
 {% if message is defined %}
     <p><strong>{{ message }}</strong></p>
 {% endif %}
+
+<a href="{{ path('ex02select') }}">🔍 Voir les utilisateurs ajoutés</a>
+<form method="get" action="{{ path('ex02delete') }}">
+    <button type="submit">Supprimer la table</button>
+</form>
