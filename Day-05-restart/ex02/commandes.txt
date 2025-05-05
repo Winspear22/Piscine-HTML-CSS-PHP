@@ -1,0 +1,13 @@
+mysql -u admin -p -h 127.0.0.1
+SHOW DATABASES;
+USE ex02db;
+SHOW TABLES;
+DESCRIBE users_ex02;
+SELECT * FROM users_ex02;
+
+INSERT INTO users_ex02 (username, name, email, enable, birthdate, address)
+VALUES ('johndoe', 'John Doe', 'john@example.com', 1, NOW(), '42 rue du Code');
+
+DELETE FROM users_ex02 WHERE id = 1;
+TRUNCATE TABLE users_ex02;
+DROP TABLE users_ex02;

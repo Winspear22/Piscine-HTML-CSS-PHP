@@ -27,27 +27,19 @@ class Ex02Controller extends AbstractController
 
     private function createTableIfNotExists(Connection $connection): void
     {
-        try
-        {
-            $message = "";
-            $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users_ex02'")->rowCount();
-            if ($tableExists === 0) 
-            {
-                $sql = "CREATE TABLE users_ex02 (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    username VARCHAR(255) UNIQUE NOT NULL,
-                    name VARCHAR(255) NOT NULL,
-                    email VARCHAR(255) UNIQUE NOT NULL,
-                    enable BOOLEAN NOT NULL,
-                    birthdate DATETIME NOT NULL,
-                    address LONGTEXT NOT NULL
-                )";
-                $connection->executeStatement($sql);
-            }
-        }
-        catch (\Exception $e)
-        {
-            $message = "Erreur lors de la creation de la table users_ex02.";
+        $tableExists = $connection->executeQuery("SHOW TABLES LIKE 'users_ex02'")->rowCount();
+    
+        if ($tableExists === 0) {
+            $sql = "CREATE TABLE users_ex02 (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(255) UNIQUE NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                enable BOOLEAN NOT NULL,
+                birthdate DATETIME NOT NULL,
+                address LONGTEXT NOT NULL
+            )";
+            $connection->executeStatement($sql);
         }
     }
 
