@@ -1,0 +1,30 @@
+<h1>Liste des utilisateurs</h1>
+
+{% if users is not empty %}
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Id</th>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Enable</th>
+        <th>Birthdate</th>
+        <th>Address</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+        <td>{{ user.birthdate|date('Y-m-d') }}</td>
+        <td>{{ user.address }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p>Aucun utilisateur trouvé.</p>
+{% endif %}
+
+<a href="{{ path('ex03bundle_insert') }}">Ajouter un utilisateur</a>

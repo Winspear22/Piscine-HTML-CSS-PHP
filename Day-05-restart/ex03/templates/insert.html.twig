@@ -1,0 +1,11 @@
+<h1>Ajouter un utilisateur</h1>
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% if message %}
+    <p><strong>{{ message }}</strong></p>
+{% endif %}
+
+<a href="{{ path('ex03bundle_select') }}">Voir les utilisateurs</a>
