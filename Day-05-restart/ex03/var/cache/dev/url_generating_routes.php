@@ -8,8 +8,10 @@ return [
     'ex03bundle_insert' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::insert'], [], [['text', '/ex03/insert']], [], [], []],
     'ex03bundle_select' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::select'], [], [['text', '/ex03/select']], [], [], []],
     'ex03bundle_delete' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::delete'], [], [['text', '/ex03/delete']], [], [], []],
+    'app_ex03_ex03_notfound' => [['wildcard'], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::notFound'], ['wildcard' => '.*'], [['variable', '/', '.*', 'wildcard', true]], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::index' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::index'], [], [['text', '/ex03']], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::insert' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::insert'], [], [['text', '/ex03/insert']], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::select' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::select'], [], [['text', '/ex03/select']], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::delete' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::delete'], [], [['text', '/ex03/delete']], [], [], []],
+    'App\Ex03Bundle\Controller\Ex03Controller::notFound' => [['wildcard'], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::notFound'], ['wildcard' => '.*'], [['variable', '/', '.*', 'wildcard', true]], [], [], []],
 ];

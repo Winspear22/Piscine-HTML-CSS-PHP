@@ -69,4 +69,12 @@ class Ex03Controller extends AbstractController
     {
         return new Response("Hello from Ex03delete!");
     }
+
+    /**
+     * @Route("/{wildcard}", requirements={"wildcard"=".*"})
+     */
+    public function notFound(): Response
+    {
+        return $this->render('error404.html.twig', [], new Response('', 404));
+    }
 }
