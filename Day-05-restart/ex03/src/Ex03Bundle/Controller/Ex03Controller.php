@@ -4,7 +4,7 @@ namespace App\Ex03Bundle\Controller;
 
 use App\Entity\User;
 use App\Form\UserTypeForm;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Ex03Bundle\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,11 +23,10 @@ class Ex03Controller extends AbstractController
     /**
      * @Route("/ex03/insert", name="ex03bundle_insert")
      */
-    public function insert(Request $request, EntityManagerInterface $em)
+    public function insert(Request $request, UserService $userManager)
     {
         $user = new User();
         $form = $this->createForm(UserTypeForm::class, $user);
-
         $form->handleRequest($request);
         $message = "";
 
@@ -35,8 +34,7 @@ class Ex03Controller extends AbstractController
         {
             try 
             {
-                $em->persist($user);
-                $em->flush();
+                $userManager->save($user); // Utilisation du service !
                 $message = "Utilisateur enregistré avec succès.";
             } 
             catch (\Exception $e) 
@@ -53,9 +51,9 @@ class Ex03Controller extends AbstractController
     /**
      * @Route("/ex03/select", name="ex03bundle_select")
      */
-    public function select(EntityManagerInterface $em)
+    public function select(UserService $userManager)
     {
-        $users = $em->getRepository(User::class)->findAll();
+        $users = $userManager->getAll();
 
         return $this->render('select.html.twig', [
             'users' => $users
