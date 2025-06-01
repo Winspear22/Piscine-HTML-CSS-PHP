@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class Ex08Controller extends AbstractController
 {
     /**
-     * @Route("/ex08", name="ex08")
+     * @Route("/ex08", name="ex08_index")
      */
     public function index(): Response
     {
@@ -54,7 +54,34 @@ class Ex08Controller extends AbstractController
      */
     public function addMaritalStatusColumn(Connection $connection)
     {
-
+		try
+		{
+			$tableExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
+			if ($tableExists == 0)
+			{
+				$message = "Erreur lors l'ajout du statut marital : la table 'persons' n'existe pas.";
+				$this->addFlash('notice', $message);
+				return $this->redirectToRoute('ex08_create_persons');
+							}
+			else
+			{
+				$columnExists = $connection->executeQuery("SHOW COLUMNS FROM persons LIKE 'marital_status'")->rowCount();
+				if ($columnExists > 0)
+					$message = "La colonne 'marital_status' existe déjà !";
+				else
+				{
+					$sql = "ALTER TABLE persons 
+					ADD COLUMN marital_status ENUM('single','married','widower') NOT NULL DEFAULT 'single';";
+					$connection->executeStatement($sql);
+					$message = "Requête exécutée avec succès : la colonne situation maritale a été ajoutée avec succès.";
+				}
+			}
+		}
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors l'ajout du statut marital : " . $e->getMessage();
+		}
+		return $this->render('add_marital_status.html.twig', ['message' => $message]);
     }
 
     /**

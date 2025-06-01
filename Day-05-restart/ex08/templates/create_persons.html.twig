@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>Créer table persons</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Créer la table persons</title>
+</head>
 <body>
+    {% for msg in app.flashes('notice') %}
+        <div class="alert">{{ msg }}</div>
+    {% endfor %}
+
     <h1>Créer la table persons</h1>
     <p>{{ message }}</p>
-    <a href="{{ path('ex08bundle_index') }}">Retour accueil</a>
+    <a href="{{ path('ex08_index') }}">Accueil ex08</a>
 </body>
 </html>
