@@ -71,7 +71,7 @@ class Ex04Controller extends AbstractController
 				('user10', 'Nom10', 'user10@example.com', 1, '1999-10-10 00:00:00', 'Adresse 10')";
 				$connection->executeStatement($insertSql);
 				$message = "Table 'users_ex04' a été (re)remplie avec les 10 utilisateurs de base.";
-		}
+		    }
 		}
         catch (\Exception $e) 
         {

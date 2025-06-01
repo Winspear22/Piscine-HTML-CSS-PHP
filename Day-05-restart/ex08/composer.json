@@ -2,25 +2,18 @@
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",
-    "prefer-stable": true,
+    "prefer-stable": false,
     "require": {
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/annotations": "^2.0",
         "symfony/console": "6.4.*",
         "symfony/dotenv": "6.4.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.4.*",
         "symfony/runtime": "6.4.*",
         "symfony/yaml": "6.4.*",
-        "winspear22/php42": "*"
-    },
-    "repositories": {
-        "php42": {
-            "type": "vcs",
-            "url": "https://github.com/Winspear22/php42"
-        }
+        "winspear22/php42": "dev-main"
     },
     "config": {
         "allow-plugins": {
@@ -29,6 +22,12 @@
             "symfony/runtime": true
         },
         "sort-packages": true
+    },
+    "repositories": {
+        "php42": {
+            "type": "vcs",
+            "url": "https://github.com/Winspear22/php42"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -67,7 +66,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "6.4.*"
+            "require": "6.4.*",
+            "docker": false
         }
     }
 }
