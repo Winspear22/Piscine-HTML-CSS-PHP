@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Création de la table utilisateurs</title>
+</head>
+<body>
+    <h1>Création/Remplissage de la table users_ex04</h1>
+    {% if message %}
+        <p><strong>{{ message }}</strong></p>
+    {% endif %}
+    <a href="{{ path('ex04bundle_select') }}">Voir la liste des utilisateurs</a>
+</body>
+</html>
