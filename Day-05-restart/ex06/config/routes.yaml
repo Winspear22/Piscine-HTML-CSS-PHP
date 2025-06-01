@@ -1,9 +1,15 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex06bundle_index:
+    path: /ex06
+    controller: App\Ex06Bundle\Controller\Ex06Controller::index
 
-Ex06Bundle:
-    resource: '../src/Ex06Bundle/Controller'
-    type: annotation
+ex06_create_table:
+    path: /ex06/create
+    controller: App\Ex06Bundle\Controller\Ex06Controller::createDataInTable
+
+ex06_select:
+    path: /ex06/select
+    controller: App\Ex06Bundle\Controller\Ex06Controller::selectTableContent
+
+ex06_update_data:
+    path: /ex06/update/{id}
+    controller: App\Ex06Bundle\Controller\Ex06Controller::updateTableContent

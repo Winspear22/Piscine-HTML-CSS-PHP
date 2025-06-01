@@ -15,7 +15,7 @@ class Ex06Controller extends AbstractController
      */
     public function index(): Response
     {
-        return new Response("Hello from Ex06Controller!");
+        return $this->redirectToRoute('ex06_select');
     }
 
     /**
@@ -103,7 +103,37 @@ class Ex06Controller extends AbstractController
 	 */
 	public function updateTableContent(Connection $connection, int $id, Request $request)
 	{
-		
+		$user = $connection->fetchAssociative('SELECT * FROM users_ex06 WHERE id = ?', [$id]);
+		if (!$user) 
+		{
+			$this->addFlash('notice', "Utilisateur inexistant.");
+			return $this->redirectToRoute('ex06_select');
+		}
+	// 2. Si la requête est POST : traiter la soumission du formulaire
+		if ($request->isMethod('POST')) 
+		{
+			$username = $request->request->get('username');
+			$name = $request->request->get('name');
+			$email = $request->request->get('email');
+			$enable = $request->request->get('enable') ? 1 : 0;
+			$birthdate = $request->request->get('birthdate');
+			$address = $request->request->get('address');
+	
+			try 
+			{
+				$connection->executeStatement(
+					'UPDATE users_ex06 SET username = ?, name = ?, email = ?, enable = ?, birthdate = ?, address = ? WHERE id = ?',
+					[$username, $name, $email, $enable, $birthdate . ' 00:00:00', $address, $id]
+				);
+				$this->addFlash('notice', "Utilisateur modifié avec succès !");
+			} 
+			catch (\Exception $e) 
+			{
+				$this->addFlash('notice', "Erreur lors de la modification : " . $e->getMessage());
+			}
+			return $this->redirectToRoute('ex06_select');
+		}
+		// 3. Sinon (GET), afficher le formulaire pré-rempli
+		return $this->render('update.html.twig', ['user' => $user]);
 	}	
-
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier l'utilisateur</title>
+</head>
+<body>
+    <h1>Modifier l’utilisateur n°{{ user.id }}</h1>
+    <form method="post">
+        <label>Nom d'utilisateur :</label>
+        <input type="text" name="username" value="{{ user.username }}" required><br>
+        <label>Nom :</label>
+        <input type="text" name="name" value="{{ user.name }}" required><br>
+        <label>Email :</label>
+        <input type="email" name="email" value="{{ user.email }}" required><br>
+        <label>Actif :</label>
+        <input type="checkbox" name="enable" value="1" {% if user.enable %}checked{% endif %}><br>
+        <label>Date de naissance :</label>
+        <input type="date" name="birthdate" value="{{ user.birthdate|date('Y-m-d') }}" required><br>
+        <label>Adresse :</label>
+        <textarea name="address" required>{{ user.address }}</textarea><br>
+        <button type="submit">Enregistrer</button>
+        <a href="{{ path('ex06_select') }}">Annuler</a>
+    </form>
+</body>
+</html>
