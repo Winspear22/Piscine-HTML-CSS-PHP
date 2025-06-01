@@ -10,8 +10,8 @@
         th { background: #efefef; }
         .alert { background: #d2f6c5; color: #205a18; padding: 12px 20px; margin: 16px auto; border-radius: 6px; max-width: 600px; border: 1px solid #90d09f;}
         .error { background: #fae0e0; color: #a22929; border: 1px solid #e39e9e; }
-        .supprimer { color: #fff; background: #cd002c; padding: 6px 12px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;}
-        .supprimer:hover { background: #a90021; }
+        .Update { color: #fff; background: #cd002c; padding: 6px 12px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;}
+        .Update:hover { background: #a90021; }
     </style>
 </head>
 <body>
@@ -48,8 +48,8 @@
                         <td>{{ user.birthdate|date('Y-m-d') }}</td>
                         <td>{{ user.address }}</td>
                         <td>
-                            <a href="{{ path('ex04_delete_data', {'id': user.id}) }}" class="supprimer"
-                               onclick="return confirm('Supprimer cet utilisateur ?');">Supprimer</a>
+                            <a href="{{ path('ex06_update_data', {'id': user.id}) }}" class="Update"
+                               onclick="return confirm('Update cet utilisateur ?');">Update</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -62,7 +62,7 @@
     </table>
 
     <div style="text-align:center;">
-        <a href="{{ path('ex04_create_table') }}">(Re)générer la table et les utilisateurs</a>
+        <a href="{{ path('ex06_create_table') }}">(Re)générer la table et les utilisateurs</a>
     </div>
 </body>
 </html>
