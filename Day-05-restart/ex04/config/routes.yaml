@@ -1,9 +1,15 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex04bundle_index:
+    path: /ex04
+    controller: App\Ex04Bundle\Controller\Ex04Controller::index
 
-Ex04Bundle:
-    resource: '../src/Ex04Bundle/Controller'
-    type: annotation
+ex04_create_table:
+    path: /ex04/create
+    controller: App\Ex04Bundle\Controller\Ex04Controller::createDataInTable
+
+ex04bundle_select:
+    path: /ex04/select
+    controller: App\Ex04Bundle\Controller\Ex04Controller::selectTableContent
+
+ex04_delete_data:
+    path: /ex04/delete/{id}
+    controller: App\Ex04Bundle\Controller\Ex04Controller::deleteTableContent

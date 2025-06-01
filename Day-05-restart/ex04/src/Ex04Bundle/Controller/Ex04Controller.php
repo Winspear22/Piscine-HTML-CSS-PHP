@@ -14,7 +14,6 @@ class Ex04Controller extends AbstractController
      */
     public function index(): Response
     {
-        // Redirige directement vers la liste des utilisateurs
         return $this->redirectToRoute('ex04bundle_select');
     }
 
@@ -122,13 +121,5 @@ class Ex04Controller extends AbstractController
         }
         $this->addFlash('notice', $message);
         return $this->redirectToRoute('ex04bundle_select');
-    }
-
-    /**
-     * @Route("/{wildcard}", requirements={"wildcard"=".*"})
-     */
-    public function notFound(): Response
-    {
-        return $this->render('error404.html.twig', [], new Response('', 404));
     }
 }
