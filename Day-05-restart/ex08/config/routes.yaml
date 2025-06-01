@@ -1,9 +1,19 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex08bundle_index:
+    path: /ex08
+    controller: App\Ex08Bundle\Controller\Ex08Controller::index
 
-Ex08Bundle:
-    resource: '../src/Ex08Bundle/Controller'
-    type: annotation
+ex08_create_persons:
+    path: /ex08/create-persons
+    controller: App\Ex08Bundle\Controller\Ex08Controller::createPersonsTable
+
+ex08_add_marital_status:
+    path: /ex08/add-marital-status
+    controller: App\Ex08Bundle\Controller\Ex08Controller::addMaritalStatusColumn
+
+ex08_create_extra_tables:
+    path: /ex08/create-extra-tables
+    controller: App\Ex08Bundle\Controller\Ex08Controller::createExtraTables
+
+ex08_add_relations:
+    path: /ex08/add-relations
+    controller: App\Ex08Bundle\Controller\Ex08Controller::addRelations

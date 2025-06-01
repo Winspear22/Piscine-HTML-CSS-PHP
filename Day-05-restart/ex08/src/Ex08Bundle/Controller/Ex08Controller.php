@@ -10,11 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class Ex08Controller extends AbstractController
 {
     /**
-     * @Route("/ex08", name="ex08bundle_index")
+     * @Route("/ex08", name="ex08")
      */
     public function index(): Response
     {
-        return new Response("Hello from Ex08Controller!");
+        return $this->redirectToRoute('ex08_create_persons');
     }
 
     /**
@@ -22,7 +22,31 @@ class Ex08Controller extends AbstractController
      */
     public function createPersonsTable(Connection $connection)
     {
-        
+        $message = "";
+		try
+		{
+			$tableExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
+			if ($tableExists == 0)
+			{
+				$sql = "CREATE TABLE persons (
+					id INT AUTO_INCREMENT PRIMARY KEY,
+					username VARCHAR(255) UNIQUE NOT NULL,
+					name VARCHAR(255) NOT NULL,
+					email VARCHAR(255) UNIQUE NOT NULL,
+					enable BOOLEAN NOT NULL,
+					birthdate DATETIME NOT NULL
+				)";
+				$connection->executeStatement($sql);
+				$message = "Table 'persons' créée avec succès.";
+			}
+			else
+				$message = "La table 'persons' existe déjà.";
+		}
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors de la création de la table : " . $e->getMessage();
+		}
+		return $this->render('create_persons.html.twig', ['message' => $message]);
     }
 
     /**
@@ -46,7 +70,6 @@ class Ex08Controller extends AbstractController
      */
     public function addRelations(Connection $connection)
     {
-        
-    }
 
+    }
 }
