@@ -25,3 +25,7 @@ ex08_add_Addresses:
 ex08_add_bankAccount:
     path: /ex08/add-relations-BankAccount
     controller: App\Ex08Bundle\Controller\Ex08Controller::addRelationsBankAccount
+
+ex08_drop_tables:
+    path: /ex08/drop-tables
+    controller: App\Ex08Bundle\Controller\Ex08Controller::dropTables

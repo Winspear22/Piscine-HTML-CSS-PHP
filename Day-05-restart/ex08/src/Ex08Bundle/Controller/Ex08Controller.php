@@ -184,10 +184,36 @@ class Ex08Controller extends AbstractController
 		$message = "";
 		try
 		{
+			$addrExists = $connection->executeQuery("SHOW TABLES LIKE 'addresses'")->rowCount();
+			if ($addrExists == 0)
+			{
+				$message = "Erreur. La table 'addresses' n'existe pas.";
+				return $this->render('addRelations_Addresses.html.twig', ['message' => $message]);
+			}
+			$personExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
+			if ($personExists == 0)
+			{
+				$message = "Erreur. La table 'persons' n'existe pas.";
+				return $this->render('addRelations_Addresses.html.twig', ['message' => $message]);
+			}
+			$colAddr = $connection->executeQuery("SHOW COLUMNS FROM addresses LIKE 'person_id'")->rowCount();
+			if ($colAddr == 0)
+			{
+				$connection->executeStatement("
+					ALTER TABLE addresses
+					ADD COLUMN person_id INT,
+					ADD CONSTRAINT fk_person_addr
+					FOREIGN KEY (person_id) REFERENCES persons(id)
+					ON DELETE SET NULL
+				");
+				$message = "Relation one-to-many persons/addresses créée !";
+			}
+			else
+				$message = "La relation one-to-many persons/addresses existe déjà.";
 		}
 		catch (\Exception $e)
 		{
-
+			$message = "Erreur dans la création de la liaison 'persons'/addresses : " . $e->getMessage();
 		}
 		return $this->render('addRelations_Addresses.html.twig', ['message' => $message]);
     }
@@ -239,4 +265,28 @@ class Ex08Controller extends AbstractController
 		}
 		return $this->render('addRelations_BankAccount.html.twig', ['message' => $message]);
     }
+
+	/**
+	 * @Route("/ex08/drop-tables", name="ex08_drop_tables")
+	 */
+	public function dropTables(Connection $connection)
+	{
+		$message = "";
+		try 
+		{
+			$bankSql = "DROP TABLE IF EXISTS bank_accounts";
+			$addrSql = "DROP TABLE IF EXISTS addresses";
+			$persSql = "DROP TABLE IF EXISTS persons";
+			$connection->executeStatement($bankSql);
+			$connection->executeStatement($addrSql);
+			$connection->executeStatement($persSql);
+			$message = "Les tables bank_accounts, addresses et persons ont bien été supprimées (si elles existaient) !";
+		} 
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors de la suppression des tables : " . $e->getMessage();
+		}
+		return $this->render('drop_tables.html.twig', ['message' => $message]);
+	}
+
 }

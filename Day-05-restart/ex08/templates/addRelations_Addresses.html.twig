@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Ajout de la relation Addresses</title>
-	</head>
-	<body>
-	</body>
+<head>
+    <meta charset="UTF-8">
+    <title>Création de la relation One-to-Many (persons/addresses)</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .btn { padding: 6px 16px; background: #015b87; color: #fff; border-radius: 5px; text-decoration: none; }
+        .btn:hover { background: #011f3f; }
+        .msg { margin: 30px 0; padding: 10px 24px; border-radius: 6px; background: #e0ffe0; color: #135c12; }
+    </style>
+</head>
+<body>
+    <h1>Relation One-to-Many persons &lt;--&gt; addresses</h1>
+    {% if message %}
+        <div class="msg">{{ message }}</div>
+    {% endif %}
+
+    <a class="btn" href="{{ path('ex08_index') }}">Retour à la page principale</a>
+</body>
 </html>
