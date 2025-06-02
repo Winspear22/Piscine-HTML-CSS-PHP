@@ -177,10 +177,37 @@ class Ex08Controller extends AbstractController
 
 
     /**
-     * @Route("/ex08/add-relations", name="ex08_add_relations")
+     * @Route("/ex08/add-relations-addresses", name="ex08_add_Addresses")
      */
-    public function addRelations(Connection $connection)
+    public function addRelationsAddresses(Connection $connection)
     {
+		$message = "";
+		try
+		{
+
+		}
+		catch (\Exception $e)
+		{
+
+		}
+		return $this->render('addRelations_Addresses.html.twig', ['message' => $message]);
+    }
+
+	/**
+     * @Route("/ex08/add-relations-BankAccount", name="ex08_add_bankAccount")
+     */
+    public function addRelationsBankAccount(Connection $connection)
+    {
+		$message = "";
+		try
+		{
+
+		}
+		catch (\Exception $e)
+		{
+
+		}
+		return $this->render('addRelations_BankAccount.html.twig', ['message' => $message]);
 
     }
 }
