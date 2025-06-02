@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin ex08 - Toutes les données</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; margin: 20px 0; width: 100%; }
+        th, td { border: 1px solid #aaa; padding: 4px 8px; text-align: left; }
+        th { background: #f0f0f0; }
+        .btn { padding: 6px 16px; background: #015b87; color: #fff; border-radius: 5px; text-decoration: none; }
+        .btn:hover { background: #011f3f; }
+    </style>
+</head>
+<body>
+    <h1>Base de données ex08 (Vue globale)</h1>
+    {% if message %}<p style="color:red;">{{ message }}</p>{% endif %}
+
+    <h2>Table persons</h2>
+    {% if persons is not empty %}
+        <table>
+            <tr>
+                {% for k, v in persons[0] %}<th>{{ k }}</th>{% endfor %}
+            </tr>
+            {% for row in persons %}
+                <tr>
+                    {% for v in row %}<td>{{ v }}</td>{% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aucune personne enregistrée.</p>
+    {% endif %}
+
+    <h2>Table addresses</h2>
+    {% if addresses is not empty %}
+        <table>
+            <tr>
+                {% for k, v in addresses[0] %}<th>{{ k }}</th>{% endfor %}
+            </tr>
+            {% for row in addresses %}
+                <tr>
+                    {% for v in row %}<td>{{ v }}</td>{% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aucune adresse enregistrée.</p>
+    {% endif %}
+
+    <h2>Table bank_accounts</h2>
+    {% if bankAccounts is not empty %}
+        <table>
+            <tr>
+                {% for k, v in bankAccounts[0] %}<th>{{ k }}</th>{% endfor %}
+            </tr>
+            {% for row in bankAccounts %}
+                <tr>
+                    {% for v in row %}<td>{{ v }}</td>{% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Aucun compte bancaire enregistré.</p>
+    {% endif %}
+
+    <div style="margin:30px 0;">
+        <a class="btn" href="{{ path('ex08_create_persons') }}">Créer la table persons</a>
+        <a class="btn" href="{{ path('ex08_add_marital_status') }}">Ajouter la colonne marital_status</a>
+		<a class="btn" href="{{ path('ex08_create_address_tables') }}">Créer la table addresses</a>
+		<a class="btn" href="{{ path('ex08_create_bankaccount_tables') }}">Créer la table bank_accounts</a>
+        <a class="btn" href="{{ path('ex08_add_relations') }}">Ajouter les relations</a>
+    </div>
+</body>
+</html>

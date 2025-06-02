@@ -10,9 +10,13 @@ ex08_add_marital_status:
     path: /ex08/add-marital-status
     controller: App\Ex08Bundle\Controller\Ex08Controller::addMaritalStatusColumn
 
-ex08_create_extra_tables:
-    path: /ex08/create-extra-tables
-    controller: App\Ex08Bundle\Controller\Ex08Controller::createExtraTables
+ex08_create_address_tables:
+    path: /ex08/create-address-table
+    controller: App\Ex08Bundle\Controller\Ex08Controller::createAddressesTable
+
+ex08_create_bankaccount_tables:
+    path: /ex08/create-bankaccount-table
+    controller: App\Ex08Bundle\Controller\Ex08Controller::createBankAccountsTable
 
 ex08_add_relations:
     path: /ex08/add-relations

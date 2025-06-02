@@ -9,13 +9,47 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Ex08Controller extends AbstractController
 {
-    /**
-     * @Route("/ex08", name="ex08_index")
-     */
-    public function index(): Response
-    {
-        return $this->redirectToRoute('ex08_create_persons');
-    }
+
+	/**
+ 	 * @Route("/ex08", name="ex08_index")
+ 	 */
+	public function index(Connection $connection)
+	{
+		// Préparer des tableaux vides par défaut
+		$persons = [];
+		$addresses = [];
+		$bankAccounts = [];
+		$message = "";
+
+		// Tenter de récupérer les données de chaque table si elle existe
+		try 
+		{
+			// Persons
+			$tableExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
+			if ($tableExists > 0)
+				$persons = $connection->fetchAllAssociative('SELECT * FROM persons');
+			// Addresses
+			$addrExists = $connection->executeQuery("SHOW TABLES LIKE 'addresses'")->rowCount();
+			if ($addrExists > 0)
+				$addresses = $connection->fetchAllAssociative('SELECT * FROM addresses');
+			// Bank Accounts
+			$bankExists = $connection->executeQuery("SHOW TABLES LIKE 'bank_accounts'")->rowCount();
+			if ($bankExists > 0)
+				$bankAccounts = $connection->fetchAllAssociative('SELECT * FROM bank_accounts');
+		} 
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors de la récupération des données : " . $e->getMessage();
+		}
+
+		return $this->render('display_all.html.twig', [
+			'persons' => $persons,
+			'addresses' => $addresses,
+			'bankAccounts' => $bankAccounts,
+			'message' => $message
+		]);
+	}
+
 
     /**
      * @Route("/ex08/create-persons", name="ex08_create_persons")
@@ -62,12 +96,16 @@ class Ex08Controller extends AbstractController
 				$message = "Erreur lors l'ajout du statut marital : la table 'persons' n'existe pas.";
 				$this->addFlash('notice', $message);
 				return $this->redirectToRoute('ex08_create_persons');
-							}
+			}
 			else
 			{
 				$columnExists = $connection->executeQuery("SHOW COLUMNS FROM persons LIKE 'marital_status'")->rowCount();
 				if ($columnExists > 0)
+				{
 					$message = "La colonne 'marital_status' existe déjà !";
+					$this->addFlash('notice', $message);
+					return $this->redirectToRoute('ex08_create_persons');
+				}
 				else
 				{
 					$sql = "ALTER TABLE persons 
@@ -85,12 +123,60 @@ class Ex08Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex08/create-extra-tables", name="ex08_create_extra_tables")
+     * @Route("/ex08/create-address-table", name="ex08_create_address_tables")
      */
-    public function createExtraTables(Connection $connection)
-    {
+	public function createAddressesTable(Connection $connection) 
+	{
+		$message = "";
+		try
+		{
+			$addressExists = $connection->executeQuery("SHOW TABLES LIKE 'addresses'")->rowCount();
+			if ($addressExists == 0)
+			{
+				$sql = "CREATE TABLE addresses (
+				id INT AUTO_INCREMENT PRIMARY KEY,
+				street VARCHAR(255) NOT NULL,
+				city VARCHAR(255) NOT NULL,
+				country VARCHAR(255) NOT NULL
+				)";
+				$connection->executeStatement($sql);
+				$message = "Création de la table 'addresses' faite avec succès.";
+			}
+		}
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors de la création de la table 'addresses', code erreur : " . $e;
+		}
+		return $this->render('create_extra_table.html.twig', ['message' => $message]);
+	}
 
-    }
+	/**
+     * @Route("/ex08/create-BankAccount-table", name="ex08_create_BankAccount_tables")
+     */
+	public function createBankAccountsTable(Connection $connection)
+	{
+		$message = "";
+		try
+		{
+			$bankExists = $connection->executeQuery("SHOW TABLES LIKE 'bank_accounts'")->rowCount();
+			if ($bankExists == 0)
+			{
+				$sql = "CREATE TABLE bank_accounts (
+					id INT AUTO_INCREMENT PRIMARY KEY,
+					iban VARCHAR(34) NOT NULL,
+					bank_name VARCHAR(255) NOT NULL
+				)";
+				$connection->executeStatement($sql);
+				$message = "Création de la table 'addresses' faite avec succès.";
+			}
+		}
+		catch (\Exception $e)
+		{
+			$message = "Erreur lors de la création de la table 'bank_accounts', code erreur : " . $e;
+		}
+		return $this->render('create_extra_table.html.twig', ['message' => $message]);
+	}
+
 
     /**
      * @Route("/ex08/add-relations", name="ex08_add_relations")
