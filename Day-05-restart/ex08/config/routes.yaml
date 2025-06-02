@@ -1,4 +1,4 @@
-ex08bundle_index:
+ex08_index:
     path: /ex08
     controller: App\Ex08Bundle\Controller\Ex08Controller::index
 

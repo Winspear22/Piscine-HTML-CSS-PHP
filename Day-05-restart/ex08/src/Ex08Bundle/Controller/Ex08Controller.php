@@ -20,6 +20,9 @@ class Ex08Controller extends AbstractController
 		$addresses = [];
 		$bankAccounts = [];
 		$message = "";
+		$tableExists = 0;
+		$addrExists = 0;
+		$bankExists = 0;
 
 		// Tenter de récupérer les données de chaque table si elle existe
 		try 
@@ -43,6 +46,9 @@ class Ex08Controller extends AbstractController
 		}
 
 		return $this->render('display_all.html.twig', [
+			'tableExists' => $tableExists,
+			'addrExists' => $addrExists,
+			'bankExists' => $bankExists,
 			'persons' => $persons,
 			'addresses' => $addresses,
 			'bankAccounts' => $bankAccounts,
@@ -92,20 +98,12 @@ class Ex08Controller extends AbstractController
 		{
 			$tableExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
 			if ($tableExists == 0)
-			{
 				$message = "Erreur lors l'ajout du statut marital : la table 'persons' n'existe pas.";
-				$this->addFlash('notice', $message);
-				return $this->redirectToRoute('ex08_create_persons');
-			}
 			else
 			{
 				$columnExists = $connection->executeQuery("SHOW COLUMNS FROM persons LIKE 'marital_status'")->rowCount();
 				if ($columnExists > 0)
-				{
 					$message = "La colonne 'marital_status' existe déjà !";
-					$this->addFlash('notice', $message);
-					return $this->redirectToRoute('ex08_create_persons');
-				}
 				else
 				{
 					$sql = "ALTER TABLE persons 
@@ -147,7 +145,7 @@ class Ex08Controller extends AbstractController
 		{
 			$message = "Erreur lors de la création de la table 'addresses', code erreur : " . $e;
 		}
-		return $this->render('create_extra_table.html.twig', ['message' => $message]);
+		return $this->render('create_extra_tables.html.twig', ['message' => $message]);
 	}
 
 	/**
@@ -174,7 +172,7 @@ class Ex08Controller extends AbstractController
 		{
 			$message = "Erreur lors de la création de la table 'bank_accounts', code erreur : " . $e;
 		}
-		return $this->render('create_extra_table.html.twig', ['message' => $message]);
+		return $this->render('create_extra_tables.html.twig', ['message' => $message]);
 	}
 
 

@@ -17,6 +17,14 @@
     {% if message %}<p style="color:red;">{{ message }}</p>{% endif %}
 
     <h2>Table persons</h2>
+
+
+    {% if tableExists > 0 %}
+        <p>La table <strong>persons</strong> existe !</p>
+    {% else %}
+        <p>La table <strong>persons</strong> n’existe pas.</p>
+    {% endif %}
+
     {% if persons is not empty %}
         <table>
             <tr>
@@ -33,6 +41,13 @@
     {% endif %}
 
     <h2>Table addresses</h2>
+
+    {% if addrExists > 0 %}
+        <p>La table <strong>addresses</strong> existe !</p>
+    {% else %}
+        <p>La table <strong>addresses</strong> n’existe pas.</p>
+    {% endif %}
+
     {% if addresses is not empty %}
         <table>
             <tr>
@@ -49,6 +64,12 @@
     {% endif %}
 
     <h2>Table bank_accounts</h2>
+
+    {% if bankExists > 0 %}
+        <p>La table <strong>bank_account</strong> existe !</p>
+    {% else %}
+        <p>La table <strong>bank_account</strong> n’existe pas.</p>
+    {% endif %}
     {% if bankAccounts is not empty %}
         <table>
             <tr>
