@@ -1,9 +1,13 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex05_index:
+    path: /ex05
+    controller: App\Ex05Bundle\Controller\Ex05Controller::index
 
-Ex05Bundle:
-    resource: '../src/Ex05Bundle/Controller'
-    type: annotation
+ex05_create:
+    path: /ex05/create
+    controller: App\Ex05Bundle\Controller\Ex05Controller::createRandomUsers
+
+ex05_delete:
+    path: /ex05/delete/{id}
+    controller: App\Ex05Bundle\Controller\Ex05Controller::deleteUser
+    requirements:
+        id: '\d+'
