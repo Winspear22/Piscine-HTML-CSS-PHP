@@ -184,7 +184,6 @@ class Ex08Controller extends AbstractController
 		$message = "";
 		try
 		{
-
 		}
 		catch (\Exception $e)
 		{
@@ -201,13 +200,43 @@ class Ex08Controller extends AbstractController
 		$message = "";
 		try
 		{
-
+			$bankExists = $connection->executeQuery("SHOW TABLES LIKE 'bank_accounts'")->rowCount();
+			if ($bankExists == 0)
+			{
+				$message = "Erreur. La table 'bank_accounts' n'existe pas.";
+				return $this->render('addRelations_BankAccount.html.twig', ['message' => $message]);
+			}
+			else
+			{
+				$personExists = $connection->executeQuery("SHOW TABLES LIKE 'persons'")->rowCount();
+				if ($personExists == 0)
+				{
+					$message = "Erreur. La table 'persons' n'existe pas.";
+					return $this->render('addRelations_BankAccount.html.twig', ['message' => $message]);
+				}
+				else
+				{
+					$colBank = $connection->executeQuery("SHOW COLUMNS FROM bank_accounts LIKE 'person_id'")->rowCount();
+					if ($colBank == 0) 
+					{
+						$connection->executeStatement("
+							ALTER TABLE bank_accounts
+							ADD COLUMN person_id INT UNIQUE,
+							ADD CONSTRAINT fk_person
+							FOREIGN KEY (person_id) REFERENCES persons(id)
+							ON DELETE SET NULL
+						");
+						$message = "Relation one-to-one persons/bank_accounts créée !";
+					}
+					else 
+						$message = "La relation one-to-one persons/bank_accounts existe déjà.";
+				}
+			}
 		}
 		catch (\Exception $e)
 		{
-
+			$message = "Erreur dans la création de la liaison 'persons'/bank_account : " . $e->getMessage();
 		}
 		return $this->render('addRelations_BankAccount.html.twig', ['message' => $message]);
-
     }
 }

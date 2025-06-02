@@ -18,10 +18,6 @@ ex08_create_bankaccount_tables:
     path: /ex08/create-bankaccount-table
     controller: App\Ex08Bundle\Controller\Ex08Controller::createBankAccountsTable
 
-ex08_add_relations:
-    path: /ex08/add-relations
-    controller: App\Ex08Bundle\Controller\Ex08Controller::addRelations
-
 ex08_add_Addresses:
     path: /ex08/add-relations-addresses
     controller: App\Ex08Bundle\Controller\Ex08Controller::addRelationsAddresses
