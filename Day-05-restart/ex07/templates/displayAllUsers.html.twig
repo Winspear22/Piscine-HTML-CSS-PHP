@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des utilisateurs</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { border-collapse: collapse; margin: 30px auto; width: 95%; }
+        th, td { border: 1px solid #888; padding: 6px 10px; text-align: center; }
+        th { background: #efefef; }
+        .alert { background: #d2f6c5; color: #205a18; padding: 12px 20px; margin: 16px auto; border-radius: 6px; max-width: 600px; border: 1px solid #90d09f;}
+        .error { background: #fae0e0; color: #a22929; border: 1px solid #e39e9e; }
+        .modifier { color: #fff; background: #088c38; padding: 6px 12px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;}
+        .modifier:hover { background: #066326; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Liste des utilisateurs</h1>
+
+    {# Affichage des messages flash #}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert{% if label == 'error' %} error{% endif %}">{{ message }}</div>
+        {% endfor %}
+    {% endfor %}
+<div style="text-align:center; margin-bottom:20px;">
+    <a href="{{ path('ex07_create') }}" style="background:#088c38;color:#fff;padding:8px 18px;border-radius:5px;text-decoration:none;font-weight:bold;">
+        Générer 10 utilisateurs random
+    </a>
+</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom d'utilisateur</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Actif</th>
+                <th>Date de naissance</th>
+                <th>Adresse</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if users is not empty %}
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+                        <td>{{ user.birthdate ? user.birthdate|date('Y-m-d') : '' }}</td>
+                        <td>{{ user.address }}</td>
+                        <td>
+                            <a href="{{ path('ex07_edit', {'id': user.id}) }}" class="modifier">
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun utilisateur trouvé.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>

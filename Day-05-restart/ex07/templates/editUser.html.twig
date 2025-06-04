@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier l'utilisateur</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .form-container { max-width: 500px; margin: 32px auto; padding: 24px; border-radius: 10px; border: 1px solid #ddd; background: #fafafa;}
+        label { font-weight: bold; }
+        button { margin-top: 12px; background: #088c38; color: #fff; padding: 8px 18px; border: none; border-radius: 5px; font-weight: bold; }
+        button:hover { background: #066326; }
+        a { text-decoration: none; color: #088c38; margin-left: 16px; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Modifier l’utilisateur</h1>
+
+    <div class="form-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert{% if label == 'error' %} error{% endif %}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit">Enregistrer</button>
+            <a href="{{ path('ex07_index') }}">Annuler</a>
+        {{ form_end(form) }}
+    </div>
+</body>
+</html>

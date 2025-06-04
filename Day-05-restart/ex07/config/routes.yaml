@@ -1,9 +1,13 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex07_index:
+    path: /ex07
+    controller: App\Ex07Bundle\Controller\Ex07Controller::index
 
-Ex07Bundle:
-    resource: '../src/Ex07Bundle/Controller'
-    type: annotation
+ex07_create:
+    path: /ex07/create
+    controller: App\Ex07Bundle\Controller\Ex07Controller::createRandomUsers
+
+ex07_edit:
+    path: /ex07/edit/{id}
+    controller: App\Ex07Bundle\Controller\Ex07Controller::editUser
+    requirements:
+        id: '\d+'
