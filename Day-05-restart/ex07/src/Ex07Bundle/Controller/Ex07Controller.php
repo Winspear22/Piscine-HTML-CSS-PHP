@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class Ex07Controller extends AbstractController
 {
     /**
-     * @Route("/ex07bundle", name="ex07bundle_index")
+     * @Route("/ex07", name="ex07_index")
      */
     public function index(): Response
     {
