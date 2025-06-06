@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestion de la table</title>
-</head>
-<body>
-    <h1>Ex00 - Gestion de la table 'users'</h1>
+    <head>
+        <meta charset="UTF-8">
+        <title>Gestion de la table</title>
+        {% block stylesheets %}
+    <link rel="stylesheet" href="/style.css">    
+        {% endblock %}
+    </head>
+    <body>
+        <h1>Ex00 - Gestion de la table 'users' popo</h1>
 
-    {% if message is defined %}
-        <p>{{ message }}</p>
-    {% endif %}
+        {% if message is defined %}
+            <p>{{ message }}</p>
+        {% endif %}
 
-    <form method="get" action="{{ path('ex00_create_table') }}">
-        <button type="submit">Créer la table</button>
-    </form>
+        <form method="get" action="{{ path('ex00_create_table') }}">
+            <button type="submit">Créer la table</button>
+        </form>
 
-    <form method="get" action="{{ path('ex00_delete_table') }}">
-        <button type="submit">Supprimer la table</button>
-    </form>
-</body>
+        <form method="get" action="{{ path('ex00_delete_table') }}">
+            <button type="submit">Supprimer la table</button>
+        </form>
+    </body>
 </html>

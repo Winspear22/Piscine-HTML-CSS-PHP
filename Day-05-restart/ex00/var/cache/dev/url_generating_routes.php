@@ -7,9 +7,7 @@ return [
     'ex00_index' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::index'], [], [['text', '/ex00']], [], [], []],
     'ex00_create_table' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::createTable'], [], [['text', '/ex00/create']], [], [], []],
     'ex00_delete_table' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::deleteTable'], [], [['text', '/ex00/delete']], [], [], []],
-    'ex00_show_table' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::showTable'], [], [['text', '/ex00/show']], [], [], []],
     'App\Ex00Bundle\Controller\Ex00Controller::index' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::index'], [], [['text', '/ex00']], [], [], []],
     'App\Ex00Bundle\Controller\Ex00Controller::createTable' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::createTable'], [], [['text', '/ex00/create']], [], [], []],
     'App\Ex00Bundle\Controller\Ex00Controller::deleteTable' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::deleteTable'], [], [['text', '/ex00/delete']], [], [], []],
-    'App\Ex00Bundle\Controller\Ex00Controller::showTable' => [[], ['_controller' => 'App\\Ex00Bundle\\Controller\\Ex00Controller::showTable'], [], [['text', '/ex00/show']], [], [], []],
 ];
