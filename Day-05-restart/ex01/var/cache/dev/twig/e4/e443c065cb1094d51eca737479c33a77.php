@@ -182,6 +182,6 @@ class __TwigTemplate_2e7089c49b794ddc3f62a005d8b5fce2 extends Template
         {% block body %}{% endblock %}
     </body>
 </html>
-", "base.html.twig", "/home/adnen/Desktop/15-04-2025/Day-05-restart/ex01/templates/base.html.twig");
+", "base.html.twig", "/home/adnen/Desktop/06-05-2025/Day-05-restart/ex01/templates/base.html.twig");
     }
 }
