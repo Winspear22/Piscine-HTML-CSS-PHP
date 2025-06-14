@@ -17,11 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class Ex02Controller extends AbstractController
 {
     /**
-     * @Route("/ex02", name="ex02bundle_index")
+     * @Route("/ex02", name="ex02_index")
      */
     public function index(): Response
     {
-        return $this->render('index.html.twig');
+        return $this->render('select.html.twig');
     }
 
     private function createTableIfNotExists(Connection $connection): void
