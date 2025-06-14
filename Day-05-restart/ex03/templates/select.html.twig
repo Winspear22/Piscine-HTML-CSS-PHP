@@ -1,4 +1,8 @@
-<h1>Liste des utilisateurs</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
 
 {% if users is not empty %}
 <table border="1" cellpadding="5">
@@ -27,4 +31,7 @@
     <p>Aucun utilisateur trouvé.</p>
 {% endif %}
 
-<a href="{{ path('ex03bundle_insert') }}">Ajouter un utilisateur</a>
+<a href="{{ path('ex03_insert') }}">Ajouter un utilisateur</a>
+
+{% endblock %}
+

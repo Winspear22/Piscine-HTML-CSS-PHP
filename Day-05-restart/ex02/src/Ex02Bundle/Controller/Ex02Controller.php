@@ -50,7 +50,7 @@ class Ex02Controller extends AbstractController
         $message = "";
         try
         {
-            $this->createTableIfNotExists($connection); // ← APPEL ICI
+            $this->createTableIfNotExists($connection);
             $form = $this->createFormBuilder(null, [
                 'method' => 'POST',
             ])

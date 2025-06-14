@@ -13,15 +13,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class Ex03Controller extends AbstractController
 {
     /**
-     * @Route("/ex03", name="ex03bundle_index")
+     * @Route("/ex03", name="ex03_index")
      */
     public function index(): Response
     {
-        return new Response("Hello from Ex03index!");
+        return $this->render('select.html.twig');
     }
 
     /**
-     * @Route("/ex03/insert", name="ex03bundle_insert")
+     * @Route("/ex03/insert", name="ex03_insert")
      */
     public function insert(Request $request, UserService $userManager)
     {
@@ -49,7 +49,7 @@ class Ex03Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex03/select", name="ex03bundle_select")
+     * @Route("/ex03/select", name="ex03_select")
      */
     public function select(UserService $userManager)
     {
@@ -61,18 +61,12 @@ class Ex03Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex03/delete", name="ex03bundle_delete")
+     * @Route("/ex03/delete", name="ex03_delete")
      */
-    public function delete(): Response
+    public function delete(UserService $userManager, Request $request): Response
     {
-        return new Response("Hello from Ex03delete!");
-    }
-
-    /**
-     * @Route("/{wildcard}", requirements={"wildcard"=".*"})
-     */
-    public function notFound(): Response
-    {
-        return $this->render('error404.html.twig', [], new Response('', 404));
+        $userManager->deleteAll();
+        $this->addFlash('success', 'Tous les utilisateurs ont été supprimés.');
+        return $this->redirectToRoute('ex03_select');    
     }
 }

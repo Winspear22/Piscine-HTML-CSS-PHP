@@ -1,9 +1,15 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex02_index:
+    path: /ex02
+    controller: App\Ex02Bundle\Controller\Ex02Controller::index
 
-Ex02Bundle:
-    resource: '../src/Ex02Bundle/Controller'
-    type: annotation
+ex02insert:
+    path: /ex02/insert
+    controller: App\Ex02Bundle\Controller\Ex02Controller::insert
+
+ex02select:
+    path: /ex02/select
+    controller: App\Ex02Bundle\Controller\Ex02Controller::select
+
+ex02delete:
+    path: /ex02/delete
+    controller: App\Ex02Bundle\Controller\Ex02Controller::deleteTable

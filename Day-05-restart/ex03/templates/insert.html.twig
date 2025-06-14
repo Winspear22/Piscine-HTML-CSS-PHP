@@ -1,11 +1,27 @@
-<h1>Ajouter un utilisateur</h1>
+{% extends 'base.html.twig' %}
 
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-{{ form_end(form) }}
+{% block title %}Ajouter un utilisateur{% endblock %}
 
-{% if message %}
-    <p><strong>{{ message }}</strong></p>
-{% endif %}
+{% block body %}
+<div class="form-container">
+    <h1>Ajouter un utilisateur</h1>
+    
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
 
-<a href="{{ path('ex03bundle_select') }}">Voir les utilisateurs</a>
+    {% if message is defined and message %}
+        <div class="msg">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endif %}
+
+    <div style="text-align:center; margin-top: 10px;">
+        <a class="btn" href="{{ path('ex03_select') }}">🔍 Voir les utilisateurs ajoutés</a>
+    </div>
+    <form method="get" action="{{ path('ex03_delete') }}" style="margin-top: 12px;">
+        <button type="submit" class="btn supprimer">Supprimer la table</button>
+    </form>
+
+</div>
+{% endblock %}

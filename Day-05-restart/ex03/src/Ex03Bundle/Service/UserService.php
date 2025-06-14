@@ -24,6 +24,15 @@ class UserService
     {
         return $this->em->getRepository(User::class)->findAll();
     }
+
+    public function deleteAll(): void
+    {
+        $users = $this->em->getRepository(User::class)->findAll();
+        foreach ($users as $user)
+            $this->em->remove($user);
+        $this->em->flush();
+    }
+
 }
 
 ?>

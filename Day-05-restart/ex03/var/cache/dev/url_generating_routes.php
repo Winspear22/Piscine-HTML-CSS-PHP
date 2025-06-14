@@ -4,10 +4,10 @@
 
 return [
     '_preview_error' => [['code', '_format'], ['_controller' => 'error_controller::preview', '_format' => 'html'], ['code' => '\\d+'], [['variable', '.', '[^/]++', '_format', true], ['variable', '/', '\\d+', 'code', true], ['text', '/_error']], [], [], []],
-    'ex03bundle_index' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::index'], [], [['text', '/ex03']], [], [], []],
-    'ex03bundle_insert' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::insert'], [], [['text', '/ex03/insert']], [], [], []],
-    'ex03bundle_select' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::select'], [], [['text', '/ex03/select']], [], [], []],
-    'ex03bundle_delete' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::delete'], [], [['text', '/ex03/delete']], [], [], []],
+    'ex03_index' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::index'], [], [['text', '/ex03']], [], [], []],
+    'ex03_insert' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::insert'], [], [['text', '/ex03/insert']], [], [], []],
+    'ex03_select' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::select'], [], [['text', '/ex03/select']], [], [], []],
+    'ex03_delete' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::delete'], [], [['text', '/ex03/delete']], [], [], []],
     'app_ex03_ex03_notfound' => [['wildcard'], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::notFound'], ['wildcard' => '.*'], [['variable', '/', '.*', 'wildcard', true]], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::index' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::index'], [], [['text', '/ex03']], [], [], []],
     'App\Ex03Bundle\Controller\Ex03Controller::insert' => [[], ['_controller' => 'App\\Ex03Bundle\\Controller\\Ex03Controller::insert'], [], [['text', '/ex03/insert']], [], [], []],

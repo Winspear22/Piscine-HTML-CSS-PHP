@@ -2225,6 +2225,14 @@
       <argument type="collection"/>
       <argument>/home/adnen/Desktop/06-05-2025/Day-05-restart/ex03</argument>
       <call method="addPath">
+        <argument>/home/adnen/Desktop/06-05-2025/Day-05-restart/ex03/templates/bundles/TwigBundle</argument>
+        <argument>Twig</argument>
+      </call>
+      <call method="addPath">
+        <argument>/home/adnen/Desktop/06-05-2025/Day-05-restart/ex03/templates/bundles/TwigBundle</argument>
+        <argument>!Twig</argument>
+      </call>
+      <call method="addPath">
         <argument>/home/adnen/Desktop/06-05-2025/Day-05-restart/ex03/vendor/doctrine/doctrine-bundle/templates</argument>
         <argument>Doctrine</argument>
       </call>

@@ -1,9 +1,11 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex01_index:
+    path: /ex01
+    controller: App\Ex01Bundle\Controller\Ex01Controller::index
 
-Ex01Bundle:
-    resource: '../src/Ex01Bundle/Controller'
-    type: annotation
+ex01_create_table:
+    path: /ex01/create
+    controller: App\Ex01Bundle\Controller\Ex01Controller::createTable
+
+ex01_delete_table:
+    path: /ex01/delete
+    controller: App\Ex01Bundle\Controller\Ex01Controller::deleteTable

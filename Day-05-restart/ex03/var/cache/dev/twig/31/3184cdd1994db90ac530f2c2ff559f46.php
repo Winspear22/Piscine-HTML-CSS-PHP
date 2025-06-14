@@ -29,10 +29,16 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
 
         $this->source = $this->getSourceContext();
 
-        $this->parent = false;
-
         $this->blocks = [
+            'title' => [$this, 'block_title'],
+            'body' => [$this, 'block_body'],
         ];
+    }
+
+    protected function doGetParent(array $context): bool|string|Template|TemplateWrapper
+    {
+        // line 1
+        return "base.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = []): iterable
@@ -41,13 +47,46 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "template", "select.html.twig"));
 
-        // line 1
-        yield "<h1>Liste des utilisateurs</h1>
+        $this->parent = $this->load("base.html.twig", 1);
+        yield from $this->parent->unwrap()->yield($context, array_merge($this->blocks, $blocks));
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
 
+    }
+
+    // line 3
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_title(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
+
+        yield "Liste des utilisateurs";
+        
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
+
+        yield from [];
+    }
+
+    // line 5
+    /**
+     * @return iterable<null|scalar|\Stringable>
+     */
+    public function block_body(array $context, array $blocks = []): iterable
+    {
+        $macros = $this->macros;
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
+        $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
+
+        // line 6
+        yield "
 ";
-        // line 3
-        if ((($tmp =  !Twig\Extension\CoreExtension::testEmpty((isset($context["users"]) || array_key_exists("users", $context) ? $context["users"] : (function () { throw new RuntimeError('Variable "users" does not exist.', 3, $this->source); })()))) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
-            // line 4
+        // line 7
+        if ((($tmp =  !Twig\Extension\CoreExtension::testEmpty((isset($context["users"]) || array_key_exists("users", $context) ? $context["users"] : (function () { throw new RuntimeError('Variable "users" does not exist.', 7, $this->source); })()))) && $tmp instanceof Markup ? (string) $tmp : $tmp)) {
+            // line 8
             yield "<table border=\"1\" cellpadding=\"5\">
     <tr>
         <th>Id</th>
@@ -59,39 +98,39 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
         <th>Address</th>
     </tr>
     ";
-            // line 14
+            // line 18
             $context['_parent'] = $context;
-            $context['_seq'] = CoreExtension::ensureTraversable((isset($context["users"]) || array_key_exists("users", $context) ? $context["users"] : (function () { throw new RuntimeError('Variable "users" does not exist.', 14, $this->source); })()));
+            $context['_seq'] = CoreExtension::ensureTraversable((isset($context["users"]) || array_key_exists("users", $context) ? $context["users"] : (function () { throw new RuntimeError('Variable "users" does not exist.', 18, $this->source); })()));
             foreach ($context['_seq'] as $context["_key"] => $context["user"]) {
-                // line 15
+                // line 19
                 yield "    <tr>
         <td>";
-                // line 16
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "id", [], "any", false, false, false, 16), "html", null, true);
-                yield "</td>
-        <td>";
-                // line 17
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "username", [], "any", false, false, false, 17), "html", null, true);
-                yield "</td>
-        <td>";
-                // line 18
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "name", [], "any", false, false, false, 18), "html", null, true);
-                yield "</td>
-        <td>";
-                // line 19
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "email", [], "any", false, false, false, 19), "html", null, true);
-                yield "</td>
-        <td>";
                 // line 20
-                yield (((($tmp = CoreExtension::getAttribute($this->env, $this->source, $context["user"], "enable", [], "any", false, false, false, 20)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) ? ("Oui") : ("Non"));
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "id", [], "any", false, false, false, 20), "html", null, true);
                 yield "</td>
         <td>";
                 // line 21
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "birthdate", [], "any", false, false, false, 21), "Y-m-d"), "html", null, true);
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "username", [], "any", false, false, false, 21), "html", null, true);
                 yield "</td>
         <td>";
                 // line 22
-                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "address", [], "any", false, false, false, 22), "html", null, true);
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "name", [], "any", false, false, false, 22), "html", null, true);
+                yield "</td>
+        <td>";
+                // line 23
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "email", [], "any", false, false, false, 23), "html", null, true);
+                yield "</td>
+        <td>";
+                // line 24
+                yield (((($tmp = CoreExtension::getAttribute($this->env, $this->source, $context["user"], "enable", [], "any", false, false, false, 24)) && $tmp instanceof Markup ? (string) $tmp : $tmp)) ? ("Oui") : ("Non"));
+                yield "</td>
+        <td>";
+                // line 25
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatDate(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "birthdate", [], "any", false, false, false, 25), "Y-m-d"), "html", null, true);
+                yield "</td>
+        <td>";
+                // line 26
+                yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, $context["user"], "address", [], "any", false, false, false, 26), "html", null, true);
                 yield "</td>
     </tr>
     ";
@@ -99,20 +138,21 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_key'], $context['user'], $context['_parent']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 25
+            // line 29
             yield "</table>
 ";
         } else {
-            // line 27
+            // line 31
             yield "    <p>Aucun utilisateur trouvé.</p>
 ";
         }
-        // line 29
+        // line 33
         yield "
 <a href=\"";
-        // line 30
-        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("ex03bundle_insert");
+        // line 34
+        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("ex03_insert");
         yield "\">Ajouter un utilisateur</a>
+
 ";
         
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->leave($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof);
@@ -141,12 +181,16 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  114 => 30,  111 => 29,  107 => 27,  103 => 25,  94 => 22,  90 => 21,  86 => 20,  82 => 19,  78 => 18,  74 => 17,  70 => 16,  67 => 15,  63 => 14,  51 => 4,  49 => 3,  45 => 1,);
+        return array (  153 => 34,  150 => 33,  146 => 31,  142 => 29,  133 => 26,  129 => 25,  125 => 24,  121 => 23,  117 => 22,  113 => 21,  109 => 20,  106 => 19,  102 => 18,  90 => 8,  88 => 7,  85 => 6,  75 => 5,  58 => 3,  41 => 1,);
     }
 
     public function getSourceContext(): Source
     {
-        return new Source("<h1>Liste des utilisateurs</h1>
+        return new Source("{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
 
 {% if users is not empty %}
 <table border=\"1\" cellpadding=\"5\">
@@ -175,7 +219,10 @@ class __TwigTemplate_adbf0957f9485319b31beed736713056 extends Template
     <p>Aucun utilisateur trouvé.</p>
 {% endif %}
 
-<a href=\"{{ path('ex03bundle_insert') }}\">Ajouter un utilisateur</a>
+<a href=\"{{ path('ex03_insert') }}\">Ajouter un utilisateur</a>
+
+{% endblock %}
+
 ", "select.html.twig", "/home/adnen/Desktop/06-05-2025/Day-05-restart/ex03/templates/select.html.twig");
     }
 }
