@@ -2,7 +2,11 @@
 
 namespace App\Ex09Bundle\Controller;
 
+use App\Entity\Address;
+use App\Entity\BankAccount;
 use App\Entity\Person;
+use App\Form\AddressTypeForm;
+use App\Form\BankAccountTypeForm;
 use App\Form\PersonTypeForm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +30,9 @@ class Ex09Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex09/new", name="ex09_new")
+     * @Route("/ex09/createPerson", name="ex09_createPerson")
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function createPerson(Request $request, EntityManagerInterface $em): Response
     {
         $person = new Person();
         $form = $this->createForm(PersonTypeForm::class, $person);
@@ -48,9 +52,9 @@ class Ex09Controller extends AbstractController
     }
 
     /**
-     * @Route("/ex09/edit/{id}", name="ex09_edit")
+     * @Route("/ex09/update/{id}", name="ex09_update")
      */
-    public function edit(Request $request, Person $person, EntityManagerInterface $em): Response
+    public function updatePerson(Request $request, Person $person, EntityManagerInterface $em): Response
     {
         $form = $this->createForm(PersonTypeForm::class, $person);
 
@@ -62,7 +66,7 @@ class Ex09Controller extends AbstractController
             return $this->redirectToRoute('ex09_index');
         }
 
-        return $this->render('edit.html.twig', [
+        return $this->render('update.html.twig', [
             'form' => $form->createView(),
             'person' => $person,
         ]);
@@ -71,11 +75,53 @@ class Ex09Controller extends AbstractController
     /**
      * @Route("/ex09/delete/{id}", name="ex09_delete")
      */
-    public function delete(Person $person, EntityManagerInterface $em): Response
+    public function deletePerson(Person $person, EntityManagerInterface $em): Response
     {
         $em->remove($person);
         $em->flush();
 
         return $this->redirectToRoute('ex09_index');
     }
+
+	/**
+     * @Route("/ex09/create_ba", name="ex09_create_ba")
+     */
+	public function createBankAccount(Request $request, EntityManagerInterface $em): Response
+	{
+		$bankAccount = new BankAccount();
+		$form = $this->createForm(BankAccountTypeForm::class, $bankAccount);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $em->persist($bankAccount);
+            $em->flush();
+
+            return $this->redirectToRoute('ex09_index');
+        }
+		return $this->render('ex09_index.html.twig', [
+			'form' => $form->createView(),
+		]);
+	}
+
+	/**
+     * @Route("/ex09/create_address", name="ex09_create_address")
+     */
+	public function createAddress(Request $request, EntityManagerInterface $em): Response
+	{
+		$address = new Address();
+		$form = $this->createForm(AddressTypeForm::class, $address);
+		$form->handleRequest($request);
+		if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $em->persist($address);
+            $em->flush();
+
+            return $this->redirectToRoute('ex09_index');
+        }
+		return $this->render('ex09_index.html.twig', [
+			'form' => $form->createView(),
+		]);
+	}
+
+	
 }
