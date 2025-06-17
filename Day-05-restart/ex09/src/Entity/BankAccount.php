@@ -17,6 +17,9 @@ class BankAccount
     #[ORM\JoinColumn(nullable: false)]
     private ?Person $person = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $balance = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +33,18 @@ class BankAccount
     public function setPerson(?Person $person): static
     {
         $this->person = $person;
+
+        return $this;
+    }
+
+    public function getBalance(): ?float
+    {
+        return $this->balance;
+    }
+
+    public function setBalance(?float $balance): static
+    {
+        $this->balance = $balance;
 
         return $this;
     }

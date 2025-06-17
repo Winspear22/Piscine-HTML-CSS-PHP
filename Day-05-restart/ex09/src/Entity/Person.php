@@ -40,12 +40,12 @@ class Person
      * @var Collection<int, Address>
      */
     #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'person', orphanRemoval: true)]
-    private Collection $address;
+    private Collection $addresses;
 
     public function __construct()
     {
         $this->bankAccounts = new ArrayCollection();
-        $this->address = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,15 +146,15 @@ class Person
     /**
      * @return Collection<int, Address>
      */
-    public function getAddress(): Collection
+    public function getAddresses(): Collection
     {
-        return $this->address;
+        return $this->addresses;
     }
 
     public function addAddress(Address $address): static
     {
-        if (!$this->address->contains($address)) {
-            $this->address->add($address);
+        if (!$this->addresses->contains($address)) {
+            $this->addresses->add($address);
             $address->setPerson($this);
         }
 
@@ -163,7 +163,7 @@ class Person
 
     public function removeAddress(Address $address): static
     {
-        if ($this->address->removeElement($address)) {
+        if ($this->addresses->removeElement($address)) {
             // set the owning side to null (unless already changed)
             if ($address->getPerson() === $this) {
                 $address->setPerson(null);
