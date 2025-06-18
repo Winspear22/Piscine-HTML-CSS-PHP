@@ -67,3 +67,39 @@ code {
         margin-bottom: 0.8em;
     }
 }
+
+.error-container {
+    text-align: center;
+    margin-top: 7vh;
+}
+
+.error-container h1 {
+    font-size: 5em;
+    font-weight: bold;
+    color: #4557ed;
+    margin-bottom: 0.3em;
+    text-shadow: 2px 4px 20px #b1bbff33;
+}
+
+.error-container p {
+    color: #444;
+    font-size: 1.5em;
+    margin-bottom: 2em;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 0.7em 2em;
+    background: #4557ed;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: background 0.2s;
+    box-shadow: 0 1px 10px #4557ed22;
+}
+
+.back-btn:hover {
+    background: #2739b3;
+}
