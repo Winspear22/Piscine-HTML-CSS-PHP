@@ -3,6 +3,7 @@
 namespace App\Ex00Bundle\Controller;
 
 use Doctrine\DBAL\Connection;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,13 +14,29 @@ class Ex00Controller extends AbstractController
 	const FAILURE = 1;
 	const DOES_NOT_EXIST = 2;
 
-    /**
-     * @Route("/ex00", name="ex00_index")
-     */
-    public function index(): Response
-    {
-		return $this->render('index.html.twig');
-    }
+	/**
+	 * @Route("/ex00", name="ex00_index")
+	 */
+	public function index(Connection $connection, Request $request): Response
+	{
+		$tableName = "persons";
+
+		if ($request->isMethod('POST')) 
+		{
+			$doesTableExists = $this->tableExistenceCheck($tableName, $connection);
+			if ($doesTableExists['status'] === self::DOES_NOT_EXIST) 
+			{
+				$createTable = $this->createTable($tableName, $connection);
+				$this->addFlash('notice', $createTable['message']);
+			}
+			else
+				$this->addFlash('notice', $doesTableExists['message']);
+			return $this->redirectToRoute('ex00_index');
+		}
+		return $this->render('index.html.twig', [
+			'tableName' => $tableName
+		]);
+	}
 
     private function tableExistenceCheck(string $tableName, Connection $connection): array
     {
@@ -28,7 +45,7 @@ class Ex00Controller extends AbstractController
 			$doesTableExists = $connection->executeQuery("SHOW TABLES LIKE '$tableName'")->rowCount();
 			if ($doesTableExists > 0)
 				return (['status' => self::SUCCESS, 'message' => "La table $tableName existe déjà."]); // La table existe.
-			return (['status' => self::DOES_NOT_EXIST, 'message' => "La table $tableName n'existe pas."]); // La table n'existe pas.
+			return (['status' => self::DOES_NOT_EXIST]); // La table n'existe pas.
 		}
 		catch (\Exception $e)
 		{
@@ -50,34 +67,11 @@ class Ex00Controller extends AbstractController
 				address LONGTEXT
 			) ENGINE=InnoDB;";
 			$connection->executeStatement($sql);
-			return ['status' => self::SUCCESS, 'message' => "La table '$tableName' a été créée avec succès (ou déjà existante)."];
+			return ['status' => self::SUCCESS, 'message' => "La table '$tableName' a été créée avec succès."];
 		} 
 		catch (\Exception $e) 
 		{
 			return ['status' => self::FAILURE, 'message' => "Erreur lors de la CREATION de la table '$tableName', code erreur : " . $e->getMessage()];
 		}
 	}
-
-    /**
-     * @Route("/ex00/create", name="ex00_create")
-     */
-    public function create(Connection $connection): Response
-    {
-		$tableName = "persons";
-		$messages = [];
-
-		$doesTableExists = $this->tableExistenceCheck($tableName, $connection);
-		$messages[] = $doesTableExists['message'];
-
-		if ($doesTableExists['status'] === self::DOES_NOT_EXIST) 
-		{
-			$createTable = $this->createTable($tableName, $connection);
-			$messages[] = $createTable['message'];
-		}
-
-		return $this->render('index.html.twig', [
-			'messages' => $messages,
-			'tableName' => $tableName
-		]);
-    }
 }

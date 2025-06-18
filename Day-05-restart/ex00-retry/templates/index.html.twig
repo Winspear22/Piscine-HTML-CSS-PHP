@@ -3,14 +3,12 @@
 {% block body %}
 	<h1>Créer la table {{ tableName }}</h1>
 
-	{# Affichage des messages éventuels #}
-	{% if messages is defined and messages|length > 0 %}
-		{% for msg in messages %}
-			<div class="alert">{{ msg }}</div>
-		{% endfor %}
-	{% endif %}
+    {# Affiche le message flash notice s’il existe #}
+    {% for msg in app.flashes('notice') %}
+        <div class="alert">{{ msg }}</div>
+    {% endfor %}
 
-	<form method="post" action="{{ path('ex00_create') }}">
+	<form method="post" action="{{ path('ex00_index') }}">
 		<button type="submit">Créer la table</button>
 	</form>
 {% endblock %}
