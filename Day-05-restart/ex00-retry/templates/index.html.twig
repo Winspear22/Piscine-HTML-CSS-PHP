@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter un utilisateur{% endblock %}
+{% block body %}
+	<h1>Créer la table {{ tableName }}</h1>
+
+	{# Affichage des messages éventuels #}
+	{% if messages is defined and messages|length > 0 %}
+		{% for msg in messages %}
+			<div class="alert">{{ msg }}</div>
+		{% endfor %}
+	{% endif %}
+
+	<form method="post" action="{{ path('ex00_create') }}">
+		<button type="submit">Créer la table</button>
+	</form>
+{% endblock %}
