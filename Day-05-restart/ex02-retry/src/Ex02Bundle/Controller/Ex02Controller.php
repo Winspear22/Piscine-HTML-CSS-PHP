@@ -55,6 +55,53 @@ class Ex02Controller extends AbstractController
 	}
 
 
+	/*========================================================================================*/
+	/*---------------------------------- CREATE THE TABLE ------------------------------------*/
+	/*========================================================================================*/
+
+	
+	private function tableExistenceCheck(string $tableName, Connection $connection): array
+    {
+		try
+		{
+			$doesTableExists = $connection->executeQuery("SHOW TABLES LIKE '$tableName'")->rowCount();
+			if ($doesTableExists > 0)
+				return (['status' => self::SUCCESS, 'message' => "La table $tableName existe déjà."]); // La table existe.
+			return (['status' => self::DOES_NOT_EXIST]); // La table n'existe pas.
+		}
+		catch (\Exception $e)
+		{
+			return ['status' => self::FAILURE, 'message' => "Erreur lors de la RECHERCHE de la table '$tableName', code erreur : " . $e->getMessage()];
+		}
+	}
+
+	private function createTable(string $tableName, Connection $connection): array
+	{
+		try 
+		{
+			$sql = "CREATE TABLE IF NOT EXISTS `$tableName` (
+				id INT AUTO_INCREMENT PRIMARY KEY,
+				username VARCHAR(255) UNIQUE,
+				name VARCHAR(255),
+				email VARCHAR(255) UNIQUE,
+				enable BOOLEAN,
+				birthdate DATETIME,
+				address LONGTEXT
+			) ENGINE=InnoDB;";
+			$connection->executeStatement($sql);
+			return ['status' => self::SUCCESS, 'message' => "La table '$tableName' a été créée avec succès."];
+		} 
+		catch (\Exception $e) 
+		{
+			return ['status' => self::FAILURE, 'message' => "Erreur lors de la CREATION de la table '$tableName', code erreur : " . $e->getMessage()];
+		}
+	}
+
+	/*========================================================================================*/
+	/*----------------------------------- CREATE THE FORM ------------------------------------*/
+	/*========================================================================================*/
+
+
 	private function buildPersonForm(): \Symfony\Component\Form\FormInterface
 	{
 		return $this->createFormBuilder(null, [
@@ -92,6 +139,27 @@ class Ex02Controller extends AbstractController
 		return null;
 	}
 
+	/*========================================================================================*/
+	/*--------------------------------------- GETTER -----------------------------------------*/
+	/*========================================================================================*/
+	
+	private function getAllPersons(Connection $connection, string $tableName): array
+	{
+		try 
+		{
+			$sql = "SELECT * FROM `$tableName` ORDER BY id DESC";
+			return $connection->fetchAllAssociative($sql);
+		} 
+		catch (\Exception $e) 
+		{
+			return [];
+		}
+	}
+
+	/*========================================================================================*/
+	/*--------------------------------------- SETTER -----------------------------------------*/
+	/*========================================================================================*/
+
 	private function insertPerson(array $data, Connection $connection, string $tableName): array
 	{
 		try 
@@ -111,62 +179,6 @@ class Ex02Controller extends AbstractController
 		catch (\Exception $e) 
 		{
 			return ['status' => self::FAILURE, 'message' => "Erreur lors de l'insertion : " . $e->getMessage()];
-		}
-	}
-
-	private function getAllPersons(Connection $connection, string $tableName): array
-	{
-		try 
-		{
-			$sql = "SELECT * FROM `$tableName` ORDER BY id DESC";
-			return $connection->fetchAllAssociative($sql);
-		} 
-		catch (\Exception $e) 
-		{
-			return [];
-		}
-	}
-
-
-	/*========================================================================================*/
-	/*---------------------------------- CREATE THE TABLE ------------------------------------*/
-	/*========================================================================================*/
-
-	
-	private function tableExistenceCheck(string $tableName, Connection $connection): array
-    {
-		try
-		{
-			$doesTableExists = $connection->executeQuery("SHOW TABLES LIKE '$tableName'")->rowCount();
-			if ($doesTableExists > 0)
-				return (['status' => self::SUCCESS, 'message' => "La table $tableName existe déjà."]); // La table existe.
-			return (['status' => self::DOES_NOT_EXIST]); // La table n'existe pas.
-		}
-		catch (\Exception $e)
-		{
-        	return ['status' => self::FAILURE, 'message' => "Erreur lors de la RECHERCHE de la table '$tableName', code erreur : " . $e->getMessage()];
-		}
-	}
-
-	private function createTable(string $tableName, Connection $connection): array
-	{
-		try 
-		{
-			$sql = "CREATE TABLE IF NOT EXISTS `$tableName` (
-				id INT AUTO_INCREMENT PRIMARY KEY,
-				username VARCHAR(255) UNIQUE,
-				name VARCHAR(255),
-				email VARCHAR(255) UNIQUE,
-				enable BOOLEAN,
-				birthdate DATETIME,
-				address LONGTEXT
-			) ENGINE=InnoDB;";
-			$connection->executeStatement($sql);
-			return ['status' => self::SUCCESS, 'message' => "La table '$tableName' a été créée avec succès."];
-		} 
-		catch (\Exception $e) 
-		{
-			return ['status' => self::FAILURE, 'message' => "Erreur lors de la CREATION de la table '$tableName', code erreur : " . $e->getMessage()];
 		}
 	}
 }
