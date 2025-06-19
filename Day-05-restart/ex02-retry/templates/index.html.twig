@@ -2,18 +2,19 @@
 {% block title %}Ajouter une personne (ex02){% endblock %}
 
 {% block body %}
-    <h1>Ajouter une personne</h1>
     {# Messages flash de succès/erreur #}
     {% for msg in app.flashes('notice') %}
         <div class="alert">{{ msg }}</div>
     {% endfor %}
 
     <div class="form-wrapper">
+        <h1>Ajouter une personne</h1>
         {{ form(form) }}
+        <h2>Liste des personnes</h2>
+
     </div>
 
 
-    <h2>Liste des personnes</h2>
     <table>
         <tr>
             <th>ID</th>
