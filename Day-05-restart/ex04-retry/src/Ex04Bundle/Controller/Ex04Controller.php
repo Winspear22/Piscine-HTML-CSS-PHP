@@ -39,11 +39,11 @@ class Ex04Controller extends AbstractController
         // 2. Gérer le paramètre d’édition
         $editId = $request->query->get('edit');
         $editPerson = null;
-        if ($editId) {
+        if ($editId) 
+		{
             $editPerson = $this->getPersonById($connection, $tableName, (int)$editId);
-            if (!$editPerson) {
+            if (!$editPerson)
                 $this->addFlash('notice', "Personne introuvable (ID $editId)");
-            }
         }
 
         // 3. Traitement du formulaire d'édition (POST)
@@ -180,11 +180,14 @@ class Ex04Controller extends AbstractController
 
     private function getPersonById(Connection $connection, string $tableName, int $id): ?array
     {
-        try {
+        try 
+		{
             $sql = "SELECT * FROM `$tableName` WHERE id = :id";
             $person = $connection->fetchAssociative($sql, ['id' => $id]);
             return $person ?: null;
-        } catch (\Exception $e) {
+        } 
+		catch (\Exception $e) 
+		{
             return null;
         }
     }
