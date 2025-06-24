@@ -140,11 +140,14 @@ class Ex04Controller extends AbstractController
 
     private function getPersonById(Connection $connection, string $tableName, int $id): ?array
     {
-        try {
+        try 
+        {
             $sql = "SELECT * FROM `$tableName` WHERE id = :id";
             $person = $connection->fetchAssociative($sql, ['id' => $id]);
             return $person ?: null;
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) 
+        {
             return null;
         }
     }
