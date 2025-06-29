@@ -1,0 +1,9 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+Ex01Bundle:
+    resource: '../src/Ex01Bundle/Controller'
+    type: annotation
