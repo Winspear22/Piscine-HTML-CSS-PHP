@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ex03{% endblock %}
+
+{% block body %}
+    <h1>Ex03 Retry</h1>
+    <a href="{{ path('ex03_create') }}" class="btn">Créer un utilisateur</a>
+	{% for msg in app.flashes('success') %}
+		<div class="alert">{{ msg }}</div>
+	{% endfor %}
+	{% for msg in app.flashes('error') %}
+		<div class="alert error">{{ msg }}</div>
+	{% endfor %}
+
+    {% if users is defined and users|length > 0 %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Enable</th>
+                    <th>Birthdate</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+                    <td>{{ user.birthdate ? user.birthdate|date('d/m/Y') : '' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun utilisateur pour l'instant.</p>
+    {% endif %}
+{% endblock %}
