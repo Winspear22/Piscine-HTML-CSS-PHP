@@ -15,7 +15,7 @@ class Ex03Controller extends AbstractController
     /**
      * @Route("/ex03", name="ex03_index")
      */
-    public function index(Request $request, EntityManagerInterface $em): Response
+    public function index(EntityManagerInterface $em): Response
     {
 		$users = $em->getRepository(User::class)->findAll();
 		return $this->render('index.html.twig',
