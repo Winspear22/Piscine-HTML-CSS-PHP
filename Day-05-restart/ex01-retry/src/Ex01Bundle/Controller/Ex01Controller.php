@@ -19,11 +19,11 @@ class Ex01Controller extends AbstractController
     {
         if ($request->isMethod('POST')) 
         {
-            $schemaManager = $em->getConnection()->createSchemaManager();
-            $schemaTool = new SchemaTool($em);
-            $metadata = [$em->getClassMetadata(User::class)];
             try 
             {
+				$schemaManager = $em->getConnection()->createSchemaManager();
+				$schemaTool = new SchemaTool($em);
+				$metadata = [$em->getClassMetadata(User::class)];
                 if ($schemaManager->tablesExist(['user']))
                     $this->addFlash('notice', "La table 'user' existe déjà.");
                 else 
