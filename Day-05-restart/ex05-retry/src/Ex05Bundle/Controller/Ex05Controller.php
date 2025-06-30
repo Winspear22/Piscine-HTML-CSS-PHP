@@ -25,6 +25,13 @@ class Ex05Controller extends AbstractController
     public function createRandomUsers(EntityManagerInterface $em)
     {
         $i = 0;
+		$checkUsersExistence = $em->getRepository(User::class)->findAll();
+		if (count($checkUsersExistence) > 0)
+		{
+			foreach ($checkUsersExistence as $users)
+				$em->remove($users);
+			$em->flush();
+		}
         while ($i < 10)
         {
             $user = new User();
@@ -68,6 +75,10 @@ class Ex05Controller extends AbstractController
 			{
 				$this->addFlash('error', 'Erreur lors de la suppression de l\'utilisateur : ' . $id . ' ' . $e->getMessage());
 			}
+		}
+		else
+		{
+			$this->addFlash('error', 'Utilisateur avec l\'id ' . $id . ' non trouvé.');
 		}
 		return $this->redirectToRoute('ex05_index');
 	}
