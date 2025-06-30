@@ -2,17 +2,50 @@
 
 namespace App\Ex05Bundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class Ex05Controller extends AbstractController
 {
     /**
-     * @Route("/ex05bundle", name="ex05bundle_index")
+     * @Route("/ex05", name="ex05_index")
      */
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
-        return new Response("Hello from Ex05Controller!");
+        $users = $em->getRepository(User::class)->findAll();
+        return $this->render('index.html.twig', ['users' => $users]);
+    }
+
+    /**
+     * @Route("/ex05/create", name="ex05_create")
+     */
+    public function createRandomUsers(EntityManagerInterface $em)
+    {
+        $i = 0;
+        while ($i < 10)
+        {
+            $user = new User();
+            $user->setUsername('user' . $i);
+            $user->setName('Nom' . $i);
+            $user->setEmail('user' . $i . '@mail.com');
+            $user->setEnable(rand(0, 1) === 1);
+            $user->setBirthdate(new \DateTime('-' . rand(18, 40) . ' years'));
+            $user->setAddress('Adresse ' . $i . ' avenue Testville');
+            $em->persist($user);
+            $i++;
+        }
+        try 
+        {
+            $em->flush();
+            $this->addFlash('success', 'Utilisateur ' . $i . ' créé avec succès.');
+        } 
+        catch (\Exception $e) 
+        {
+            $this->addFlash('error', 'Erreur lors de la création de l\'utilisateur ' . $i . ': ' . $e->getMessage());
+        }
+        return $this->redirectToRoute('ex05_index');
     }
 }
