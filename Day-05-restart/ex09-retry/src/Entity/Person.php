@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\MaritalStatus;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,6 +40,9 @@ class Person
     #[ORM\OneToOne(inversedBy: 'person', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?BankAccount $BankAccount = null;
+
+    #[ORM\Column(enumType: MaritalStatus::class)]
+    private ?MaritalStatus $marital_status = null;
 
     public function __construct()
     {
@@ -148,6 +152,18 @@ class Person
     public function setBankAccount(BankAccount $BankAccount): static
     {
         $this->BankAccount = $BankAccount;
+
+        return $this;
+    }
+
+    public function getMaritalStatus(): ?MaritalStatus
+    {
+        return $this->marital_status;
+    }
+
+    public function setMaritalStatus(MaritalStatus $marital_status): static
+    {
+        $this->marital_status = $marital_status;
 
         return $this;
     }
