@@ -1,0 +1,3 @@
+ex10_create_sql_table:
+    path: /ex10/create-sql-table
+    controller: App\Controller\Ex10Controller::createSqlTable

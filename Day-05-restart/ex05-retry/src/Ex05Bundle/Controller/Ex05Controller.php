@@ -77,9 +77,7 @@ class Ex05Controller extends AbstractController
 			}
 		}
 		else
-		{
 			$this->addFlash('error', 'Utilisateur avec l\'id ' . $id . ' non trouvé.');
-		}
 		return $this->redirectToRoute('ex05_index');
 	}
 }

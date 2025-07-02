@@ -38,7 +38,7 @@ class Person
     private Collection $Address;
 
     #[ORM\OneToOne(inversedBy: 'person', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?BankAccount $BankAccount = null;
 
     #[ORM\Column(enumType: MaritalStatus::class)]
