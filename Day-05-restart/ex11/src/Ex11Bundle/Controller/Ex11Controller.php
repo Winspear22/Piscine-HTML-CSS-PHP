@@ -21,47 +21,49 @@ class Ex11Controller extends AbstractController
 	{
 		$requiredTables = 
 		[
-        'persons' => function() use ($connection) { $this->createPersonsHelper('persons', $connection); },
-        'addresses' => function() use ($connection) { $this->createAddressesHelper('addresses', $connection); },
-        'bank_accounts' => function() use ($connection) { $this->createBankAccountsHelper('bank_accounts', $connection); },
-	];
-    $messages = [];
-    foreach ($requiredTables as $table => $creator) 
-	{
-        $exists = $this->tableExistenceCheck($table, $connection);
-        if ($exists['status'] === self::DOES_NOT_EXIST) 
+			'persons' => function() use ($connection) { $this->createPersonsHelper('persons', $connection); },
+			'addresses' => function() use ($connection) { $this->createAddressesHelper('addresses', $connection); },
+			'bank_accounts' => function() use ($connection) { $this->createBankAccountsHelper('bank_accounts', $connection); },
+		];
+		$messages = [];
+		foreach ($requiredTables as $table => $creator) 
 		{
-            $result = $creator();
-            $messages[] = "Table $table créée automatiquement.";
-        }
-    }
-	$relations = [
-    [
-        'table' => 'addresses',
-        'column' => 'person_id',
-        'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
-    ],
-    [
-        'table' => 'bank_accounts',
-        'column' => 'person_id',
-        'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
-    ],
-];
+			$exists = $this->tableExistenceCheck($table, $connection);
+			if ($exists['status'] === self::DOES_NOT_EXIST) 
+			{
+				$result = $creator();
+				$messages[] = "Table $table créée automatiquement.";
+			}
+		}
+		$relations = [
+		[
+			'table' => 'addresses',
+			'column' => 'person_id',
+			'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
+		],
+		[
+			'table' => 'bank_accounts',
+			'column' => 'person_id',
+			'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
+		],
+		];
 
-foreach ($relations as $rel) {
-    $hasCol = $this->columnExistenceCheck($connection, $rel['table'], $rel['column']);
-    if ($hasCol['status'] === self::DOES_NOT_EXIST) {
-        $rel['setup'](); // Ajoute la relation (colonne + contrainte)
-        $messages[] = "Relation sur {$rel['table']}.{$rel['column']} créée automatiquement.";
-    }
-}
+		foreach ($relations as $rel) 
+		{
+			$hasCol = $this->columnExistenceCheck($connection, $rel['table'], $rel['column']);
+			if ($hasCol['status'] === self::DOES_NOT_EXIST) 
+			{
+				$rel['setup'](); // Ajoute la relation (colonne + contrainte)
+				$messages[] = "Relation sur {$rel['table']}.{$rel['column']} créée automatiquement.";
+			}
+		}
 		// 1. Récupérer les paramètres GET pour filtre et tri
 		$filterName = $request->query->get('filter_name', '');
 		$sortBy = $request->query->get('sort_by', 'name');
 		$sortDir = $request->query->get('sort_dir', 'asc');
 
 		// 2. Valider les colonnes et direction du tri (whitelist)
-		$allowedSorts = ['name', 'email', 'city'];
+		$allowedSorts = ['name', 'email', 'city', 'birthdate'];
 		$allowedDir = ['asc', 'desc'];
 		if (!in_array($sortBy, $allowedSorts)) 
 			$sortBy = 'name';
@@ -70,14 +72,15 @@ foreach ($relations as $rel) {
 
 		// 3. Construire la requête SQL (JOIN, WHERE, ORDER BY)
 		$sql = "
-			SELECT p.id, p.name, p.email, a.city, a.street, b.iban, b.bank_name
+			SELECT p.id, p.name, p.email, p.birthdate, a.city, a.street, b.iban, b.bank_name
 			FROM persons p
 			LEFT JOIN addresses a ON a.person_id = p.id
 			LEFT JOIN bank_accounts b ON b.person_id = p.id
 			WHERE 1=1
 		";
 		$params = [];
-		if ($filterName) {
+		if ($filterName) 
+		{
 			$sql .= " AND p.name LIKE :filterName ";
 			$params['filterName'] = '%' . $filterName . '%';
 		}
@@ -92,7 +95,7 @@ foreach ($relations as $rel) {
 			'filter_name' => $filterName,
 			'sort_by' => $sortBy,
 			'sort_dir' => $sortDir,
-		]);
+	]);
 	}
 
 
@@ -245,7 +248,7 @@ foreach ($relations as $rel) {
     }
 
     /*========================================================================================*/
-	/*--------------------------------- ADD MARITAL STATUS -----------------------------------*/
+	/*------------------------------------ ADD RELATIONS -------------------------------------*/
 	/*========================================================================================*/
 
 	/**
@@ -320,38 +323,6 @@ foreach ($relations as $rel) {
 		return $this->redirectToRoute('ex11_index');
 	}
 
-	/**
-	 * @Route("/ex11/add-marital-status", name="ex11_add_marital_status")
-	 */
-	public function addMaritalStatusColumn(Connection $connection)
-	{
-		$columnStatus = $this->columnExistenceCheck($connection, 'persons', 'marital_status');
-		if ($columnStatus['status'] === self::FAILURE) 
-		{
-			$this->addFlash('notice', $columnStatus['message']);
-			return $this->redirectToRoute('ex11_index');
-		}
-		if ($columnStatus['status'] === self::DOES_NOT_EXIST) 
-		{
-			try 
-			{
-				$connection->executeStatement("
-					ALTER TABLE persons
-					ADD COLUMN marital_status ENUM('single','married','widower') NOT NULL DEFAULT 'single'
-				");
-				$message = "Colonne 'marital_status' ajoutée avec succès à 'persons'.";
-			} 
-			catch (\Exception $e) {
-				$message = "Erreur lors de l'ajout de la colonne marital_status : " . $e->getMessage();
-			}
-		}
-		else if ($columnStatus['status'] === self::SUCCESS)
-			$message = "La colonne 'marital_status' existe déjà dans 'persons'.";
-
-		$this->addFlash('notice', $message);
-		return $this->redirectToRoute('ex11_index');
-	}
-
     /*========================================================================================*/
 	/*------------------------------------ DROP TABLES ---------------------------------------*/
 	/*========================================================================================*/
@@ -394,7 +365,7 @@ foreach ($relations as $rel) {
 		for ($i = 1; $i <= 10; $i++) 
 		{
 			$username = "user$i";
-			$name = "Nom$i";
+			$name = $this->randomAlphaString(5) . "Nom$i"; // Modifier ici pour démontrer que Nom1 et Nom10 sortent en même temps
 			$email = "user{$i}@mail.com";
 			$enable = rand(0,1);
 			$birthdate = date('Y-m-d H:i:s', strtotime('-'.rand(18,40).' years'));
@@ -449,6 +420,17 @@ foreach ($relations as $rel) {
 				'id' => null
 			];
 		}
+	}
+
+	private function randomAlphaString($length = 8) 
+	{
+		$characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$result = '';
+		for ($i = 0; $i < $length; $i++) 
+		{
+			$result .= $characters[random_int(0, strlen($characters) - 1)];
+		}	
+		return $result;
 	}
 
 	private function addTestAddress(Connection $connection, string $street, string $city, string $country, int $personId): array
