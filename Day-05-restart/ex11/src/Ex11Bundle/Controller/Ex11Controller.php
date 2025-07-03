@@ -357,7 +357,7 @@ foreach ($relations as $rel) {
 	/*========================================================================================*/
 
 	/**
-	 * @Route("/ex08/drop-tables", name="ex08_drop_tables")
+	 * @Route("/ex11/drop-tables", name="ex11_drop_tables")
 	 */
 	public function dropTables(Connection $connection)
 	{
@@ -377,7 +377,7 @@ foreach ($relations as $rel) {
 			$message = "Erreur lors de la suppression des tables : " . $e->getMessage();
 		}
 		$this->addFlash('notice', $message);
-		return $this->redirectToRoute('ex08_index');
+		return $this->redirectToRoute('ex11_index');
 	}
     
     /*========================================================================================*/
@@ -391,7 +391,7 @@ foreach ($relations as $rel) {
 	{
 		$messages = [];
 
-		for ($i = 1; $i <= 3; $i++) 
+		for ($i = 1; $i <= 10; $i++) 
 		{
 			$username = "user$i";
 			$name = "Nom$i";
@@ -427,7 +427,8 @@ foreach ($relations as $rel) {
 			}
 		}
 
-		return new Response(implode('<br>', $messages));
+    $this->addFlash('notice', implode('<br>', $messages));
+    return $this->redirectToRoute('ex11_index');
 	}
 
 	private function addTestPerson(Connection $connection, string $username, string $name, string $email, int $enable, string $birthdate): array

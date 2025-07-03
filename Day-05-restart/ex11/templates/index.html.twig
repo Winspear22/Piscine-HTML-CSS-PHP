@@ -5,6 +5,15 @@
 
 {% block body %}
     <h1>Liste (tri/jointure/filtre SQL pur)</h1>
+    <div class="form-wrapper" style="flex-direction:row;justify-content:center;gap:2em;margin-bottom:2em;">
+    <form action="{{ path('ex11_add_test_persons') }}" method="post" style="display:inline;">
+        <button type="submit">Ajouter des personnes de test</button>
+    </form>
+    <form action="{{ path('ex11_drop_tables') }}" method="post" style="display:inline;" onsubmit="return confirm('Supprimer TOUTES les tables et leurs données ?');">
+        <button type="submit" style="background:#e3342f;">Supprimer toutes les tables</button>
+    </form>
+</div>
+
     <form method="get" class="form-wrapper" style="max-width:450px;margin:0 auto 2em auto;">
         <label>Filtrer par nom :</label>
         <input type="text" name="filter_name" value="{{ filter_name }}">
