@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des personnes et données liées{% endblock %}
+
+
+{% block body %}
+    <h1>Liste (tri/jointure/filtre SQL pur)</h1>
+    <form method="get" class="form-wrapper" style="max-width:450px;margin:0 auto 2em auto;">
+        <label>Filtrer par nom :</label>
+        <input type="text" name="filter_name" value="{{ filter_name }}">
+        <label>Trier par :</label>
+        <select name="sort_by">
+            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Nom</option>
+            <option value="email" {% if sort_by == 'email' %}selected{% endif %}>Email</option>
+            <option value="city" {% if sort_by == 'city' %}selected{% endif %}>Ville</option>
+        </select>
+        <select name="sort_dir">
+            <option value="asc" {% if sort_dir == 'asc' %}selected{% endif %}>Croissant</option>
+            <option value="desc" {% if sort_dir == 'desc' %}selected{% endif %}>Décroissant</option>
+        </select>
+        <button type="submit">Rechercher</button>
+    </form>
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Ville</th>
+            <th>Rue</th>
+            <th>IBAN</th>
+            <th>Banque</th>
+        </tr>
+        {% for item in data %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.city }}</td>
+                <td>{{ item.street }}</td>
+                <td>{{ item.iban }}</td>
+                <td>{{ item.bank_name }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">Aucune donnée trouvée.</td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}
