@@ -103,17 +103,6 @@ class Ex11Controller extends AbstractController
 	/*--------------------------------------- CREATE TABLES -----------------------------------------*/
 	/*========================================================================================*/
 
-		/**
-	 * @Route("/ex11/create-persons", name="ex11_create_persons")
-	 */
-	public function createPersonsTable(Connection $connection)
-	{
-		$tableName = 'persons';
-		$result = $this->createPersonsHelper($tableName, $connection);
-		$this->addFlash('notice', $result['message']);
-		return $this->redirectToRoute('ex11_index');
-	}
-
     private function createPersonsHelper(string $tableName, Connection $connection): array
     {
         try 
@@ -142,16 +131,6 @@ class Ex11Controller extends AbstractController
         }
     }
 	
-	/**
-	 * @Route("/ex11/create-address-table", name="ex11_create_address_tables")
-	 */
-	public function createAddressesTable(Connection $connection)
-	{
-		$tableName = 'addresses';
-		$result = $this->createAddressesHelper($tableName, $connection);
-		$this->addFlash('notice', $result['message']);
-		return $this->redirectToRoute('ex11_index');
-	}
 	private function createAddressesHelper(string $tableName, Connection $connection): array
 	{
 		try
@@ -176,17 +155,6 @@ class Ex11Controller extends AbstractController
 		{
 			return ['status' => self::FAILURE, 'message' => "Erreur lors de la création de la table '$tableName' : " . $e->getMessage()];
 		}
-	}
-
-	/**
-     * @Route("/ex11/create-BankAccount-table", name="ex11_create_BankAccount_tables")
-     */
-	public function createBankAccountsTable(Connection $connection)
-	{
-		$tableName = 'bank_accounts';
-		$result = $this->createBankAccountsHelper($tableName, $connection);
-		$this->addFlash('notice', $result['message']);
-		return $this->redirectToRoute('ex11_index');
 	}
 
 	private function createBankAccountsHelper(string $tableName, Connection $connection): array
@@ -251,10 +219,7 @@ class Ex11Controller extends AbstractController
 	/*------------------------------------ ADD RELATIONS -------------------------------------*/
 	/*========================================================================================*/
 
-	/**
-	 * @Route("/ex11/add-relation-addresses", name="ex11_add_relation_addresses")
-	 */
-	public function addRelationAddresses(Connection $connection)
+	private function addRelationAddresses(Connection $connection)
 	{
 		$columnStatus = $this->columnExistenceCheck($connection, 'addresses', 'person_id');
 		if ($columnStatus['status'] === self::FAILURE) 
@@ -287,10 +252,7 @@ class Ex11Controller extends AbstractController
 		return $this->redirectToRoute('ex11_index');
 	}
 
-	/**
-	 * @Route("/ex11/add-relation-bank-account", name="ex11_add_relation_bank_account")
-	 */
-	public function addRelationBankAccount(Connection $connection)
+	private function addRelationBankAccount(Connection $connection)
 	{
 		$columnStatus = $this->columnExistenceCheck($connection, 'bank_accounts', 'person_id');
 		if ($columnStatus['status'] === self::FAILURE) 
