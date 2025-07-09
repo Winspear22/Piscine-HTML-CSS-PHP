@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Enum\EmployeeHours;
 use App\Enum\EmployeePosition;
 use App\Repository\EmployeeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
@@ -33,7 +35,7 @@ class Employee
     #[ORM\Column]
     private ?\DateTime $employed_since = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTime $employed_until = null;
 
     #[ORM\Column(enumType: EmployeeHours::class)]
@@ -44,6 +46,21 @@ class Employee
 
     #[ORM\Column(enumType: EmployeePosition::class)]
     private ?EmployeePosition $position = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'employees')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?self $manager = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'manager', orphanRemoval: true)]
+    private Collection $employees;
+
+    public function __construct()
+    {
+        $this->employees = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -166,6 +183,48 @@ class Employee
     public function setPosition(EmployeePosition $position): static
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getManager(): ?self
+    {
+        return $this->manager;
+    }
+
+    public function setManager(?self $manager): static
+    {
+        $this->manager = $manager;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function addEmployee(self $employee): static
+    {
+        if (!$this->employees->contains($employee)) {
+            $this->employees->add($employee);
+            $employee->setManager($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmployee(self $employee): static
+    {
+        if ($this->employees->removeElement($employee)) {
+            // set the owning side to null (unless already changed)
+            if ($employee->getManager() === $this) {
+                $employee->setManager(null);
+            }
+        }
 
         return $this;
     }
