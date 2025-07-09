@@ -23,6 +23,27 @@ class Ex12Controller extends AbstractController
 		$sortBy = $request->query->get('sort_by', 'name');
 		$sortDir = $request->query->get('sort_dir', 'asc');
 
+		// --- PROTECTIONS ICI ---
+		$allowedSorts = ['name', 'email', 'city', 'birthdate'];
+		$allowedDir = ['asc', 'desc'];
+		if (!in_array($sortBy, $allowedSorts)) {
+			$this->addFlash('notice', '⚠️ Tri non valide, utilisation du tri par défaut.');
+			$sortBy = 'name';
+		}
+		if (!in_array($sortDir, $allowedDir)) {
+			$this->addFlash('notice', '⚠️ Sens de tri non valide, utilisation du tri par défaut.');
+			$sortDir = 'asc';
+		}
+		if (mb_strlen($filterName) > 80) {
+			$this->addFlash('notice', '⚠️ Filtre trop long ! Limité à 80 caractères.');
+			$filterName = mb_substr($filterName, 0, 80);
+		}
+		if (!preg_match('/^[\p{L}\p{N} _\'\-]*$/u', $filterName)) {
+			$this->addFlash('notice', '⚠️ Le filtre contient des caractères non autorisés.');
+			$filterName = preg_replace('/[^\p{L}\p{N} _\'\-]/u', '', $filterName);
+		}
+		// --- FIN PROTECTIONS ---
+
 		$people = $repo->findWithFilters($filterName, $sortBy, $sortDir);
 		$total_people = $repo->count([]);
 		return $this->render('index.html.twig', [
@@ -33,6 +54,7 @@ class Ex12Controller extends AbstractController
 			'total_people' => $total_people,
 		]);
 	}
+
 
 
 	/**

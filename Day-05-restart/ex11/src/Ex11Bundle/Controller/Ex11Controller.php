@@ -36,16 +36,16 @@ class Ex11Controller extends AbstractController
 			}
 		}
 		$relations = [
-		[
-			'table' => 'addresses',
-			'column' => 'person_id',
-			'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
-		],
-		[
-			'table' => 'bank_accounts',
-			'column' => 'person_id',
-			'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
-		],
+			[
+				'table' => 'addresses',
+				'column' => 'person_id',
+				'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
+			],
+			[
+				'table' => 'bank_accounts',
+				'column' => 'person_id',
+				'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
+			],
 		];
 
 		foreach ($relations as $rel) 
@@ -62,13 +62,26 @@ class Ex11Controller extends AbstractController
 		$sortBy = $request->query->get('sort_by', 'name');
 		$sortDir = $request->query->get('sort_dir', 'asc');
 
-		// 2. Valider les colonnes et direction du tri (whitelist)
+		// --- PROTECTIONS ICI ---
 		$allowedSorts = ['name', 'email', 'city', 'birthdate'];
 		$allowedDir = ['asc', 'desc'];
-		if (!in_array($sortBy, $allowedSorts)) 
+		if (!in_array($sortBy, $allowedSorts)) {
+			$this->addFlash('notice', '⚠️ Tri non valide, utilisation du tri par défaut.');
 			$sortBy = 'name';
-		if (!in_array($sortDir, $allowedDir)) 
+		}
+		if (!in_array($sortDir, $allowedDir)) {
+			$this->addFlash('notice', '⚠️ Sens de tri non valide, utilisation du tri par défaut.');
 			$sortDir = 'asc';
+		}
+		if (mb_strlen($filterName) > 80) {
+			$this->addFlash('notice', '⚠️ Filtre trop long ! Limité à 80 caractères.');
+			$filterName = mb_substr($filterName, 0, 80);
+		}
+		if (!preg_match('/^[\p{L}\p{N} _\'\-]*$/u', $filterName)) {
+			$this->addFlash('notice', '⚠️ Le filtre contient des caractères non autorisés.');
+			$filterName = preg_replace('/[^\p{L}\p{N} _\'\-]/u', '', $filterName);
+		}
+		// --- FIN PROTECTIONS ---
 
 		// 3. Construire la requête SQL (JOIN, WHERE, ORDER BY)
 		$sql = "
@@ -97,8 +110,9 @@ class Ex11Controller extends AbstractController
 			'sort_by' => $sortBy,
 			'sort_dir' => $sortDir,
 			'total_people' => $total_people,
-	]);
+		]);
 	}
+
 
 
     /*========================================================================================*/

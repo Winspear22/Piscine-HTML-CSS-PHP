@@ -1,9 +1,14 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex12_index:
+    path: /ex12
+    controller: App\Ex12Bundle\Controller\Ex12Controller::index
+    methods: [GET]
 
-Ex12Bundle:
-    resource: '../src/Ex12Bundle/Controller'
-    type: annotation
+ex12_add_test_persons:
+    path: /ex12/add-test-persons
+    controller: App\Ex12Bundle\Controller\Ex12Controller::addTestPersons
+    methods: [POST]
+
+ex12_drop_all:
+    path: /ex12/drop-all
+    controller: App\Ex12Bundle\Controller\Ex12Controller::dropAll
+    methods: [POST]
