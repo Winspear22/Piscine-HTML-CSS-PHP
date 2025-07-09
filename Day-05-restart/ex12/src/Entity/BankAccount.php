@@ -19,6 +19,9 @@ class BankAccount
     #[ORM\Column(length: 255)]
     private ?string $bank_name = null;
 
+    #[ORM\OneToOne(mappedBy: 'bank_account', cascade: ['persist', 'remove'])]
+    private ?Person $person = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,28 @@ class BankAccount
     public function setBankName(string $bank_name): static
     {
         $this->bank_name = $bank_name;
+
+        return $this;
+    }
+
+    public function getPerson(): ?Person
+    {
+        return $this->person;
+    }
+
+    public function setPerson(?Person $person): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($person === null && $this->person !== null) {
+            $this->person->setBankAccount(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($person !== null && $person->getBankAccount() !== $this) {
+            $person->setBankAccount($this);
+        }
+
+        $this->person = $person;
 
         return $this;
     }
