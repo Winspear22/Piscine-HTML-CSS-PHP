@@ -23,22 +23,28 @@
         </form>
     </div>
 
-    <form method="get" class="form-wrapper" style="max-width:450px;margin:0 auto 2em auto;">
-        <label>Filtrer par nom :</label>
-        <input type="text" name="filter_name" value="{{ filter_name }}">
-        <label>Trier par :</label>
-        <select name="sort_by">
-            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Nom</option>
-            <option value="email" {% if sort_by == 'email' %}selected{% endif %}>Email</option>
-            <option value="city" {% if sort_by == 'city' %}selected{% endif %}>Ville</option>
-            <option value="birthdate" {% if sort_by == 'birthdate' %}selected{% endif %}>Date de naissance</option>
-        </select>
-        <select name="sort_dir">
-            <option value="asc" {% if sort_dir == 'asc' %}selected{% endif %}>Croissant</option>
-            <option value="desc" {% if sort_dir == 'desc' %}selected{% endif %}>Décroissant</option>
-        </select>
-        <button type="submit">Rechercher</button>
-    </form>
+<form method="get" class="form-wrapper" style="max-width:450px;margin:0 auto 2em auto;">
+    <label>Filtrer par nom :</label>
+    <input type="text" name="filter_name" value="{{ filter_name }}">
+
+    <label>Trier par :</label>
+    <select name="sort_by">
+        <option value="name" {% if sort_by == 'name' %}selected{% endif %}>Nom</option>
+        <option value="email" {% if sort_by == 'email' %}selected{% endif %}>Email</option>
+        <option value="city" {% if sort_by == 'city' %}selected{% endif %}>Ville</option>
+        <option value="birthdate" {% if sort_by == 'birthdate' %}selected{% endif %}>Date de naissance</option>
+    </select>
+    <select name="sort_dir">
+        <option value="asc" {% if sort_dir == 'asc' %}selected{% endif %}>Croissant</option>
+        <option value="desc" {% if sort_dir == 'desc' %}selected{% endif %}>Décroissant</option>
+    </select>
+
+    <div style="display:flex; gap:1em; justify-content:center;">
+        <button type="submit" name="filter_submit" value="Rechercher">Rechercher</button>
+        <button type="submit" name="sort_submit" value="Trier">Trier</button>
+    </div>
+</form>
+
     <table>
         <tr>
             <th>Nom</th>

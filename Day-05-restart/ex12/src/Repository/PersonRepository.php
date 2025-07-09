@@ -16,52 +16,33 @@ class PersonRepository extends ServiceEntityRepository
         parent::__construct($registry, Person::class);
     }
 
-    public function findFilteredSorted($filterName = '', $sortBy = 'name', $sortDir = 'asc')
+public function findWithFilters(?string $filterName, string $sortBy = 'name', string $sortDir = 'asc')
+{
+    $qb = $this->createQueryBuilder('p')
+        ->leftJoin('p.addresses', 'a')
+        ->leftJoin('p.bank_account', 'b')
+        ->addSelect('a', 'b');
+
+    if ($filterName) 
     {
-        $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.addresses', 'a')
-            ->leftJoin('p.bank_account', 'b')
-            ->addSelect('a')
-            ->addSelect('b');
-
-        if ($filterName) 
-        {
-            $qb->andWhere('p.name LIKE :filterName')
-            ->setParameter('filterName', '%' . $filterName . '%');
-        }
-
-        $allowedSorts = ['name', 'email', 'birthdate'];
-        $allowedDir = ['asc', 'desc'];
-        if (!in_array($sortBy, $allowedSorts)) 
-            $sortBy = 'name';
-        if (!in_array(strtolower($sortDir), $allowedDir)) 
-            $sortDir = 'asc';
-
-        $qb->orderBy('p.' . $sortBy, $sortDir);
-
-        return $qb->getQuery()->getResult();
+        $qb->andWhere('p.name LIKE :filterName')
+        ->setParameter('filterName', '%' . $filterName . '%');
     }
 
-    public function findWithFilters(?string $filterName, string $sortBy = 'name', string $sortDir = 'asc')
-    {
-        $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.addresses', 'a')
-            ->leftJoin('p.bank_account', 'b')
-            ->addSelect('a', 'b');
+    $allowedSorts = ['name', 'email', 'birthdate', 'city'];
+    $allowedDir = ['asc', 'desc'];
+    if (!in_array($sortBy, $allowedSorts)) $sortBy = 'name';
+    if (!in_array($sortDir, $allowedDir)) $sortDir = 'asc';
 
-        if ($filterName) 
-        {
-            $qb->andWhere('p.name LIKE :filterName')
-            ->setParameter('filterName', '%' . $filterName . '%');
-        }
-
-        $allowedSorts = ['name', 'email', 'birthdate'];
-        $allowedDir = ['asc', 'desc'];
-        if (!in_array($sortBy, $allowedSorts)) $sortBy = 'name';
-        if (!in_array($sortDir, $allowedDir)) $sortDir = 'asc';
-
+    // Gestion du tri selon la colonne choisie
+    if ($sortBy === 'city') {
+        // Ici tu tries sur la première adresse associée à la personne
+        $qb->orderBy('a.city', $sortDir);
+    } else {
         $qb->orderBy('p.' . $sortBy, $sortDir);
-
-        return $qb->getQuery()->getResult();
     }
+
+    return $qb->getQuery()->getResult();
+}
+
 }
