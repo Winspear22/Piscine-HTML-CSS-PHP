@@ -16,28 +16,52 @@ class PersonRepository extends ServiceEntityRepository
         parent::__construct($registry, Person::class);
     }
 
-    //    /**
-    //     * @return Person[] Returns an array of Person objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findFilteredSorted($filterName = '', $sortBy = 'name', $sortDir = 'asc')
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.addresses', 'a')
+            ->leftJoin('p.bank_account', 'b')
+            ->addSelect('a')
+            ->addSelect('b');
 
-    //    public function findOneBySomeField($value): ?Person
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($filterName) 
+        {
+            $qb->andWhere('p.name LIKE :filterName')
+            ->setParameter('filterName', '%' . $filterName . '%');
+        }
+
+        $allowedSorts = ['name', 'email', 'birthdate'];
+        $allowedDir = ['asc', 'desc'];
+        if (!in_array($sortBy, $allowedSorts)) 
+            $sortBy = 'name';
+        if (!in_array(strtolower($sortDir), $allowedDir)) 
+            $sortDir = 'asc';
+
+        $qb->orderBy('p.' . $sortBy, $sortDir);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findWithFilters(?string $filterName, string $sortBy = 'name', string $sortDir = 'asc')
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.addresses', 'a')
+            ->leftJoin('p.bank_account', 'b')
+            ->addSelect('a', 'b');
+
+        if ($filterName) 
+        {
+            $qb->andWhere('p.name LIKE :filterName')
+            ->setParameter('filterName', '%' . $filterName . '%');
+        }
+
+        $allowedSorts = ['name', 'email', 'birthdate'];
+        $allowedDir = ['asc', 'desc'];
+        if (!in_array($sortBy, $allowedSorts)) $sortBy = 'name';
+        if (!in_array($sortDir, $allowedDir)) $sortDir = 'asc';
+
+        $qb->orderBy('p.' . $sortBy, $sortDir);
+
+        return $qb->getQuery()->getResult();
+    }
 }

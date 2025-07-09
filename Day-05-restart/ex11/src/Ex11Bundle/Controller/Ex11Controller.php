@@ -88,6 +88,7 @@ class Ex11Controller extends AbstractController
 
 		// 4. Exécution
 		$data = $connection->fetchAllAssociative($sql, $params);
+		$total_people = $connection->fetchOne('SELECT COUNT(*) FROM persons');
 
 		// 5. Rendu vers le template (index.html.twig dans templates/ex11/)
 		return $this->render('index.html.twig', [
@@ -95,6 +96,7 @@ class Ex11Controller extends AbstractController
 			'filter_name' => $filterName,
 			'sort_by' => $sortBy,
 			'sort_dir' => $sortDir,
+			'total_people' => $total_people,
 	]);
 	}
 
