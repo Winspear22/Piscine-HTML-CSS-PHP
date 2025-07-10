@@ -61,28 +61,8 @@ class Ex13Controller extends AbstractController
 		$form = $this->createForm(EmployeeFormType::class, $employee, $formOptions);
 		$form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			// Un seul CEO/COO
-			if ($employee->getPosition() === EmployeePosition::Ceo && $ceo) {
-				$this->addFlash('error', 'Il existe déjà un CEO !');
-				return $this->redirectToRoute('ex13_create');
-			}
-			if ($employee->getPosition() === EmployeePosition::Coo && $coo) {
-				$this->addFlash('error', 'Il existe déjà un COO !');
-				return $this->redirectToRoute('ex13_create');
-			}
-			// CEO n'a pas de manager
-			if ($employee->getPosition() === EmployeePosition::Ceo && $employee->getManager() !== null) {
-				$this->addFlash('error', 'Le CEO ne peut pas avoir de manager.');
-				return $this->redirectToRoute('ex13_create');
-			}
-			// COO doit avoir CEO comme manager
-			if ($employee->getPosition() === EmployeePosition::Coo) {
-				if (!$employee->getManager() || $employee->getManager()->getPosition() !== EmployeePosition::Ceo) {
-					$this->addFlash('error', 'Le COO doit avoir le CEO comme manager.');
-					return $this->redirectToRoute('ex13_create');
-				}
-			}
+		if ($form->isSubmitted() && $form->isValid()) 
+		{
 			$em->persist($employee);
 			$em->flush();
 			$this->addFlash('success', 'Employé créé avec succès !');
@@ -127,19 +107,8 @@ class Ex13Controller extends AbstractController
 		$form = $this->createForm(EmployeeFormType::class, $employee, $formOptions);
 		$form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid()) {
-			// CEO n'a pas de manager
-			if ($employee->getPosition() === EmployeePosition::Ceo && $employee->getManager() !== null) {
-				$this->addFlash('error', 'Le CEO ne peut pas avoir de manager.');
-				return $this->redirectToRoute('ex13_update', ['id' => $employee->getId()]);
-			}
-			// COO doit avoir CEO comme manager
-			if ($employee->getPosition() === EmployeePosition::Coo) {
-				if (!$employee->getManager() || $employee->getManager()->getPosition() !== EmployeePosition::Ceo) {
-					$this->addFlash('error', 'Le COO doit avoir le CEO comme manager.');
-					return $this->redirectToRoute('ex13_update', ['id' => $employee->getId()]);
-				}
-			}
+		if ($form->isSubmitted() && $form->isValid()) 
+		{
 			$em->flush();
 			$this->addFlash('success', 'Employé modifié avec succès !');
 			return $this->redirectToRoute('ex13_index');

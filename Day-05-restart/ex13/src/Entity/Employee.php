@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator as AppAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use App\Enum\EmployeeHours;
@@ -12,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[UniqueEntity(fields: ['email'], message: "Cet email est déjà utilisé.")]
+#[AppAssert\EmployeeBusiness]
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
 {
@@ -121,53 +123,5 @@ class Employee
             }
         }
         return $this;
-    }
-
-    // --- VALIDATIONS SPÉCIFIQUES --- //
-
-    #[Assert\IsTrue(message: "Le manager est obligatoire, sauf pour le CEO.")]
-    public function isManagerValid(): bool
-    {
-        // CEO ne doit pas avoir de manager
-        if ($this->position === EmployeePosition::Ceo) {
-            return $this->manager === null;
-        }
-        // Autres doivent avoir un manager (si position renseignée)
-        if ($this->position && $this->position !== EmployeePosition::Ceo) {
-            return $this->manager !== null;
-        }
-        // Si pas de position, ne valide pas ici
-        return true;
-    }
-
-    #[Assert\IsTrue(message: "L'employé doit avoir au moins 18 ans à la date d'embauche.")]
-    public function isOfLegalAgeAtHire(): bool
-    {
-        if (!$this->birthdate || !$this->employed_since) return true;
-        $legal18 = (clone $this->birthdate)->modify('+18 years');
-        return $this->employed_since >= $legal18;
-    }
-
-    #[Assert\IsTrue(message: "La date d'embauche ne peut pas être avant la date de naissance, ni avant ses 18 ans.")]
-    public function isHireDateValid(): bool
-    {
-        if (!$this->birthdate || !$this->employed_since) return true;
-        $legal18 = (clone $this->birthdate)->modify('+18 years');
-        return $this->employed_since >= $this->birthdate && $this->employed_since >= $legal18;
-    }
-
-    #[Assert\IsTrue(message: "La date de fin de contrat ne peut pas être avant la date de naissance, ni avant ses 18 ans.")]
-    public function isEndDateValid(): bool
-    {
-        if (!$this->birthdate || !$this->employed_until) return true;
-        $legal18 = (clone $this->birthdate)->modify('+18 years');
-        return $this->employed_until >= $this->birthdate && $this->employed_until >= $legal18;
-    }
-
-    #[Assert\IsTrue(message: "La date de fin doit être après la date d'embauche.")]
-    public function isEmployedUntilValid(): bool
-    {
-        if ($this->employed_until === null) return true;
-        return $this->employed_since <= $this->employed_until;
     }
 }
