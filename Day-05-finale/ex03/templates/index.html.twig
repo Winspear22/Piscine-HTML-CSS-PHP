@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Utilisateurs (ex03){% endblock %}
+{% block title %}Ex03 — Ajouter un User ORM{% endblock %}
 
 {% block body %}
-    <h1>Ajouter un utilisateur</h1>
     {% for msg in app.flashes('success') %}
         <div class="alert success">{{ msg }}</div>
     {% endfor %}
@@ -12,38 +11,35 @@
     {% endfor %}
 
     <div class="form-wrapper">
+        <h1>Ex03 — Ajouter un User ORM</h1>
         {{ form(form) }}
+        <h2>Liste des personnes</h2>
     </div>
 
-    <h2>Liste des utilisateurs</h2>
-    {% if users|length > 0 %}
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Enable</th>
-                    <th>Birthdate</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
-                    <td>{{ user.birthdate ? user.birthdate|date('d/m/Y') : '' }}</td>
-                    <td>{{ user.address }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Aucun utilisateur pour l'instant.</p>
-    {% endif %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Enable</th>
+            <th>Birthdate</th>
+            <th>Address</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+                <td>{{ user.birthdate ? user.birthdate|date('d/m/Y') : '' }}</td>
+                <td>{{ user.address }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7" style="text-align: center;">Aucune personne enregistrée.</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
