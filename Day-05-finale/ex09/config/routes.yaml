@@ -1,9 +1,24 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex09_index:
+    path: /ex09
+    controller: App\Controller\Ex09Controller::index
+    methods: [GET]
 
-Ex09Bundle:
-    resource: '../src/Ex09Bundle/Controller'
-    type: annotation
+ex09_add:
+    path: /ex09/add
+    controller: App\Controller\Ex09Controller::addPerson
+    methods: [POST]
+
+ex09_add_address:
+    path: /ex09/add-address/{id}
+    controller: App\Controller\Ex09Controller::addAddress
+    methods: [POST]
+
+ex09_add_bank_account:
+    path: /ex09/add-bank-account/{id}
+    controller: App\Controller\Ex09Controller::addBankAccount
+    methods: [POST]
+
+ex09_delete:
+    path: /ex09/delete/{id}
+    controller: App\Controller\Ex09Controller::deletePerson
+    methods: [POST]

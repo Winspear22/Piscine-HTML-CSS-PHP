@@ -13,13 +13,13 @@ class BankAccount
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $iban = null;
+    #[ORM\Column(length: 34)]
+    private ?string $iban = null;
 
     #[ORM\Column(length: 255)]
     private ?string $bank_name = null;
 
-    #[ORM\OneToOne(mappedBy: 'BankAccount', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'bank_account', cascade: ['persist', 'remove'])]
     private ?Person $person = null;
 
     public function getId(): ?int
@@ -27,12 +27,12 @@ class BankAccount
         return $this->id;
     }
 
-    public function getIban(): ?int
+    public function getIban(): ?string
     {
         return $this->iban;
     }
 
-    public function setIban(int $iban): static
+    public function setIban(string $iban): static
     {
         $this->iban = $iban;
 
@@ -56,10 +56,15 @@ class BankAccount
         return $this->person;
     }
 
-    public function setPerson(Person $person): static
+    public function setPerson(?Person $person): static
     {
+        // unset the owning side of the relation if necessary
+        if ($person === null && $this->person !== null) {
+            $this->person->setBankAccount(null);
+        }
+
         // set the owning side of the relation if necessary
-        if ($person->getBankAccount() !== $this) {
+        if ($person !== null && $person->getBankAccount() !== $this) {
             $person->setBankAccount($this);
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Enum\MaritalStatus;
 use App\Repository\PersonRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,7 +21,7 @@ class Person
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true, unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -31,22 +30,21 @@ class Person
     #[ORM\Column]
     private ?\DateTime $birthdate = null;
 
+    #[ORM\Column(length: 16)]
+    private ?string $marital_status = null;
+
     /**
      * @var Collection<int, Address>
      */
-    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'person', orphanRemoval: true)]
-    private Collection $Address;
+    #[ORM\OneToMany(targetEntity: Address::class, mappedBy: 'person', cascade: ['remove'], orphanRemoval: true)]
+    private Collection $addresses;
 
     #[ORM\OneToOne(inversedBy: 'person', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?BankAccount $BankAccount = null;
-
-    #[ORM\Column(enumType: MaritalStatus::class)]
-    private ?MaritalStatus $marital_status = null;
+    private ?BankAccount $bank_account = null;
 
     public function __construct()
     {
-        $this->Address = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,7 +81,7 @@ class Person
         return $this->email;
     }
 
-    public function setEmail(?string $email): static
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
@@ -114,18 +112,30 @@ class Person
         return $this;
     }
 
+    public function getMaritalStatus(): ?string
+    {
+        return $this->marital_status;
+    }
+
+    public function setMaritalStatus(string $marital_status): static
+    {
+        $this->marital_status = $marital_status;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Address>
      */
-    public function getAddress(): Collection
+    public function getAddresses(): Collection
     {
-        return $this->Address;
+        return $this->addresses;
     }
 
     public function addAddress(Address $address): static
     {
-        if (!$this->Address->contains($address)) {
-            $this->Address->add($address);
+        if (!$this->addresses->contains($address)) {
+            $this->addresses->add($address);
             $address->setPerson($this);
         }
 
@@ -134,7 +144,7 @@ class Person
 
     public function removeAddress(Address $address): static
     {
-        if ($this->Address->removeElement($address)) {
+        if ($this->addresses->removeElement($address)) {
             // set the owning side to null (unless already changed)
             if ($address->getPerson() === $this) {
                 $address->setPerson(null);
@@ -146,24 +156,12 @@ class Person
 
     public function getBankAccount(): ?BankAccount
     {
-        return $this->BankAccount;
+        return $this->bank_account;
     }
 
-    public function setBankAccount(BankAccount $BankAccount): static
+    public function setBankAccount(?BankAccount $bank_account): static
     {
-        $this->BankAccount = $BankAccount;
-
-        return $this;
-    }
-
-    public function getMaritalStatus(): ?MaritalStatus
-    {
-        return $this->marital_status;
-    }
-
-    public function setMaritalStatus(MaritalStatus $marital_status): static
-    {
-        $this->marital_status = $marital_status;
+        $this->bank_account = $bank_account;
 
         return $this;
     }
