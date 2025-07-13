@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ex03 Create{% endblock %}
+
+{% block body %}
+    <h1>Créer un utilisateur</h1>
+
+    {# Messages flash #}
+    {% for msg in app.flashes('success') %}
+        <div class="alert">{{ msg }}</div>
+    {% endfor %}
+    {% for msg in app.flashes('error') %}
+        <div class="alert error">{{ msg }}</div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Créer</button>
+    {{ form_end(form) }}
+	<a href="{{ path('ex03_index') }}" class="btn">Retour à la liste des utilisateurs</a>
+{% endblock %}

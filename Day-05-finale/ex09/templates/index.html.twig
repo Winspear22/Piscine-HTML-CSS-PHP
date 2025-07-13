@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Personnes, Comptes & Adresses{% endblock %}
+
+{% block body %}
+<h1>Gestion des personnes</h1>
+
+{# Affichage des messages flash #}
+{% for msg in app.flashes('success') %}
+    <div class="alert">{{ msg }}</div>
+{% endfor %}
+{% for msg in app.flashes('error') %}
+    <div class="alert error">{{ msg }}</div>
+{% endfor %}
+
+<div class="form-container">
+    <h2>Ajouter une personne</h2>
+    {{ form_start(formPerson) }}
+        {{ form_widget(formPerson) }}
+        <button class="btn" type="submit">Créer</button>
+    {{ form_end(formPerson) }}
+</div>
+
+<h2>Liste des personnes</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Enable</th>
+            <th>Date de naissance</th>
+            <th>Comptes bancaires</th>
+            <th>Adresses</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for person in persons %}
+        <tr>
+            <td>{{ person.id }}</td>
+            <td>{{ person.username }}</td>
+            <td>{{ person.name }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.enable ? 'Oui' : 'Non' }}</td>
+            <td>{{ person.birthdate ? person.birthdate|date('d/m/Y') : '' }}</td>
+            <td>
+                {% for ba in person.bankAccounts %}
+                    n°{{ ba.id }} — {{ ba.balance is not null ? ba.balance ~ ' €' : 'Montant inconnu' }}<br>
+                {% else %}
+                    Aucune
+                {% endfor %}
+            </td>
+            <td>
+                {% for address in person.addresses %}
+                    n°{{ address.id }} — {{ address.city ?? 'Adresse inconnue' }}<br>
+                {% else %}
+                    Aucune
+                {% endfor %}
+            </td>
+            <td>
+                <a class="btn modifier" href="{{ path('ex09_update', {'id': person.id}) }}">Modifier</a>
+                {# Suppression par POST ! #}
+                <form method="post" action="{{ path('ex09_delete', {'id': person.id}) }}" style="display:inline;">
+                    <button class="btn supprimer" type="submit" onclick="return confirm('Supprimer vraiment ?')">Supprimer</button>
+                </form>
+                <a class="btn" href="{{ path('ex09_create_ba', {'id': person.id}) }}">Ajouter compte</a>
+                <a class="btn" href="{{ path('ex09_create_address', {'id': person.id}) }}">Ajouter adresse</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{# Formulaire dynamique d’ajout de compte bancaire pour une personne sélectionnée #}
+{% if formBankAccount is defined %}
+    <div class="form-container">
+        <h2>Ajouter un compte bancaire à {{ personToEdit.name }}</h2>
+        {{ form_start(formBankAccount) }}
+            {{ form_widget(formBankAccount) }}
+            <button class="btn" type="submit">Ajouter compte</button>
+        {{ form_end(formBankAccount) }}
+    </div>
+{% endif %}
+
+{# Formulaire dynamique d’ajout d’adresse pour une personne sélectionnée #}
+{% if formAddress is defined %}
+    <div class="form-container">
+        <h2>Ajouter une adresse à {{ personToEdit.name }}</h2>
+        {{ form_start(formAddress) }}
+            {{ form_widget(formAddress) }}
+            <button class="btn" type="submit">Ajouter adresse</button>
+        {{ form_end(formAddress) }}
+    </div>
+{% endif %}
+
+{% endblock %}
