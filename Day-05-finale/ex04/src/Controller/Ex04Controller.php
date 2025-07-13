@@ -158,7 +158,6 @@ class Ex04Controller extends AbstractController
 			return [];
 		}
 	}
-
     private function getPersonById(Connection $connection, string $tableName, int $id): ?array
     {
         try 
@@ -188,12 +187,12 @@ class Ex04Controller extends AbstractController
 			$person = $this->getPersonById($connection, $tableName, (int)$id);
 			if (!$person) 
 			{
-				$this->addFlash('notice', "Impossible de supprimer : l'utilisateur (ID $id) n'existe pas.");
+				$this->addFlash('notice', "Impossible de supprimer : le user (ID $id) n'existe pas.");
 				return $this->redirectToRoute('ex04_index');
 			}
 			$sql = "DELETE FROM `$tableName` WHERE id = :id";
 			$connection->executeStatement($sql, ['id' => $id]);
-			$this->addFlash('success', "Suppression réussie pour l'utilisateur ID $id !");
+			$this->addFlash('success', "Suppression réussie pour le user ID $id !");
 		} 
 		catch (\Exception $e) 
 		{

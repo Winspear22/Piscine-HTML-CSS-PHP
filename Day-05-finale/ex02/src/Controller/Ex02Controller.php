@@ -25,9 +25,8 @@ class Ex02Controller extends AbstractController
 	 */
 	public function index(Request $request, Connection $connection): Response
 	{
-		$tableName = "persons";
+		$tableName = "users";
 
-		// Vérifier si la table existe, et la créer si besoin (sans aucun return ici)
 		$tableStatus = $this->tableExistenceCheck($tableName, $connection);
 		if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
 		{
@@ -46,20 +45,17 @@ class Ex02Controller extends AbstractController
 			return $this->redirectToRoute('ex02_index');
 		}
 
-		$persons = $this->getAllPersons($connection, $tableName);
+		$users = $this->getAllUsers($connection, $tableName);
 
 		return $this->render('index.html.twig', [
 			'form' => $form->createView(),
-			'persons' => $persons,
+			'users' => $users,
 		]);
 	}
-
 
 	/*========================================================================================*/
 	/*---------------------------------- CREATE THE TABLE ------------------------------------*/
 	/*========================================================================================*/
-
-	
 	private function tableExistenceCheck(string $tableName, Connection $connection): array
     {
 		try
@@ -100,8 +96,6 @@ class Ex02Controller extends AbstractController
 	/*========================================================================================*/
 	/*----------------------------------- CREATE THE FORM ------------------------------------*/
 	/*========================================================================================*/
-
-
 	private function buildPersonForm(): \Symfony\Component\Form\FormInterface
 	{
 		return $this->createFormBuilder(null, [
@@ -116,7 +110,6 @@ class Ex02Controller extends AbstractController
 			->add('submit', SubmitType::class, ['label' => 'Ajouter l’utilisateur'])
 			->getForm();
 	}
-
 	private function handlePersonFormSubmission($form, Connection $connection, string $tableName): ?string
 	{
 		if ($form->isSubmitted() && $form->isValid()) 
@@ -143,7 +136,7 @@ class Ex02Controller extends AbstractController
 	/*--------------------------------------- GETTER -----------------------------------------*/
 	/*========================================================================================*/
 	
-	private function getAllPersons(Connection $connection, string $tableName): array
+	private function getAllUsers(Connection $connection, string $tableName): array
 	{
 		try 
 		{

@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
-{% block title %}Ajouter une personne (ex02){% endblock %}
+{% block title %}Ex02 — Ajouter un User SQL{% endblock %}
 
 {% block body %}
-    {# Messages flash de succès/erreur #}
     {% for msg in app.flashes('notice') %}
         <div class="alert">{{ msg }}</div>
     {% endfor %}
 
     <div class="form-wrapper">
-        <h1>Ajouter une personne</h1>
+        <h1>Ex02 — Ajouter un User SQL</h1>
         {{ form(form) }}
         <h2>Liste des personnes</h2>
-
     </div>
-
 
     <table>
         <tr>
@@ -25,15 +22,15 @@
             <th>Birthdate</th>
             <th>Address</th>
         </tr>
-        {% for person in persons %}
+        {% for user in users %}
             <tr>
-                <td>{{ person.id }}</td>
-                <td>{{ person.username }}</td>
-                <td>{{ person.name }}</td>
-                <td>{{ person.email }}</td>
-                <td>{{ person.enable ? 'Oui' : 'Non' }}</td>
-                <td>{{ person.birthdate }}</td>
-                <td>{{ person.address }}</td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.enable ? 'Oui' : 'Non' }}</td>
+                <td>{{ user.birthdate }}</td>
+                <td>{{ user.address }}</td>
             </tr>
         {% else %}
             <tr>
