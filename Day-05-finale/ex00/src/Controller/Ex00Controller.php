@@ -19,7 +19,7 @@ class Ex00Controller extends AbstractController
 	 */
 	public function index(Connection $connection, Request $request): Response
 	{
-		$tableName = "persons";
+		$tableName = "user";
 
 		if ($request->isMethod('POST')) 
 		{
@@ -44,8 +44,8 @@ class Ex00Controller extends AbstractController
 		{
 			$doesTableExists = $connection->executeQuery("SHOW TABLES LIKE '$tableName'")->rowCount();
 			if ($doesTableExists > 0)
-				return (['status' => self::SUCCESS, 'message' => "La table $tableName existe déjà."]); // La table existe.
-			return (['status' => self::DOES_NOT_EXIST]); // La table n'existe pas.
+				return (['status' => self::SUCCESS, 'message' => "La table $tableName existe déjà."]);
+			return (['status' => self::DOES_NOT_EXIST]);
 		}
 		catch (\Exception $e)
 		{
