@@ -3,72 +3,85 @@
 namespace App\Controller;
 
 use Doctrine\DBAL\Connection;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 class Ex04Controller extends AbstractController
 {
+
     const SUCCESS = 0;
 	const FAILURE = 1;
 	const DOES_NOT_EXIST = 2;
-
-
     /**
-    * @Route("/ex04", name="ex04_index")
-    */
-    public function index(Connection $connection, Request $request): Response
-    {
-        $tableName = "persons";
-
-        // 1. Vérifier et créer table si besoin, puis recharger la liste
-        $tableStatus = $this->tableExistenceCheck($tableName, $connection);
-        if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
-        {
-            $this->addFlash('notice', $tableStatus['message']);
-            $creationResult = $this->createTable($tableName, $connection);
-            $this->addFlash('notice', $creationResult['message']);
-            $genMessages = $this->generatePersons($connection, $tableName, 10);            foreach ($genMessages as $msg) 
-            {
-                $this->addFlash('notice', $msg['message']);
-            }
-        }
-        $persons = $this->getAllPersons($connection, $tableName);
-
-        // 2. Gérer le paramètre d’édition
-        $editId = $request->query->get('edit');
-        $editPerson = null;
-        if ($editId) 
+     * @Route("/ex04", name="ex04_index")
+     */
+	public function index(Connection $connection): Response
+	{
+		$tableName = "users";
+		try 
 		{
-            $editPerson = $this->getPersonById($connection, $tableName, (int)$editId);
-            if (!$editPerson)
-                $this->addFlash('notice', "Personne introuvable (ID $editId)");
-        }
+			$tableStatus = $this->tableExistenceCheck($tableName, $connection);
+			if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
+			{
+				$this->addFlash('notice', $tableStatus['message']);
+				$creationResult = $this->createTable($tableName, $connection);
+				$this->addFlash('notice', $creationResult['message']);
+				$genMessages = $this->generateUsers($connection, $tableName, 10);            
+				foreach ($genMessages as $msg) 
+					$this->addFlash('notice', $msg['message']);
+			}
+			$users = $this->getAllUsers($connection, $tableName);
+		} 
+		catch (\Exception $e) 
+		{
+			$this->addFlash('error', "Erreur globale : " . $e->getMessage());
+			$users = [];
+		}
+			return $this->render('index.html.twig', [
+			'users' => $users,
+			]);
+	}
 
-        // 3. Traitement du formulaire d'édition (POST)
-        if ($request->isMethod('POST') && $editId) {
-            $data = [
-                'username'  => $request->request->get('username'),
-                'name'      => $request->request->get('name'),
-                'email'     => $request->request->get('email'),
-                'enable'    => $request->request->get('enable', 0),
-                'birthdate' => $request->request->get('birthdate'),
-                'address'   => $request->request->get('address'),
-            ];
-            $updateResult = $this->updatePerson($connection, $tableName, (int)$editId, $data);
-            $this->addFlash('notice', $updateResult['message']);
-            return $this->redirectToRoute('ex04_index');
-        }
+	private function generateUsers(Connection $connection, string $tableName, int $nb): array
+	{
+		$messages = [];
+		try 
+		{
+			$connection->executeStatement("DELETE FROM `$tableName`");
+		} 
+		catch (\Exception $e) 
+		{
+			$messages[] = ['status' => self::FAILURE, 'message' => "Erreur lors du nettoyage : " . $e->getMessage()];
+			return $messages;
+		}        
+		for ($i = 0; $i <= $nb; $i++) 
+		{
+			$data = [
+				'username'  => 'user'.$i,
+				'name'      => 'Nom'.$i,
+				'email'     => 'user'.$i.'@mail.com',
+				'enable'    => rand(0,1),
+				'birthdate' => date('Y-m-d H:i:s', strtotime('-'.rand(18,40).' years')),
+				'address'   => 'Adresse '.$i.' avenue Testville'
+			];
+			try 
+			{
+				$sql = "INSERT INTO `$tableName` (username, name, email, enable, birthdate, address)
+						VALUES (:username, :name, :email, :enable, :birthdate, :address)";
+				$connection->executeStatement($sql, $data);
+			} 
+			catch (\Exception $e) 
+			{
+				$messages[] = ['status' => self::FAILURE, 'message' => "Erreur personne $i : " . $e->getMessage()];
+			}
+		}
+		$messages[] = ['status' => self::SUCCESS, 'message' => "10 users créés avec succès."];
+		return $messages;
+	}
 
-        // 4. Affichage
-        return $this->render('index.html.twig', [
-            'persons'    => $persons,
-            'editPerson' => $editPerson
-    ]);
-}
-
-    private function createTable(string $tableName, Connection $connection): array
+	private function createTable(string $tableName, Connection $connection): array
     {
         try 
         {
@@ -90,8 +103,31 @@ class Ex04Controller extends AbstractController
         }
     }
 
-
-    private function tableExistenceCheck(string $tableName, Connection $connection): array
+    /**
+     * @Route("/ex04/fill", name="ex04_fill", methods={"POST"})
+     */
+	public function fillTable(Connection $connection)
+	{
+		$tableName = "users";
+		try 
+		{
+			$tableStatus = $this->tableExistenceCheck($tableName, $connection);
+			if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
+			{
+				$this->addFlash('notice', $tableStatus['message']);
+				return $this->redirectToRoute('ex04_index');
+			}
+			$messages = $this->generateUsers($connection, $tableName, 10);
+			foreach ($messages as $msg) 
+				$this->addFlash('notice', $msg['message']);
+		} 
+		catch (\Exception $e) 
+		{
+			$this->addFlash('error', "Erreur lors du remplissage : " . $e->getMessage());
+		}
+		return $this->redirectToRoute('ex04_index');
+	}
+	private function tableExistenceCheck(string $tableName, Connection $connection): array
     {
         try 
         {
@@ -105,71 +141,16 @@ class Ex04Controller extends AbstractController
             return ['status' => self::FAILURE, 'message' => "Erreur lors de la RECHERCHE de la table '$tableName' : " . $e->getMessage()];
         }
     }
-
-
-    private function generatePersons(Connection $connection, string $tableName, int $nb): array
-    {
-        $messages = [];
-        for ($i = 1; $i <= $nb; $i++) {
-            $data = [
-                'username'  => 'user'.$i,
-                'name'      => 'Nom'.$i,
-                'email'     => 'user'.$i.'@mail.com',
-                'enable'    => rand(0,1),
-                'birthdate' => date('Y-m-d H:i:s', strtotime('-'.rand(18,40).' years')),
-                'address'   => 'Adresse '.$i.' avenue Testville'
-            ];
-            try {
-                $sql = "INSERT INTO `$tableName` (username, name, email, enable, birthdate, address)
-                        VALUES (:username, :name, :email, :enable, :birthdate, :address)";
-                $connection->executeStatement($sql, $data);
-                $messages[] = ['status' => self::SUCCESS, 'message' => "Personne $i ajoutée avec succès."];
-            } catch (\Exception $e) {
-                $messages[] = ['status' => self::FAILURE, 'message' => "Erreur personne $i : " . $e->getMessage()];
-            }
-        }
-        return $messages;
-    }
-
-
-    private function updatePerson(Connection $connection, string $tableName, int $id, array $data): array
-    {
-        try 
-        {
-            $sql = "UPDATE `$tableName` 
-                    SET username = :username,
-                        name = :name,
-                        email = :email,
-                        enable = :enable,
-                        birthdate = :birthdate,
-                        address = :address
-                    WHERE id = :id";
-            $connection->executeStatement($sql, [
-                'username'  => $data['username'],
-                'name'      => $data['name'],
-                'email'     => $data['email'],
-                'enable'    => !empty($data['enable']) ? 1 : 0,
-                'birthdate' => $data['birthdate'],
-                'address'   => $data['address'],
-                'id'        => $id
-            ]);
-            return ['status' => self::SUCCESS, 'message' => "Modification réussie !"];
-        } 
-        catch (\Exception $e) 
-        {
-            return ['status' => self::FAILURE, 'message' => "Erreur lors de la modification : " . $e->getMessage()];
-        }
-    }
-
-    /*========================================================================================*/
+	
+	/*========================================================================================*/
 	/*--------------------------------------- GETTER -----------------------------------------*/
 	/*========================================================================================*/
 	
-	private function getAllPersons(Connection $connection, string $tableName): array
+	private function getAllUsers(Connection $connection, string $tableName): array
 	{
 		try 
 		{
-			$sql = "SELECT * FROM `$tableName` ORDER BY id DESC";
+			$sql = "SELECT * FROM `$tableName` ORDER BY id ASC";
 			return $connection->fetchAllAssociative($sql);
 		} 
 		catch (\Exception $e) 
@@ -181,16 +162,44 @@ class Ex04Controller extends AbstractController
     private function getPersonById(Connection $connection, string $tableName, int $id): ?array
     {
         try 
-		{
+        {
             $sql = "SELECT * FROM `$tableName` WHERE id = :id";
             $person = $connection->fetchAssociative($sql, ['id' => $id]);
             return $person ?: null;
         } 
-		catch (\Exception $e) 
-		{
+        catch (\Exception $e) 
+        {
             return null;
         }
     }
 
+	/*========================================================================================*/
+	/*--------------------------------------- DELETE -----------------------------------------*/
+	/*========================================================================================*/
 
+    /**
+     * @Route("/ex04/delete/{id}", name="ex04_delete", methods={"POST"})
+     */
+	public function delete(Connection $connection, Request $request, $id)
+	{
+		$tableName = "users";
+		try 
+		{
+			$person = $this->getPersonById($connection, $tableName, (int)$id);
+			if (!$person) 
+			{
+				$this->addFlash('notice', "Impossible de supprimer : l'utilisateur (ID $id) n'existe pas.");
+				return $this->redirectToRoute('ex04_index');
+			}
+			$sql = "DELETE FROM `$tableName` WHERE id = :id";
+			$connection->executeStatement($sql, ['id' => $id]);
+			$this->addFlash('success', "Suppression réussie pour l'utilisateur ID $id !");
+		} 
+		catch (\Exception $e) 
+		{
+			$this->addFlash('error', "Erreur lors de la suppression ou du check : " . $e->getMessage());
+		}
+		$this->addFlash('notice', "Suppression effectuée avec succès.");
+		return $this->redirectToRoute('ex04_index');
+	}
 }
