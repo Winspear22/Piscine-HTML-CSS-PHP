@@ -1,0 +1,506 @@
+                               
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8000\http://127.0.0.1:8000\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex00] GET /ex00 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8001\http://127.0.0.1:8001\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex01] GET /ex01 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8002\http://127.0.0.1:8002\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex02] GET /ex02 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8003\http://127.0.0.1:8003\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex03] GET /ex03 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8003\http://127.0.0.1:8003\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex03] GET /ex03/create → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8004\http://127.0.0.1:8004\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex04] GET /ex04 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8005\http://127.0.0.1:8005\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex05] GET /ex05 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8005\http://127.0.0.1:8005\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex05] GET /ex05/create → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8005\http://127.0.0.1:8005\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex05] POST /ex05/delete/1 → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8006\http://127.0.0.1:8006\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex06] GET /ex06 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8007\http://127.0.0.1:8007\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex07] GET /ex07 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8007\http://127.0.0.1:8007\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex07] GET /ex07/create → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8007\http://127.0.0.1:8007\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex07] GET /ex07/update/1 → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] GET /ex08 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/create-persons → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/create-address-table → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/create-BankAccount-table → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/add-marital-status → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/add-relation-addresses → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/add-relation-bank-account → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8008\http://127.0.0.1:8008\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex08] POST /ex08/drop-tables → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8009\http://127.0.0.1:8009\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex09] GET /ex09 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8009\http://127.0.0.1:8009\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex09] POST /ex09/add → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8009\http://127.0.0.1:8009\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex09] POST /ex09/add-address/1 → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8009\http://127.0.0.1:8009\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex09] POST /ex09/add-bank-account/1 → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8009\http://127.0.0.1:8009\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex09] POST /ex09/delete/1 → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8010\http://127.0.0.1:8010\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex10] GET /ex10 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8010\http://127.0.0.1:8010\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex10] GET /ex10/create-sql-table → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8010\http://127.0.0.1:8010\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex10] GET /ex10/import → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8010\http://127.0.0.1:8010\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex10] GET /ex10/clear → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8011\http://127.0.0.1:8011\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex11] GET /ex11 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8011\http://127.0.0.1:8011\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex11] POST /ex11/add-test-persons → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8011\http://127.0.0.1:8011\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex11] POST /ex11/drop-tables → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8012\http://127.0.0.1:8012\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex12] GET /ex12 → 200
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8012\http://127.0.0.1:8012\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex12] POST /ex12/add-test-persons → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                                                       
+
+                                                                                                                     
+[OK] Web server listening                                                                                                                                                                      
+     http://127.0.0.1:8012\http://127.0.0.1:8012\                                                                                           
+                                                                                                                     
+
+Stream the logs via [32msymfony server:log[39m
+✅ [ex12] POST /ex12/drop-all → 302
+Stopping [33mPHP[39m
+Stopping [33mWeb Server[39m
+
+                                                                                                                     
+[OK] Stopped 2 process(es) successfully                                                                              
+                                                                                                                     
+
