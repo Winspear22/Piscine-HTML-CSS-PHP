@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -29,6 +30,9 @@ class User
 
     #[ORM\Column]
     private ?\DateTime $birthdate = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $address = null;
 
     public function getId(): ?int
     {
@@ -91,6 +95,18 @@ class User
     public function setBirthdate(\DateTime $birthdate): static
     {
         $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(string $address): static
+    {
+        $this->address = $address;
 
         return $this;
     }
