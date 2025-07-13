@@ -8,7 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class UserType extends AbstractType
 {
@@ -19,12 +20,16 @@ class UserType extends AbstractType
             ->add('name')
             ->add('email', EmailType::class)
             ->add('enable')
-            ->add('birthdate', DateType::class)
-            ->add('address', TextType::class, [
+            ->add('birthdate', DateType::class, [
+                'widget' => 'single_text',
+                'required' => false
+            ])            
+            ->add('address', TextareaType::class, [
+                'attr' => ['rows' => 2, 'cols' => 40],
                 'required' => false,
                 'label' => 'Address',
             ])
-        ;
+            ->add('submit', SubmitType::class, ['label' => 'Ajouter l’utilisateur']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -15,37 +15,28 @@ class Ex03Controller extends AbstractController
     /**
      * @Route("/ex03", name="ex03_index")
      */
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
-		$users = $em->getRepository(User::class)->findAll();
-		return $this->render('index.html.twig',
-			['users' => $users]);
+        $users = $em->getRepository(User::class)->findAll();
+
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $em->persist($user);
+                $em->flush();
+                $this->addFlash('success', 'Utilisateur créé avec succès.');
+                return $this->redirectToRoute('ex03_index');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage());
+            }
+        }
+
+        return $this->render('index.html.twig', [
+            'form' => $form->createView(),
+            'users' => $users,
+        ]);
     }
-
-	/**
-	 * @Route("/ex03/create", name="ex03_create")
-	 */
-	public function create(Request $request, EntityManagerInterface $em): Response
-	{
-			$user = new User();
-			$form = $this->createForm(UserType::class, $user);
-			$form->handleRequest($request);
-
-			if ($form->isSubmitted() && $form->isValid())
-			{
-				try 
-				{
-					$em->persist($user);
-					$em->flush();
-					$this->addFlash('success', 'Utilisateur créé avec succès.');
-					return $this->redirectToRoute('ex03_index');
-				}
-				catch (\Exception $e)
-				{
-					$this->addFlash('error', 'Erreur lors de la création de l\'utilisateur : ' . $e->getMessage());
-				}
-			}
-		return $this->render('create.html.twig',
-			['form' => $form->createView()]);
-	}
 }

@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
-{% block title %}Ex03{% endblock %}
+
+{% block title %}Utilisateurs (ex03){% endblock %}
 
 {% block body %}
-    <h1>Ex03 Retry</h1>
-    <a href="{{ path('ex03_create') }}" class="btn">Créer un utilisateur</a>
-	{% for msg in app.flashes('success') %}
-		<div class="alert">{{ msg }}</div>
-	{% endfor %}
-	{% for msg in app.flashes('error') %}
-		<div class="alert error">{{ msg }}</div>
-	{% endfor %}
+    <h1>Ajouter un utilisateur</h1>
+    {% for msg in app.flashes('success') %}
+        <div class="alert success">{{ msg }}</div>
+    {% endfor %}
+    {% for msg in app.flashes('error') %}
+        <div class="alert error">{{ msg }}</div>
+    {% endfor %}
 
-    {% if users is defined and users|length > 0 %}
+    <div class="form-wrapper">
+        {{ form(form) }}
+    </div>
+
+    <h2>Liste des utilisateurs</h2>
+    {% if users|length > 0 %}
         <table>
             <thead>
                 <tr>
