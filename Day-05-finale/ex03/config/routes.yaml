@@ -1,5 +1,7 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+ex03_index:
+    path: /ex03
+    controller: App\Controller\Ex03Controller::index
+
+ex03_create:
+    path: /ex03/create
+    controller: App\Controller\Ex03Controller::create
