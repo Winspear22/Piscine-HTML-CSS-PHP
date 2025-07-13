@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ex04 — Modifier une personne{% endblock %}
+{% block title %}Ex06 — Modifier une personne{% endblock %}
 
 {% block body %}
     <h1>Gestion des personnes</h1>
@@ -34,7 +34,7 @@
                 <textarea name="address" required>{{ editPerson.address }}</textarea>
             </label>
             <button type="submit">Enregistrer les modifications</button>
-            <a href="{{ path('ex04_index') }}"><button type="button">Annuler</button></a>
+            <a href="{{ path('ex06_index') }}"><button type="button">Annuler</button></a>
         </form>
         <hr>
     {% endif %}

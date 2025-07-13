@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class Ex04Controller extends AbstractController
+class Ex06Controller extends AbstractController
 {
     const SUCCESS = 0;
 	const FAILURE = 1;
@@ -16,7 +16,7 @@ class Ex04Controller extends AbstractController
 
 
     /**
-    * @Route("/ex04", name="ex04_index")
+    * @Route("/ex06", name="ex06_index")
     */
     public function index(Connection $connection, Request $request): Response
     {
@@ -58,7 +58,7 @@ class Ex04Controller extends AbstractController
             ];
             $updateResult = $this->updatePerson($connection, $tableName, (int)$editId, $data);
             $this->addFlash('notice', $updateResult['message']);
-            return $this->redirectToRoute('ex04_index');
+            return $this->redirectToRoute('ex06_index');
         }
 
         // 4. Affichage
