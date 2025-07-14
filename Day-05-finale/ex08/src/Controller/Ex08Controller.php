@@ -18,32 +18,45 @@ class Ex08Controller extends AbstractController
      */
 	public function index(Connection $connection): Response
 	{
-		// État des tables
-		$tables = ['persons', 'addresses', 'bank_accounts'];
-		$tablesStatus = [];
-		foreach ($tables as $table) 
-			$tablesStatus[$table] = $this->tableExistenceCheck($table, $connection)['status'];
+		try
+		{
+			// État des tables
+			$tables = ['persons', 'addresses', 'bank_accounts'];
+			$tablesStatus = [];
+			foreach ($tables as $table)
+				$tablesStatus[$table] = $this->tableExistenceCheck($table, $connection)['status'];
 
-		// Colonnes et relations
-		$maritalStatus = ($tablesStatus['persons'] === self::SUCCESS)
-			? $this->columnExistenceCheck($connection, 'persons', 'marital_status')['status']
-			: self::DOES_NOT_EXIST;
+			// Colonnes et relations
+			$maritalStatus = ($tablesStatus['persons'] === self::SUCCESS)
+				? $this->columnExistenceCheck($connection, 'persons', 'marital_status')['status']
+				: self::DOES_NOT_EXIST;
 
-		$relationAddresses = ($tablesStatus['addresses'] === self::SUCCESS)
-			? $this->columnExistenceCheck($connection, 'addresses', 'person_id')['status']
-			: self::DOES_NOT_EXIST;
+			$relationAddresses = ($tablesStatus['addresses'] === self::SUCCESS)
+				? $this->columnExistenceCheck($connection, 'addresses', 'person_id')['status']
+				: self::DOES_NOT_EXIST;
 
-		$relationBankAccount = ($tablesStatus['bank_accounts'] === self::SUCCESS)
-			? $this->columnExistenceCheck($connection, 'bank_accounts', 'person_id')['status']
-			: self::DOES_NOT_EXIST;
+			$relationBankAccount = ($tablesStatus['bank_accounts'] === self::SUCCESS)
+				? $this->columnExistenceCheck($connection, 'bank_accounts', 'person_id')['status']
+				: self::DOES_NOT_EXIST;
+		}
+		catch (\Exception $e)
+		{
+			// Tout a planté, tu renvoies le minimum pour que la page ne crash pas
+			$this->addFlash('notice', "Erreur lors de l'accès à la base de données : " . $e->getMessage());
+			$tablesStatus = ['persons'=> self::DOES_NOT_EXIST, 'addresses'=> self::DOES_NOT_EXIST, 'bank_accounts'=> self::DOES_NOT_EXIST];
+			$maritalStatus = self::DOES_NOT_EXIST;
+			$relationAddresses = self::DOES_NOT_EXIST;
+			$relationBankAccount = self::DOES_NOT_EXIST;
+		}
 
 		return $this->render('index.html.twig', [
-			'tablesStatus'       => $tablesStatus,
-			'maritalStatus'      => $maritalStatus,
-			'relationAddresses'  => $relationAddresses,
-			'relationBankAccount'=> $relationBankAccount,
+			'tablesStatus'        => $tablesStatus,
+			'maritalStatus'       => $maritalStatus,
+			'relationAddresses'   => $relationAddresses,
+			'relationBankAccount' => $relationBankAccount,
 		]);
 	}
+
     
 	/*========================================================================================*/
 	/*--------------------------------------- CREATE TABLES -----------------------------------------*/
