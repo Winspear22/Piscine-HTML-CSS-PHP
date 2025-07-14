@@ -15,58 +15,71 @@ class Ex06Controller extends AbstractController
 	const DOES_NOT_EXIST = 2;
 
 
-    /**
-    * @Route("/ex06", name="ex06_index")
-    */
-    public function index(Connection $connection, Request $request): Response
-    {
-        $tableName = "persons";
-
-        // 1. Vérifier et créer table si besoin, puis recharger la liste
-        $tableStatus = $this->tableExistenceCheck($tableName, $connection);
-        if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
-        {
-            $this->addFlash('notice', $tableStatus['message']);
-            $creationResult = $this->createTable($tableName, $connection);
-            $this->addFlash('notice', $creationResult['message']);
-            $genMessages = $this->generatePersons($connection, $tableName, 10);            foreach ($genMessages as $msg) 
-            {
-                $this->addFlash('notice', $msg['message']);
-            }
-        }
-        $persons = $this->getAllPersons($connection, $tableName);
-
-        // 2. Gérer le paramètre d’édition
-        $editId = $request->query->get('edit');
-        $editPerson = null;
-        if ($editId) 
+	/**
+	* @Route("/ex06", name="ex06_index")
+	*/
+	public function index(Connection $connection, Request $request): Response
+	{
+		try
 		{
-            $editPerson = $this->getPersonById($connection, $tableName, (int)$editId);
-            if (!$editPerson)
-                $this->addFlash('notice', "Personne introuvable (ID $editId)");
-        }
+			$tableName = "persons";
 
-        // 3. Traitement du formulaire d'édition (POST)
-        if ($request->isMethod('POST') && $editId) {
-            $data = [
-                'username'  => $request->request->get('username'),
-                'name'      => $request->request->get('name'),
-                'email'     => $request->request->get('email'),
-                'enable'    => $request->request->get('enable', 0),
-                'birthdate' => $request->request->get('birthdate'),
-                'address'   => $request->request->get('address'),
-            ];
-            $updateResult = $this->updatePerson($connection, $tableName, (int)$editId, $data);
-            $this->addFlash('notice', $updateResult['message']);
-            return $this->redirectToRoute('ex06_index');
-        }
+			// 1. Vérifier et créer table si besoin, puis recharger la liste
+			$tableStatus = $this->tableExistenceCheck($tableName, $connection);
+			if ($tableStatus['status'] === self::DOES_NOT_EXIST) 
+			{
+				$this->addFlash('notice', $tableStatus['message']);
+				$creationResult = $this->createTable($tableName, $connection);
+				$this->addFlash('notice', $creationResult['message']);
+				$genMessages = $this->generatePersons($connection, $tableName, 10);
+				foreach ($genMessages as $msg) 
+				{
+					$this->addFlash('notice', $msg['message']);
+				}
+			}
+			$persons = $this->getAllPersons($connection, $tableName);
 
-        // 4. Affichage
-        return $this->render('index.html.twig', [
-            'persons'    => $persons,
-            'editPerson' => $editPerson
-    ]);
-}
+			// 2. Gérer le paramètre d’édition
+			$editId = $request->query->get('edit');
+			$editPerson = null;
+			if ($editId) 
+			{
+				$editPerson = $this->getPersonById($connection, $tableName, (int)$editId);
+				if (!$editPerson)
+					$this->addFlash('notice', "Personne introuvable (ID $editId)");
+			}
+
+			// 3. Traitement du formulaire d'édition (POST)
+			if ($request->isMethod('POST') && $editId) {
+				$data = [
+					'username'  => $request->request->get('username'),
+					'name'      => $request->request->get('name'),
+					'email'     => $request->request->get('email'),
+					'enable'    => $request->request->get('enable', 0),
+					'birthdate' => $request->request->get('birthdate'),
+					'address'   => $request->request->get('address'),
+				];
+				$updateResult = $this->updatePerson($connection, $tableName, (int)$editId, $data);
+				$this->addFlash('notice', $updateResult['message']);
+				return $this->redirectToRoute('ex06_index');
+			}
+
+			// 4. Affichage
+			return $this->render('index.html.twig', [
+				'persons'    => $persons,
+				'editPerson' => $editPerson
+			]);
+		}
+		catch (\Exception $e)
+		{
+			$this->addFlash('error', 'Erreur générale : ' . $e->getMessage());
+			return $this->render('index.html.twig', [
+				'persons'    => [],
+				'editPerson' => null,
+			]);
+		}
+	}
+
 
     private function createTable(string $tableName, Connection $connection): array
     {
@@ -110,7 +123,8 @@ class Ex06Controller extends AbstractController
     private function generatePersons(Connection $connection, string $tableName, int $nb): array
     {
         $messages = [];
-        for ($i = 1; $i <= $nb; $i++) {
+        for ($i = 1; $i <= $nb; $i++) 
+		{
             $data = [
                 'username'  => 'user'.$i,
                 'name'      => 'Nom'.$i,
@@ -119,12 +133,15 @@ class Ex06Controller extends AbstractController
                 'birthdate' => date('Y-m-d H:i:s', strtotime('-'.rand(18,40).' years')),
                 'address'   => 'Adresse '.$i.' avenue Testville'
             ];
-            try {
+            try 
+			{
                 $sql = "INSERT INTO `$tableName` (username, name, email, enable, birthdate, address)
                         VALUES (:username, :name, :email, :enable, :birthdate, :address)";
                 $connection->executeStatement($sql, $data);
                 $messages[] = ['status' => self::SUCCESS, 'message' => "Personne $i ajoutée avec succès."];
-            } catch (\Exception $e) {
+            } 
+			catch (\Exception $e) 
+			{
                 $messages[] = ['status' => self::FAILURE, 'message' => "Erreur personne $i : " . $e->getMessage()];
             }
         }
