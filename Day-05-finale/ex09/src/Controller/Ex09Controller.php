@@ -17,17 +17,34 @@ class Ex09Controller extends AbstractController
      */
     public function index(EntityManagerInterface $em): Response
     {
-        $people = $em->getRepository(Person::class)->findAll();
+        try 
+        {
+            $people = $em->getRepository(Person::class)->findAll();
+        } 
+        catch (\Exception $e) 
+        {
+            $this->addFlash('notice', "Erreur d'accès à la base de données : " . $e->getMessage());
+            $people = [];
+        }
         return $this->render('index.html.twig', ['people' => $people]);
     }
+
 
     /**
      * @Route("/ex09/add", name="ex09_add", methods={"POST"})
      */
     public function addPerson(EntityManagerInterface $em): Response
     {
-        $nbPeople = $em->getRepository(Person::class)->count([]);
-        if ($nbPeople >= 10) {
+        try 
+        {
+            $nbPeople = $em->getRepository(Person::class)->count([]);
+        } 
+        catch (\Exception $e) 
+        {
+            return $this->redirectToRoute('ex09_index');
+        }        
+        if ($nbPeople >= 10) 
+        {
             $this->addFlash('notice', "❌ Impossible d'ajouter plus de 10 personnes !");
             return $this->redirectToRoute('ex09_index');
         }
@@ -41,11 +58,14 @@ class Ex09Controller extends AbstractController
         $person->setBirthdate(new \DateTime('1990-01-01'));
         $person->setMaritalStatus($statuses[array_rand($statuses)]);
 
-        try {
+        try 
+        {
             $em->persist($person);
             $em->flush();
             $this->addFlash('notice', "✅ Personne ajoutée, id = ".$person->getId());
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) 
+        {
             $this->addFlash('notice', "Erreur lors de l'ajout : ".$e->getMessage());
         }
         return $this->redirectToRoute('ex09_index');
@@ -56,8 +76,16 @@ class Ex09Controller extends AbstractController
      */
     public function addAddress($id, EntityManagerInterface $em): Response
     {
-        $person = $em->getRepository(Person::class)->find($id);
-        if (!$person) {
+        try
+        {
+            $person = $em->getRepository(Person::class)->find($id);
+        }
+        catch (\Exception $e)
+        {
+            return $this->redirectToRoute('ex09_index');
+        }
+        if (!$person) 
+        {
             $this->addFlash('notice', 'Person not found');
             return $this->redirectToRoute('ex09_index');
         }
@@ -87,12 +115,21 @@ class Ex09Controller extends AbstractController
      */
     public function addBankAccount($id, EntityManagerInterface $em): Response
     {
-        $person = $em->getRepository(Person::class)->find($id);
-        if (!$person) {
+        try
+        {
+            $person = $em->getRepository(Person::class)->find($id);
+        }
+        catch (\Exception $e)
+        {
+            return $this->redirectToRoute('ex09_index');
+        }
+        if (!$person) 
+        {
             $this->addFlash('notice', 'Person not found');
             return $this->redirectToRoute('ex09_index');
         }
-        if ($person->getBankAccount()) {
+        if ($person->getBankAccount()) 
+        {
             $this->addFlash('notice', "❌ Cette personne a déjà un compte bancaire !");
             return $this->redirectToRoute('ex09_index');
         }
@@ -102,12 +139,15 @@ class Ex09Controller extends AbstractController
         $bank->setBankName('Banque'.rand(1,5));
         $person->setBankAccount($bank);
 
-        try {
+        try 
+        {
             $em->persist($bank);
             $em->persist($person);
             $em->flush();
             $this->addFlash('notice', '✅ Compte bancaire ajouté à la personne '.$person->getId());
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) 
+        {
             $this->addFlash('notice', "Erreur : ".$e->getMessage());
         }
         return $this->redirectToRoute('ex09_index');
@@ -118,17 +158,27 @@ class Ex09Controller extends AbstractController
      */
     public function deletePerson($id, EntityManagerInterface $em): Response
     {
-        $person = $em->getRepository(Person::class)->find($id);
-        if (!$person) {
+		try
+        {
+            $person = $em->getRepository(Person::class)->find($id);
+        }
+        catch (\Exception $e)
+        {
+            return $this->redirectToRoute('ex09_index');
+        }
+        if (!$person) 
+		{
             $this->addFlash('notice', "Personne inexistante");
             return $this->redirectToRoute('ex09_index');
         }
-
-        try {
+        try 
+		{
             $em->remove($person);
             $em->flush();
             $this->addFlash('notice', "✅ Personne supprimée (id={$id})");
-        } catch (\Exception $e) {
+        } 
+		catch (\Exception $e) 
+		{
             $this->addFlash('notice', "Erreur lors de la suppression : ".$e->getMessage());
         }
         return $this->redirectToRoute('ex09_index');

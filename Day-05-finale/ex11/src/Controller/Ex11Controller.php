@@ -19,104 +19,116 @@ class Ex11Controller extends AbstractController
 	 */
 	public function index(Connection $connection, Request $request): Response
 	{
-		$requiredTables = 
-		[
-			'persons' => function() use ($connection) { $this->createPersonsHelper('persons', $connection); },
-			'addresses' => function() use ($connection) { $this->createAddressesHelper('addresses', $connection); },
-			'bank_accounts' => function() use ($connection) { $this->createBankAccountsHelper('bank_accounts', $connection); },
-		];
-		$messages = [];
-		foreach ($requiredTables as $table => $creator) 
+		try
 		{
-			$exists = $this->tableExistenceCheck($table, $connection);
-			if ($exists['status'] === self::DOES_NOT_EXIST) 
+			$requiredTables = [
+				'persons' => function() use ($connection) { $this->createPersonsHelper('persons', $connection); },
+				'addresses' => function() use ($connection) { $this->createAddressesHelper('addresses', $connection); },
+				'bank_accounts' => function() use ($connection) { $this->createBankAccountsHelper('bank_accounts', $connection); },
+			];
+			$messages = [];
+			foreach ($requiredTables as $table => $creator)
 			{
-				$result = $creator();
-				$messages[] = "Table $table créée automatiquement.";
+				$exists = $this->tableExistenceCheck($table, $connection);
+				if ($exists['status'] === self::DOES_NOT_EXIST)
+				{
+					$result = $creator();
+					$messages[] = "Table $table créée automatiquement.";
+				}
 			}
-		}
-		$relations = [
-			[
-				'table' => 'addresses',
-				'column' => 'person_id',
-				'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
-			],
-			[
-				'table' => 'bank_accounts',
-				'column' => 'person_id',
-				'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
-			],
-		];
+			$relations = [
+				[
+					'table' => 'addresses',
+					'column' => 'person_id',
+					'setup' => function() use ($connection) { $this->addRelationAddresses($connection); }
+				],
+				[
+					'table' => 'bank_accounts',
+					'column' => 'person_id',
+					'setup' => function() use ($connection) { $this->addRelationBankAccount($connection); }
+				],
+			];
 
-		foreach ($relations as $rel) 
-		{
-			$hasCol = $this->columnExistenceCheck($connection, $rel['table'], $rel['column']);
-			if ($hasCol['status'] === self::DOES_NOT_EXIST) 
+			foreach ($relations as $rel)
 			{
-				$rel['setup'](); // Ajoute la relation (colonne + contrainte)
-				$messages[] = "Relation sur {$rel['table']}.{$rel['column']} créée automatiquement.";
+				$hasCol = $this->columnExistenceCheck($connection, $rel['table'], $rel['column']);
+				if ($hasCol['status'] === self::DOES_NOT_EXIST)
+				{
+					$rel['setup']();
+					$messages[] = "Relation sur {$rel['table']}.{$rel['column']} créée automatiquement.";
+				}
 			}
-		}
-		// 1. Récupérer les paramètres GET pour filtre et tri
-		$filterName = $request->query->get('filter_name', '');
-		$sortBy = $request->query->get('sort_by', 'name');
-		$sortDir = $request->query->get('sort_dir', 'asc');
 
-		// --- PROTECTIONS ICI ---
-		$allowedSorts = ['name', 'email', 'city', 'birthdate'];
-		$allowedDir = ['asc', 'desc'];
-		if (!in_array($sortBy, $allowedSorts)) {
-			$this->addFlash('notice', '⚠️ Tri non valide, utilisation du tri par défaut.');
-			$sortBy = 'name';
-		}
-		if (!in_array($sortDir, $allowedDir)) {
-			$this->addFlash('notice', '⚠️ Sens de tri non valide, utilisation du tri par défaut.');
-			$sortDir = 'asc';
-		}
-		if (mb_strlen($filterName) > 80) {
-			$this->addFlash('notice', '⚠️ Filtre trop long ! Limité à 80 caractères.');
-			$filterName = mb_substr($filterName, 0, 80);
-		}
-		if (!preg_match('/^[\p{L}\p{N} _\'\-]*$/u', $filterName)) {
-			$this->addFlash('notice', '⚠️ Le filtre contient des caractères non autorisés.');
-			$filterName = preg_replace('/[^\p{L}\p{N} _\'\-]/u', '', $filterName);
-		}
-		// --- FIN PROTECTIONS ---
+			// GET param, filtres
+			$filterName = $request->query->get('filter_name', '');
+			$sortBy = $request->query->get('sort_by', 'name');
+			$sortDir = $request->query->get('sort_dir', 'asc');
 
-		// 3. Construire la requête SQL (JOIN, WHERE, ORDER BY)
-		$sql = "
-			SELECT p.id, p.name, p.email, p.birthdate, a.city, a.street, b.iban, b.bank_name
-			FROM persons p
-			LEFT JOIN addresses a ON a.person_id = p.id
-			LEFT JOIN bank_accounts b ON b.person_id = p.id
-			WHERE 1=1
-		";
-		$params = [];
-		if ($filterName) 
+			// Protections
+			$allowedSorts = ['name', 'email', 'city', 'birthdate'];
+			$allowedDir = ['asc', 'desc'];
+			if (!in_array($sortBy, $allowedSorts))
+			{
+				$this->addFlash('notice', '⚠️ Tri non valide, utilisation du tri par défaut.');
+				$sortBy = 'name';
+			}
+			if (!in_array($sortDir, $allowedDir))
+			{
+				$this->addFlash('notice', '⚠️ Sens de tri non valide, utilisation du tri par défaut.');
+				$sortDir = 'asc';
+			}
+			if (mb_strlen($filterName) > 80)
+			{
+				$this->addFlash('notice', '⚠️ Filtre trop long ! Limité à 80 caractères.');
+				$filterName = mb_substr($filterName, 0, 80);
+			}
+			if (!preg_match('/^[\p{L}\p{N} _\'\-]*$/u', $filterName))
+			{
+				$this->addFlash('notice', '⚠️ Le filtre contient des caractères non autorisés.');
+				$filterName = preg_replace('/[^\p{L}\p{N} _\'\-]/u', '', $filterName);
+			}
+
+			$sql = "
+				SELECT p.id, p.name, p.email, p.birthdate, a.city, a.street, b.iban, b.bank_name
+				FROM persons p
+				LEFT JOIN addresses a ON a.person_id = p.id
+				LEFT JOIN bank_accounts b ON b.person_id = p.id
+				WHERE 1=1
+			";
+			$params = [];
+			if ($filterName)
+			{
+				$sql .= " AND p.name LIKE :filterName ";
+				$params['filterName'] = '%' . $filterName . '%';
+			}
+			$sql .= " ORDER BY $sortBy $sortDir";
+
+			$data = $connection->fetchAllAssociative($sql, $params);
+			$total_people = $connection->fetchOne('SELECT COUNT(*) FROM persons');
+
+			return $this->render('index.html.twig', [
+				'data' => $data,
+				'filter_name' => $filterName,
+				'sort_by' => $sortBy,
+				'sort_dir' => $sortDir,
+				'total_people' => $total_people,
+			]);
+		}
+		catch (\Exception $e)
 		{
-			$sql .= " AND p.name LIKE :filterName ";
-			$params['filterName'] = '%' . $filterName . '%';
+			$this->addFlash('notice', "Erreur d'accès à la base de données : " . $e->getMessage());
+			return $this->render('index.html.twig', [
+				'data' => [],
+				'filter_name' => '',
+				'sort_by' => 'name',
+				'sort_dir' => 'asc',
+				'total_people' => 0,
+			]);
 		}
-		$sql .= " ORDER BY $sortBy $sortDir";
-
-		// 4. Exécution
-		$data = $connection->fetchAllAssociative($sql, $params);
-		$total_people = $connection->fetchOne('SELECT COUNT(*) FROM persons');
-
-		// 5. Rendu vers le template (index.html.twig dans templates/ex11/)
-		return $this->render('index.html.twig', [
-			'data' => $data,
-			'filter_name' => $filterName,
-			'sort_by' => $sortBy,
-			'sort_dir' => $sortDir,
-			'total_people' => $total_people,
-		]);
 	}
 
-
-
     /*========================================================================================*/
-	/*--------------------------------------- CREATE TABLES -----------------------------------------*/
+	/*---------------------------------- CREATE TABLES ---------------------------------------*/
 	/*========================================================================================*/
 
     private function createPersonsHelper(string $tableName, Connection $connection): array
@@ -339,6 +351,7 @@ class Ex11Controller extends AbstractController
 	public function addTestPersons(Connection $connection)
 	{
 		$messages = [];
+		$message = "";
 
 		for ($i = 1; $i <= 10; $i++) 
 		{
@@ -366,18 +379,20 @@ class Ex11Controller extends AbstractController
 					"Bank{$i}",
 					$personId
 				);
-				$messages[] = $person['message'];
-				$messages[] = $address['message'];
-				$messages[] = $bank['message'];
+				//$messages[] = $person['message'];
+				//$messages[] = $address['message'];
+				//$messages[] = $bank['message'];
+				$message = "Création des données réussies.";
 			} 
 			else 
 			{
+				$message = "Erreur lors de la création des données.";
 				$messages[] = $person['message'];
 			}
 		}
-
-    $this->addFlash('notice', implode('<br>', $messages));
-    return $this->redirectToRoute('ex11_index');
+		//$this->addFlash('notice', implode('<br>', $messages));
+		$this->addFlash('notice',$message);
+		return $this->redirectToRoute('ex11_index');
 	}
 
 	private function addTestPerson(Connection $connection, string $username, string $name, string $email, int $enable, string $birthdate): array
