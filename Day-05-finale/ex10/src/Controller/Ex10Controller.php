@@ -21,24 +21,43 @@ class Ex10Controller extends AbstractController
      */
     public function index(Connection $connection, EntityManagerInterface $em): Response
     {
-        $sqlItems = $connection->fetchAllAssociative('SELECT * FROM ex10_sql_items');
-        $ormItems = $em->getRepository(Ex10OrmItem::class)->findAll();
+        try
+        {
+            $sqlItems = $connection->fetchAllAssociative('SELECT * FROM ex10_sql_items');
+        } 
+        catch (\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur SQL : ' . $e->getMessage());
+            $sqlItems = [];
+        }
+
+        try 
+        {
+            $ormItems = $em->getRepository(Ex10OrmItem::class)->findAll();
+        } 
+        catch (\Exception $e)
+        {
+            $this->addFlash('error', 'Erreur ORM : ' . $e->getMessage());
+            $ormItems = [];
+        }
 
         return $this->render('index.html.twig', [
             'sqlItems' => $sqlItems,
             'ormItems' => $ormItems
-            // PAS besoin de passer 'message' ni 'error' ici
         ]);
     }
+
 
 /**
  * @Route("/ex10/import", name="ex10_import", methods={"POST"})
  */
 public function importFromFile(Connection $connection, EntityManagerInterface $em, Request $request): Response
 {
-    try {
+    try 
+    {
         $filePath = $this->getParameter('kernel.project_dir') . '/public/data.txt';
-        if (!file_exists($filePath) || !is_readable($filePath)) {
+        if (!file_exists($filePath) || !is_readable($filePath))
+        {
             $this->addFlash('error', 'Fichier introuvable ou illisible.');
             return $this->redirectToRoute('ex10_index');
         }
@@ -46,12 +65,14 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
         $lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $nbLines = count($lines);
 
-        if ($nbLines === 0) {
+        if ($nbLines === 0)
+        {
             $this->addFlash('error', 'Le fichier ne contient aucune ligne.');
             return $this->redirectToRoute('ex10_index');
         }
 
-        if ($nbLines > 10) {
+        if ($nbLines > 10)
+        {
             $this->addFlash('error', 'Le fichier ne doit pas contenir plus de 10 lignes.');
             return $this->redirectToRoute('ex10_index');
         }
@@ -81,12 +102,14 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
             $lineNum++;
         }
 
-        if (empty($validEntries)) {
+        if (empty($validEntries)) 
+        {
             $this->addFlash('error', 'Aucune ligne valide dans le fichier. ' . (!empty($errors) ? implode(' ', $errors) : ''));
             return $this->redirectToRoute('ex10_index');
         }
 
-        if (!empty($errors)) {
+        if (!empty($errors)) 
+        {
             $this->addFlash('error', 'Des lignes sont invalides : ' . implode(' ', $errors) . ' Rien n\'a été importé.');
             return $this->redirectToRoute('ex10_index');
         }
@@ -98,7 +121,8 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
         $insertedSql = 0;
         $insertedOrm = 0;
 
-        foreach ($validEntries as [$name, $value]) {
+        foreach ($validEntries as [$name, $value])
+        {
             $connection->executeStatement(
                 'INSERT INTO ex10_sql_items (name, value) VALUES (?, ?)',
                 [$name, $value]
@@ -114,7 +138,9 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
         $em->flush();
 
         $this->addFlash('message', "Import SQL ($insertedSql), ORM ($insertedOrm) réussi.");
-    } catch (\Exception $e) {
+    } 
+    catch (\Exception $e) 
+    {
         $this->addFlash('error', 'Erreur lors de l\'import : ' . $e->getMessage());
     }
     return $this->redirectToRoute('ex10_index');
@@ -127,13 +153,15 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
      */
     public function createSqlTable(Connection $connection)
     {
-        try {
+        try 
+        {
             $schemaManager = $connection->createSchemaManager();
             $tables = $schemaManager->listTableNames();
 
-            if (in_array('ex10_sql_items', $tables)) {
+            if (in_array('ex10_sql_items', $tables))
                 $this->addFlash('error', 'La table SQL existe déjà.');
-            } else {
+            else 
+            {
                 $sql = "CREATE TABLE ex10_sql_items (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(255) NOT NULL,
@@ -142,7 +170,9 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
                 $connection->executeStatement($sql);
                 $this->addFlash('message', 'Table SQL créée avec succès.');
             }
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) 
+        {
             $this->addFlash('error', 'Erreur lors de la création de la table : ' . $e->getMessage());
         }
         return $this->redirectToRoute('ex10_index');
@@ -152,12 +182,15 @@ public function importFromFile(Connection $connection, EntityManagerInterface $e
     */
     public function clearDatabase(Connection $connection, EntityManagerInterface $em)
     {
-        try {
+        try 
+        {
             $connection->executeStatement('DELETE FROM ex10_sql_items');
             $em->createQuery('DELETE FROM App\Entity\Ex10OrmItem')->execute();
 
             $this->addFlash('message', 'Les deux tables ont été vidées !');
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e)
+        {
             $this->addFlash('error', 'Erreur lors de la suppression : ' . $e->getMessage());
         }
         return $this->redirectToRoute('ex10_index');

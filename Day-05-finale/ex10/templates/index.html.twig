@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Ex10 Index</title>
-    <link rel="stylesheet" href="/css/ton-style.css"> {# adapte le chemin si besoin #}
-</head>
-<body>
+{% extends 'base.html.twig' %}
+
+{% block title %}Ex10 — Importation SQL & ORM{% endblock %}
+
+{% block body %}
     <h1>Importation SQL & ORM depuis un fichier</h1>
 
     <div class="form-wrapper">
@@ -13,7 +10,7 @@
             <div class="alert">{{ message }}</div>
         {% endfor %}
         {% for error in app.flashes('error') %}
-            <div class="alert" style="background:#ffd1d1;color:#c80000;border-left:5px solid #e66464;">
+            <div class="alert error">
                 {{ error }}
             </div>
         {% endfor %}
@@ -25,7 +22,7 @@
             <button type="submit">Importer depuis le fichier</button>
         </form>
         <form action="{{ path('ex10_clear') }}" method="post" onsubmit="return confirm('Confirmer la suppression de toutes les données ?');">
-            <button type="submit" style="background:#c7c7c7; color:#2e3a59;">Vider les deux tables</button>
+            <button type="submit">Vider les deux tables</button>
         </form>
     </div>
 
@@ -64,5 +61,4 @@
             <tr><td colspan="3">Aucune donnée</td></tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}
