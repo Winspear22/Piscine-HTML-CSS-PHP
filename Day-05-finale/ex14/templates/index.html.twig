@@ -23,23 +23,33 @@
         </form>
     {% endif %}
 
-    {% if table_status.status == 0 %}
-        <h2>Ajouter un utilisateur (⚠️ Non sécurisé !)</h2>
-        <form id="insecure-form" action="{{ path('ex14_insert') }}" method="post">
-            <label>Username : <input type="text" name="username" required></label><br>
-            <label>Name : <input type="text" name="name" required></label><br>
-            <button type="submit">Ajouter</button>
-        </form>
-    {% endif %}
+	{% if table_status.status == 0 %}
+		<div style="display: flex; gap: 4em;">
+			<div>
+				<h2>Ajouter un utilisateur (⚠️ Non sécurisé !)</h2>
+				<form id="insecure-form" action="{{ path('ex14_insert') }}" method="post">
+					<label>Username : <input type="text" name="username" required></label><br>
+					<button type="submit">Ajouter (vulnérable)</button>
+				</form>
+			</div>
+			<div>
+				<h2>Ajouter un utilisateur (optionnel, sécurisé)</h2>
+				<form id="secure-form" action="{{ path('ex14_correct_insert') }}" method="post">
+					<label>Username : <input type="text" name="username" required></label><br>
+					<button type="submit">Ajouter (sécurisé)</button>
+				</form>
+			</div>
+		</div>
+	{% endif %}
+
 
     <h2>Utilisateurs dans la table</h2>
     <table>
-        <tr><th>ID</th><th>Username</th><th>Name</th></tr>
+        <tr><th>ID</th><th>Username</th></tr>
         {% for row in rows %}
             <tr>
                 <td>{{ row.id }}</td>
                 <td>{{ row.username }}</td>
-                <td>{{ row.name }}</td>
             </tr>
         {% else %}
             <tr><td colspan="3">Aucun utilisateur</td></tr>

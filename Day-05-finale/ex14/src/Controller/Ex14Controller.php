@@ -51,12 +51,7 @@ class Ex14Controller extends AbstractController
 		{
 			$sql = "CREATE TABLE IF NOT EXISTS `$tableName` (
 				id INT AUTO_INCREMENT PRIMARY KEY,
-				username VARCHAR(255) UNIQUE,
-				name VARCHAR(255),
-				email VARCHAR(255) UNIQUE,
-				enable BOOLEAN,
-				birthdate DATETIME,
-				address LONGTEXT
+				username VARCHAR(255) UNIQUE
 			) ENGINE=InnoDB;";
 			$connection->executeStatement($sql);
 			$this->addFlash('notice', "La table '$tableName' a été créée avec succès.");
@@ -91,8 +86,7 @@ class Ex14Controller extends AbstractController
 	{
 		$tableName = "users";
 		$username = $request->request->get('username');
-		$name = $request->request->get('name');
-		$sql = "INSERT INTO $tableName (username, name) VALUES ('$username', '$name')";
+		$sql = "INSERT INTO $tableName (username) VALUES ('$username')";
 		try 
 		{
 			$connection->executeQuery($sql);
@@ -104,6 +98,27 @@ class Ex14Controller extends AbstractController
 		}
 		return $this->redirectToRoute('ex14_index');
 	}
+
+	/**
+	 * @Route("/ex14/correct-insert", name="ex14_correct_insert", methods={"POST"})
+	 */
+	public function correctInsert(Connection $connection, Request $request): Response
+	{
+		$tableName = "users";
+		$username = $request->request->get('username');
+		try 
+		{
+			$sql = "INSERT INTO $tableName (username) VALUES (:username)";
+			$connection->executeStatement($sql, ['username' => $username]);
+			$this->addFlash('notice', "Ajout sécurisé OK !");
+		} 
+		catch (\Exception $e) 
+		{
+			$this->addFlash('error', "Erreur lors de l'ajout sécurisé : " . $e->getMessage());
+		}
+		return $this->redirectToRoute('ex14_index');
+	}
+
 
 }
 
