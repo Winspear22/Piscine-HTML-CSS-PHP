@@ -44,7 +44,7 @@
 				<td>{{ employee.employedSince ? employee.employedSince|date('Y-m-d') : '-' }}</td>
 				<td>{{ employee.employedUntil ? employee.employedUntil|date('Y-m-d') : '-' }}</td>
 				<td>{{ employee.hours ? employee.hours.value : '-' }}</td>
-				<td>{{ employee.position ? employee.position.value : '-' }}</td>
+				<td>{{ employee.salary ?? '---' }}</td>
 				<td>{{ employee.position ? employee.position.value : '-' }}</td>
 				<td>{{ employee.manager ? employee.manager.firstname ~ ' ' ~ employee.manager.lastname : '-' }}
 				</td>

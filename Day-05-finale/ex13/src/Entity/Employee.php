@@ -69,7 +69,6 @@ class Employee
     private ?EmployeePosition $position = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'employees')]
-    #[Assert\NotNull(message: "Un manager doit être choisi.")]
     private ?self $manager = null;
 
     /**
@@ -83,43 +82,45 @@ class Employee
         $this->employees = new ArrayCollection();
     }
     
-    #[Assert\Callback]
-    public function validateBusinessRules(ExecutionContextInterface $context): void
-    {
-        // Pas de manager pour le CEO
-        if ($this->position?->value === 'ceo' && $this->manager !== null) {
-            $context->buildViolation("Le CEO ne peut pas avoir de manager.")
-                ->atPath('manager')
-                ->addViolation();
-        }
-
-        // Un seul CEO
-        // (doit être géré côté contrôleur car il faut compter les CEO déjà en base)
-
-        // Le COO ne peut avoir que le CEO comme manager
-        if ($this->position?->value === 'coo' && $this->manager?->getPosition()?->value !== 'ceo') {
-            $context->buildViolation("Le COO doit avoir le CEO comme manager.")
-                ->atPath('manager')
-                ->addViolation();
-        }
-
-        // Un COO unique
-        // (doit être géré côté contrôleur ou custom validator, car il faut checker la base)
-
-        // Un manager ne peut pas être lui-même
-        if ($this->manager && $this->manager === $this) {
-            $context->buildViolation("Un employé ne peut pas être son propre manager.")
-                ->atPath('manager')
-                ->addViolation();
-        }
-
-        // Date d'embauche <= date de fin (déjà plus haut mais doublon safe)
-        if ($this->employedUntil && $this->employedSince && $this->employedUntil < $this->employedSince) {
-            $context->buildViolation("La date de fin doit être postérieure à la date d'embauche.")
-                ->atPath('employedUntil')
-                ->addViolation();
-        }
+#[Assert\Callback]
+public function validateBusinessRules(ExecutionContextInterface $context): void
+{
+    // Pas de manager pour le CEO
+    if ($this->position?->value === 'ceo' && $this->manager !== null) {
+        $context->buildViolation("Le CEO ne peut pas avoir de manager.")
+            ->atPath('manager')
+            ->addViolation();
     }
+
+    // Un employé (hors CEO) doit obligatoirement avoir un manager
+    if ($this->position?->value !== 'ceo' && $this->manager === null) {
+        $context->buildViolation("Un manager doit être choisi pour ce poste.")
+            ->atPath('manager')
+            ->addViolation();
+    }
+
+    // Le COO ne peut avoir que le CEO comme manager
+    if ($this->position?->value === 'coo' && $this->manager?->getPosition()?->value !== 'ceo') {
+        $context->buildViolation("Le COO doit avoir le CEO comme manager.")
+            ->atPath('manager')
+            ->addViolation();
+    }
+
+    // Un employé ne peut pas être son propre manager
+    if ($this->manager && $this->manager === $this) {
+        $context->buildViolation("Un employé ne peut pas être son propre manager.")
+            ->atPath('manager')
+            ->addViolation();
+    }
+
+    // Date de fin >= date d'embauche
+    if ($this->employedUntil && $this->employedSince && $this->employedUntil < $this->employedSince) {
+        $context->buildViolation("La date de fin doit être postérieure à la date d'embauche.")
+            ->atPath('employedUntil')
+            ->addViolation();
+    }
+}
+
     public function getId(): ?int
     {
         return $this->id;

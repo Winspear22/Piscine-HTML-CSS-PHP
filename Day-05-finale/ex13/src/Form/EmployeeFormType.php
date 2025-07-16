@@ -42,12 +42,12 @@ class EmployeeFormType extends AbstractType
                 'label' => 'Actif',
                 'required' => false,
             ])
-            ->add('employed_since', DateType::class, [
+            ->add('employedSince', DateType::class, [
                 'label' => 'Employé depuis',
                 'widget' => 'single_text',
                 'required' => true,
             ])
-            ->add('employed_until', DateType::class, [
+            ->add('employedUntil', DateType::class, [
                 'label' => 'Employé jusqu\'à',
                 'widget' => 'single_text',
                 'required' => false,
@@ -70,7 +70,12 @@ class EmployeeFormType extends AbstractType
             ])          
             ->add('manager', EntityType::class, [
                 'class' => Employee::class,
-                'choice_label' => 'id',
+                'choice_label' => function (Employee $e) 
+                {
+                    return sprintf('%s %s (%s)', $e->getFirstname(), $e->getLastname(), $e->getPosition()?->value ?? '');
+                },                
+                'required' => false,
+                'placeholder' => 'Aucun'
             ])
         ;
     }
