@@ -3,7 +3,3 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-
-Ex13Bundle:
-    resource: '../src/Ex13Bundle/Controller'
-    type: annotation
