@@ -53,7 +53,7 @@ class Ex13Controller extends AbstractController
 				$this->addFlash('error', 'Erreur lors de la création : '.$e->getMessage());
 			}
 		}
-		return $this->render('ex13/create.html.twig', [
+		return $this->render('create.html.twig', [
 			'form' => $form->createView(),
 		]);
 	}

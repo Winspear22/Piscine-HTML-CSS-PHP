@@ -49,7 +49,9 @@
 				<td>{{ employee.manager ? employee.manager.firstname ~ ' ' ~ employee.manager.lastname : '-' }}
 				</td>
 				<td>
-					<a href="{{ path('ex13_update', {'id': employee.id}) }}">Modifier</a>
+					<form action="{{ path('ex13_update', {'id': employee.id}) }}" method="post" style="display:inline;">
+						<button type="submit">Modifier</button>
+					</form>
 					<form action="{{ path('ex13_delete', {'id': employee.id}) }}" method="post" style="display:inline;" onsubmit="return confirm('Confirmer la suppression ?');">
 						<button type="submit">Supprimer</button>
 					</form>
