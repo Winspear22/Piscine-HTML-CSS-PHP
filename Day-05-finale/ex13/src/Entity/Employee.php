@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Enum\EmployeeHours;
-use app\enum\EmployeePosition;
+use App\Enum\EmployeePosition;
 use App\Repository\EmployeeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
