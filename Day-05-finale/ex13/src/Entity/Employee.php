@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Entity;
-
 use App\Enum\EmployeeHours;
+
 use App\Enum\EmployeePosition;
-use App\Repository\EmployeeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\EmployeeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: EmployeeRepository::class)]
 class Employee
@@ -16,38 +18,58 @@ class Employee
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
+    #[Assert\Length(max: 50)]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 50)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
+    #[Assert\Length(max: 50)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
+    #[Assert\NotBlank(message: "L'email est obligatoire.")]
+    #[Assert\Email(message: "Email invalide.")]
+    #[Assert\Length(max: 100)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private ?\DateTime $birthdate = null;
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(message: "La date de naissance est obligatoire.")]
+    #[Assert\LessThanOrEqual("today", message: "La date de naissance doit être dans le passé.")]
+    #[Assert\GreaterThanOrEqual("1945-01-01", message: "La date de naissance ne peut pas être avant 1945.")]
+    private ?\DateTimeInterface $birthdate = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $active = null;
 
-    #[ORM\Column]
-    private ?\DateTime $employed_since = null;
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\NotBlank(message: "La date d'embauche est obligatoire.")]
+    private ?\DateTimeInterface $employedSince = null;
 
-    #[ORM\Column]
-    private ?\DateTime $employed_until = null;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Assert\Expression(
+        "this.getEmployedUntil() === null or this.getEmployedUntil() >= this.getEmployedSince()",
+        message: "La date de fin doit être après la date d'embauche."
+    )]
+    private ?\DateTimeInterface $employedUntil = null;
 
-    #[ORM\Column(enumType: EmployeeHours::class)]
+    #[ORM\Column(type: 'string', enumType: EmployeeHours::class)]
+    #[Assert\NotNull(message: "Choisir les heures de travail.")]
     private ?EmployeeHours $hours = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
+    #[Assert\Positive(message: "Le salaire doit être positif.")]
     private ?int $salary = null;
 
-    #[ORM\Column(enumType: EmployeePosition::class)]
+    #[ORM\Column(type: 'string', enumType: EmployeePosition::class)]
+    #[Assert\NotNull(message: "Le poste doit être précisé.")]
     private ?EmployeePosition $position = null;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'employees')]
+    #[Assert\NotNull(message: "Un manager doit être choisi.")]
     private ?self $manager = null;
 
     /**
@@ -60,7 +82,44 @@ class Employee
     {
         $this->employees = new ArrayCollection();
     }
+    
+    #[Assert\Callback]
+    public function validateBusinessRules(ExecutionContextInterface $context): void
+    {
+        // Pas de manager pour le CEO
+        if ($this->position?->value === 'ceo' && $this->manager !== null) {
+            $context->buildViolation("Le CEO ne peut pas avoir de manager.")
+                ->atPath('manager')
+                ->addViolation();
+        }
 
+        // Un seul CEO
+        // (doit être géré côté contrôleur car il faut compter les CEO déjà en base)
+
+        // Le COO ne peut avoir que le CEO comme manager
+        if ($this->position?->value === 'coo' && $this->manager?->getPosition()?->value !== 'ceo') {
+            $context->buildViolation("Le COO doit avoir le CEO comme manager.")
+                ->atPath('manager')
+                ->addViolation();
+        }
+
+        // Un COO unique
+        // (doit être géré côté contrôleur ou custom validator, car il faut checker la base)
+
+        // Un manager ne peut pas être lui-même
+        if ($this->manager && $this->manager === $this) {
+            $context->buildViolation("Un employé ne peut pas être son propre manager.")
+                ->atPath('manager')
+                ->addViolation();
+        }
+
+        // Date d'embauche <= date de fin (déjà plus haut mais doublon safe)
+        if ($this->employedUntil && $this->employedSince && $this->employedUntil < $this->employedSince) {
+            $context->buildViolation("La date de fin doit être postérieure à la date d'embauche.")
+                ->atPath('employedUntil')
+                ->addViolation();
+        }
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -128,24 +187,24 @@ class Employee
 
     public function getEmployedSince(): ?\DateTime
     {
-        return $this->employed_since;
+        return $this->employedSince;
     }
 
-    public function setEmployedSince(\DateTime $employed_since): static
+    public function setEmployedSince(\DateTime $employedSince): static
     {
-        $this->employed_since = $employed_since;
+        $this->employedSince = $employedSince;
 
         return $this;
     }
 
     public function getEmployedUntil(): ?\DateTime
     {
-        return $this->employed_until;
+        return $this->employedUntil;
     }
 
-    public function setEmployedUntil(\DateTime $employed_until): static
+    public function setEmployedUntil(\DateTime $employedUntil): static
     {
-        $this->employed_until = $employed_until;
+        $this->employedUntil = $employedUntil;
 
         return $this;
     }
