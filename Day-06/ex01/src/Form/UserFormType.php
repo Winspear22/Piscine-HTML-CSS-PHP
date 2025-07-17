@@ -16,7 +16,10 @@ class UserFormType extends AbstractType
     {
         $builder
             ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
+            ->add('plainPassword', PasswordType::class, [
+                'mapped' => false,
+                'label' => 'Password'
+            ])            
             ->add('submit', SubmitType::class, [
                 'label' => 'Sign Up',]);
     }
