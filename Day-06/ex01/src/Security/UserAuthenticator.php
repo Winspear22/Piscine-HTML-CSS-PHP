@@ -20,7 +20,8 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    // MODIFIE cette constante : elle doit pointer sur le nom de ta route de connexion
+    public const LOGIN_ROUTE = 'e01_sign-in'; // <-- Le nom de ta route login (cf contrôleur)
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {

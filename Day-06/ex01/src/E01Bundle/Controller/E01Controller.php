@@ -21,7 +21,9 @@ class E01Controller extends AbstractController
      */
     public function signIn(): Response
     {
-        return new Response("Hello from E01Controller!");
+        return $this->render('security/login.html.twig', [
+        // Variables pour le formulaire (si besoin)
+        ]);    
     }
 
     /**
