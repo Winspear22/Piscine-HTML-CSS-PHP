@@ -113,11 +113,18 @@ public function validateBusinessRules(ExecutionContextInterface $context): void
             ->addViolation();
     }
 
-    // Date de fin >= date d'embauche
-    if ($this->employedUntil && $this->employedSince && $this->employedUntil < $this->employedSince) {
-        $context->buildViolation("La date de fin doit être postérieure à la date d'embauche.")
-            ->atPath('employedUntil')
-            ->addViolation();
+    if ($this->birthdate) 
+    {
+        if ($this->birthdate && $this->employedSince)
+        {
+            $interval = $this->employedSince->diff($this->birthdate);
+            if ($interval->y < 18)
+            {
+                $context->buildViolation('Le salarié doit avoir au moins 18 ans.')
+                    ->atPath('birthdate')
+                    ->addViolation();
+            }
+        }
     }
 }
 
