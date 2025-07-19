@@ -13,8 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\DBAL\Exception as DoctrineDBALException;
+
 
 class Ex02Controller extends AbstractController
 {
@@ -94,7 +95,26 @@ class Ex02Controller extends AbstractController
         ]);
 	}
 	
-	#[Route('/e02/admin', name: 'e02_admin')]
+	#[Route('/e02/sign_in', name: 'e02_sign_in')]
+    public function signIn(): Response
+    {
+        try
+		{
+            return $this->render('security/login.html.twig');
+        }
+		catch (DoctrineDBALException $e)
+		{
+            $this->addFlash('error', 'La base de données est indisponible.');
+            return $this->render('error_db.html.twig');
+        }
+		catch (Exception $e)
+		{
+            $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
+            return $this->render('error_db_others.html.twig');
+        }
+    }
+	
+	#[Route('/e02/sign_up', name: 'e02_sign_up')]
 	#[IsGranted('ROLE_ADMIN')]
 	public function admin(UserRepository $userRepository): Response
 	{
