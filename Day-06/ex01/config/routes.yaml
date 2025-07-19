@@ -6,4 +6,4 @@ controllers:
 
 E01Bundle:
     resource: '../src/E01Bundle/Controller'
-    type: annotation
+    type: attribute

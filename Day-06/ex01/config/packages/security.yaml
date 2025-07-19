@@ -19,7 +19,8 @@ security:
             provider: app_user_provider     # <-- Ici, ton provider doit être 'app_user_provider' !
             custom_authenticator: App\Security\UserAuthenticator
             logout:
-                path: e01_sign-out         # <-- Ici, mets le nom de ta route de logout (voir contrôleur)
+                path: e01_sign-out          # <-- Ici, mets le nom de ta route de logout (voir contrôleur)
+                target: e01_index
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800
