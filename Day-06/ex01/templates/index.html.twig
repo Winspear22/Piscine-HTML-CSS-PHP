@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Bienvenue sur l’application !</h1>
 
+
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
@@ -14,7 +15,7 @@
 
     {% if app.user %}
         <p>Bonjour <strong>{{ app.user.userIdentifier }}</strong> !</p>
-        <a href="{{ path('e01_welcome') }}" class="btn btn-success">Aller à l’accueil connecté</a>
+        <a href="{{ path('e01_welcome') }}" class="btn btn-success">Aller sur la page Welcome</a>
         <a href="{{ path('e01_sign-out') }}" class="btn btn-danger">Se déconnecter</a>
     {% else %}
         <a href="{{ path('e01_sign-in') }}" class="btn btn-primary">Se connecter</a>

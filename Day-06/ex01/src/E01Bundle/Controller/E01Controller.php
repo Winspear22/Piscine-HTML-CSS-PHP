@@ -13,19 +13,38 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\DBAL\Exception as DoctrineDBALException;
+
 
 class E01Controller extends AbstractController
 {
+
     #[Route('/e01', name: 'e01_index')]
     public function index(): Response
     {
-        return $this->render('index.html.twig'); // chemin conseillé pour l'accueil
+        try {
+            return $this->render('index.html.twig');
+        } catch (DoctrineDBALException $e) {
+            $this->addFlash('error', 'La base de données est indisponible.');
+            return $this->render('error_db.html.twig');
+        } catch (Exception $e) {
+            $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
+            return $this->render('error_db_others.html.twig');
+        }
     }
 
     #[Route('/e01/sign-in', name: 'e01_sign-in')]
     public function signIn(): Response
     {
-        return $this->render('security/login.html.twig');
+        try {
+            return $this->render('security/login.html.twig');
+        } catch (DoctrineDBALException $e) {
+            $this->addFlash('error', 'La base de données est indisponible.');
+            return $this->render('error_db.html.twig');
+        } catch (Exception $e) {
+            $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
+            return $this->render('error_db_others.html.twig');
+        }
     }
 
     #[Route('/e01/sign-up', name: 'e01_sign-up')]
@@ -39,13 +58,16 @@ class E01Controller extends AbstractController
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            try {
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            try
+            {
                 // Vérifier si le username existe déjà
                 $existingUser = $em->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]);
-                if ($existingUser) {
+                if ($existingUser)
                     $form->get('username')->addError(new FormError('Ce nom d\'utilisateur est déjà pris.'));
-                } else {
+                else
+                {
                     // Récupère le mot de passe en clair
                     $plainPassword = $form->get('plainPassword')->getData();
                     // Hash le mot de passe avant de le mettre dans l'entité
@@ -60,12 +82,12 @@ class E01Controller extends AbstractController
                     $em->flush();
 
                     $this->addFlash('success', 'Inscription réussie ! Connecte-toi !');
-                    // Redirige vers la page de login
                     return $this->redirectToRoute('e01_sign-in');
                 }
-            } catch (Exception $e) {
+            } 
+            catch (Exception $e) 
+            {
                 $this->addFlash('error', 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.');
-                // Log l'erreur si nécessaire
             }
         }
         return $this->render('sign-up.html.twig', [
@@ -80,9 +102,17 @@ class E01Controller extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function welcome(): Response
     {
-        return $this->render('welcome.html.twig', [
+        try
+        {
+            return $this->render('welcome.html.twig', [
             'username' => $this->getUser()->getUserIdentifier(),
-        ]);
+            ]);
+        }
+        catch (Exception $e)
+        {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
+            return $this->redirectToRoute('e01_index');
+        }
     }
 
 	#[Route('/e01/need-auth', name: 'e01_need_auth')]
