@@ -44,6 +44,7 @@ class Ex02Controller extends AbstractController
 						$em->remove($user);
 				}
             }
+			$em->flush();
             while ($i < 10)
             {
                 $user = new User();
@@ -152,7 +153,7 @@ class Ex02Controller extends AbstractController
         }
     }
 	
-	#[Route('/e01/sign_out', name: 'e01_sign_out')]
+	#[Route('/e02/sign_out', name: 'e02_sign_out')]
     public function signOut(): void	{}
 
 }
