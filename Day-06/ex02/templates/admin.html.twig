@@ -35,13 +35,23 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.getRoles()|join(', ') }}</td>
-                </tr>
-            {% endfor %}
+			{% for user in users %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.username }}</td>
+					<td>{{ user.getRoles()|join(', ') }}</td>
+					<td>
+						{% if user != app.user and 'ROLE_ADMIN' not in user.getRoles() %}
+							<form method="post" action="{{ path('e02_admin_delete', {id: user.id}) }}" onsubmit="return confirm('Supprimer {{ user.username }} ?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
+								<button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+							</form>
+						{% else %}
+							<em>Non autorisé</em>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
         </tbody>
     </table>
 {% endif %}

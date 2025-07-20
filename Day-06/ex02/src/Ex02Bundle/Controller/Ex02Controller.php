@@ -156,4 +156,37 @@ class Ex02Controller extends AbstractController
 	#[Route('/e02/sign_out', name: 'e02_sign_out')]
     public function signOut(): void	{}
 
+	#[Route('/e02/need-auth', name: 'e02_need_auth')]
+	public function needAuth(): Response
+	{
+		return $this->render('need_auth.html.twig');
+	}
+
+	#[Route('/e02/admin/delete/{id}', name: 'e02_admin_delete', methods: ['POST'])]
+	#[IsGranted('ROLE_ADMIN')]
+	public function deleteUser(User $user, EntityManagerInterface $em): Response
+	{
+		$currentUser = $this->getUser();
+
+		if ($user === $currentUser)
+			$this->addFlash('error', 'Tu ne peux pas te supprimer toi-même.');
+		elseif (in_array('ROLE_ADMIN', $user->getRoles(), true))
+			$this->addFlash('error', 'Tu ne peux pas supprimer un autre administrateur.');
+		else
+		{
+			try
+			{
+				$em->remove($user);
+				$em->flush();
+				$this->addFlash('success', 'Utilisateur supprimé avec succès.');
+			}
+			catch (Exception $e)
+			{
+				$this->addFlash('error', 'Erreur lors de la suppression de l’utilisateur : ' . $e->getMessage());
+			}
+		}
+		return $this->redirectToRoute('e02_admin');
+	}
+
+
 }

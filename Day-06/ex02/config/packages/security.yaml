@@ -19,7 +19,7 @@ security:
             custom_authenticator: App\Security\UserCustomAuthenticator
             logout:
                 path: e02_sign_out
-                target: /e02
+                target: e02_index
                 # where to redirect after logout
                 # target: app_any_route
 
