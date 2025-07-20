@@ -4,7 +4,7 @@ namespace App\Ex02Bundle\Controller;
 
 use Exception;
 use App\Entity\User;
-use App\Form\UserFormType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,14 +19,17 @@ use Doctrine\DBAL\Exception as DoctrineDBALException;
 
 class Ex02Controller extends AbstractController
 {
-    #[Route('/e02', name: 'e02_index')]
-    public function index(): Response
-    {
-        return new Response("Hello from Ex02Controller!");
-    }
+	#[Route('/e02', name: 'e02_index')]
+	public function index(): Response
+	{
+		return $this->render('index.html.twig', [
+			'user' => $this->getUser()
+		]);
+	}
 
-    #[Route('/e02/create_user', name: 'e02_create_user')]
-    public function createManyUsers(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    #[Route('/e02/create_user', name: 'e02_create_user', methods: ['POST'])]
+	#[IsGranted('ROLE_ADMIN')]
+    public function createManyUsers(EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $i = 0;
         try 
@@ -34,9 +37,12 @@ class Ex02Controller extends AbstractController
             $checkUsersExistence = $em->getRepository(User::class)->findAll();
             if (count($checkUsersExistence) > 0)
             {
-                foreach ($checkUsersExistence as $users)
-                    $em->remove($users);
-                $em->flush();
+				$currentUser = $this->getUser();
+				foreach ($checkUsersExistence as $user)
+				{
+					if ($user !== $currentUser)
+						$em->remove($user);
+				}
             }
             while ($i < 10)
             {
@@ -55,14 +61,14 @@ class Ex02Controller extends AbstractController
 		{
 			$this->addFlash('error', 'Erreur lors de la création des users : ' . $e->getMessage());
 		}
-		return $this->redirectToRoute('e02_index');
+		return $this->redirectToRoute('e02_admin');
     }
 
-	#[Route('/e02/create_admin', name: 'e02_create_admin')]
+	#[Route('/e02/sign_up', name: 'e02_sign_up')]
 	public function createAdmin(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
 	{
 		$user = new User();
-		$form = $this->createForm(UserFormType::class, $user);
+		$form = $this->createForm(UserType::class, $user);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid())
@@ -81,7 +87,7 @@ class Ex02Controller extends AbstractController
                     $em->persist($user);
                     $em->flush();
                     $this->addFlash('success', 'Inscription réussie ! Connecte-toi !');
-                    return $this->redirectToRoute('e01_sign-in');
+                    return $this->redirectToRoute('e02_sign_in');
 				}
 			}
 			catch (Exception $e)
@@ -90,7 +96,7 @@ class Ex02Controller extends AbstractController
 				return $this->redirectToRoute('e02_index');
 			}
 		}
-		return $this->render('create_admin.html.twig', [
+		return $this->render('sign_up.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
 	}
@@ -114,7 +120,7 @@ class Ex02Controller extends AbstractController
         }
     }
 	
-	#[Route('/e02/sign_up', name: 'e02_sign_up')]
+	#[Route('/e02/admin', name: 'e02_admin')]
 	#[IsGranted('ROLE_ADMIN')]
 	public function admin(UserRepository $userRepository): Response
 	{
@@ -126,7 +132,27 @@ class Ex02Controller extends AbstractController
 		{
 			$this->addFlash('error', 'Erreur lors de l\'affichage des utilisateurs : ' . $e->getMessage());
 		}
-		return $this->render('admin/index.html.twig', ['users' => $users]);
+		return $this->render('admin.html.twig', ['users' => $users]);
 	}
+	
+	#[Route('/e02/welcome', name: 'e02_welcome')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function welcome(): Response
+    {
+        try
+        {
+			return $this->render('welcome.html.twig', [
+				'user' => $this->getUser(),
+			]);
+        }
+        catch (Exception $e)
+        {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
+            return $this->redirectToRoute('e02_index');
+        }
+    }
+	
+	#[Route('/e01/sign_out', name: 'e01_sign_out')]
+    public function signOut(): void	{}
 
 }
