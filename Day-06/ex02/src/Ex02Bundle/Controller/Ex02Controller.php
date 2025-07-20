@@ -164,8 +164,15 @@ class Ex02Controller extends AbstractController
 
 	#[Route('/e02/admin/delete/{id}', name: 'e02_admin_delete', methods: ['POST'])]
 	#[IsGranted('ROLE_ADMIN')]
-	public function deleteUser(User $user, EntityManagerInterface $em): Response
+	public function deleteUser(int $id, UserRepository $userRepo, EntityManagerInterface $em, Request $request): Response
 	{
+		$user = $userRepo->find($id);
+
+		if (!$user) {
+			$this->addFlash('error', "L'utilisateur demandé n'existe pas.");
+			return $this->redirectToRoute('e02_admin');
+		}
+
 		$currentUser = $this->getUser();
 
 		if ($user === $currentUser)
@@ -174,19 +181,14 @@ class Ex02Controller extends AbstractController
 			$this->addFlash('error', 'Tu ne peux pas supprimer un autre administrateur.');
 		else
 		{
-			try
-			{
-				$em->remove($user);
-				$em->flush();
-				$this->addFlash('success', 'Utilisateur supprimé avec succès.');
-			}
-			catch (Exception $e)
-			{
-				$this->addFlash('error', 'Erreur lors de la suppression de l’utilisateur : ' . $e->getMessage());
-			}
+			$em->remove($user);
+			$em->flush();
+			$this->addFlash('success', 'Utilisateur supprimé avec succès.');
 		}
+
 		return $this->redirectToRoute('e02_admin');
 	}
+		
 
 
 }
