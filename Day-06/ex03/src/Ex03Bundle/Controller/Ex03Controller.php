@@ -31,6 +31,7 @@ class Ex03Controller extends AbstractController
         ]);
     }
 
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[Route('/e03/sign_out', name: 'e03_sign_out')]
     public function signOut(): void {}
 
@@ -96,17 +97,21 @@ class Ex03Controller extends AbstractController
 
 
     #[Route('/e03/welcome', name: 'e03_welcome')]
+    #[IsGranted(attribute: 'ROLE_USER')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function welcome(EntityManagerInterface $em): Response
     {
-        try {
+        try 
+		{
             $posts = $em->getRepository(Post::class)->findBy([], ['created' => 'DESC']);
 
             return $this->render('welcome.html.twig', [
                 'user' => $this->getUser(),
                 'posts' => $posts,
             ]);
-        } catch (Exception $e) {
+        } 
+		catch (Exception $e)
+		{
             $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
             return $this->redirectToRoute('e03_index');
         }
@@ -114,7 +119,8 @@ class Ex03Controller extends AbstractController
 
 
     #[Route('/e03/post/new', name: 'e03_post_new')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted(attribute: 'ROLE_USER')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function newPost(Request $request, EntityManagerInterface $em): Response
     {
         $post = new Post();
@@ -130,7 +136,7 @@ class Ex03Controller extends AbstractController
             $em->flush();
 
             $this->addFlash('success', 'Post créé avec succès !');
-            return $this->redirectToRoute('e03_index');
+            return $this->redirectToRoute('e03_welcome');
         }
 
         return $this->render('post.html.twig', [
