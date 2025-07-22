@@ -12,4 +12,19 @@
     <a href="{{ path('e03_welcome') }}" class="btn btn-success">Aller sur la page Welcome</a>
     <a href="{{ path('e03_sign_out') }}" class="btn btn-danger">Se déconnecter</a>
 {% endif %}
+
+{% if posts|length > 0 %}
+    <h2>Liste des posts :</h2>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{{ path('e03_post_show', {id: post.id}) }}">{{ post.title }}</a>
+                — par {{ post.author.username }}, le {{ post.created|date('d/m/Y H:i') }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun post pour le moment.</p>
+{% endif %}
+
 {% endblock %}

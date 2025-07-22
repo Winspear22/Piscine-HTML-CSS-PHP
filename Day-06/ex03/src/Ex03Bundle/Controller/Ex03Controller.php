@@ -2,8 +2,11 @@
 
 namespace App\Ex03Bundle\Controller;
 
+use DateTime;
 use Exception;
+use App\Entity\Post;
 use App\Entity\User;
+use App\Form\PostType;
 use App\Form\UserType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,10 +21,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class Ex03Controller extends AbstractController
 {
     #[Route('/e03', name: 'e03_index')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        $posts = $em->getRepository(Post::class)->findBy([], ['created' => 'DESC']);
+
         return $this->render('index.html.twig', [
-            'user' => $this->getUser()
+            'user' => $this->getUser(),
+            'posts' => $posts,
         ]);
     }
 
@@ -104,6 +110,31 @@ class Ex03Controller extends AbstractController
             $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
             return $this->redirectToRoute('e03_index');
         }
+    }
+
+    #[Route('/e03/post/new', name: 'e03_post_new')]
+    #[IsGranted('ROLE_USER')]
+    public function newPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $post->setAuthor($this->getUser());
+            $post->setCreated(new DateTime());
+
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('success', 'Post créé avec succès !');
+            return $this->redirectToRoute('e03_index');
+        }
+
+        return $this->render('post.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 

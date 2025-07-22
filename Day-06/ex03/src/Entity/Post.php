@@ -15,67 +15,47 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Title = null;
+    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Content = null;
+    private ?string $content = null;
 
     #[ORM\Column]
-    private ?\DateTime $Created = null;
+    private ?\DateTimeInterface $created = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
-    private ?User $Author = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $author = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    // Getters / Setters (à modifier aussi)
+    public function getId(): ?int { return $this->id; }
 
-    public function getTitle(): ?string
-    {
-        return $this->Title;
-    }
+    public function getTitle(): ?string { return $this->title; }
 
-    public function setTitle(string $Title): static
-    {
-        $this->Title = $Title;
-
+    public function setTitle(string $title): static {
+        $this->title = $title;
         return $this;
     }
 
-    public function getContent(): ?string
-    {
-        return $this->Content;
-    }
+    public function getContent(): ?string { return $this->content; }
 
-    public function setContent(string $Content): static
-    {
-        $this->Content = $Content;
-
+    public function setContent(string $content): static {
+        $this->content = $content;
         return $this;
     }
 
-    public function getCreated(): ?\DateTime
-    {
-        return $this->Created;
-    }
+    public function getCreated(): ?\DateTimeInterface { return $this->created; }
 
-    public function setCreated(\DateTime $Created): static
-    {
-        $this->Created = $Created;
-
+    public function setCreated(\DateTimeInterface $created): static {
+        $this->created = $created;
         return $this;
     }
 
-    public function getAuthor(): ?User
-    {
-        return $this->Author;
-    }
+    public function getAuthor(): ?User { return $this->author; }
 
-    public function setAuthor(?User $Author): static
-    {
-        $this->Author = $Author;
-
+    public function setAuthor(?User $author): static {
+        $this->author = $author;
         return $this;
     }
 }
+
