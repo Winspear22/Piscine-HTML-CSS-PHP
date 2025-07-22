@@ -5,7 +5,7 @@ namespace App\E04Bundle\Controller;
 use Exception;
 use Throwable;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserFormType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,20 +32,23 @@ class E04Controller extends AbstractController
         }
 		catch (Exception $e)
 		{
-            $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
-            return $this->render('error_db_others.html.twig');
+return $this->render('error_db_others.html.twig', [
+    'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
+    'exception_message' => $e::class,
+]);
+
         }
     }
-
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[Route('/e04/sign_out', name: 'e04_sign_out')]
-    public function signOut(): void {}
 
     #[Route('/e04/need-auth', name: 'e04_need_auth')]
     public function needAuth(): Response
     {
         return $this->render('need_auth.html.twig');
     }
+
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[Route('/e04/sign_out', name: 'e04_sign_out')]
+    public function signOut(): void {}
 
     #[Route('/e04/sign_in', name: 'e04_sign_in')]
     public function signIn(): Response
@@ -70,7 +73,7 @@ class E04Controller extends AbstractController
     public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
