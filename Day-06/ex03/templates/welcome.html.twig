@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de bienvenue{% endblock %}
+
+{% block body %}
+<h1>Bienvenue, {{ user.username }} !</h1>
+
+{% if 'ROLE_USER' in user.getRoles() %}
+    <p>Vous êtes un utilisateur, votre username est {{ user.username }}.</p>
+    <a href="{{ path('e03_post') }}" class="btn btn-primary">Accéder à la page d’administration</a>
+{% else %}
+    <p>Malheureusement, vous n’êtes pas un utilisateur. Vous ne pouvez pas accéder à la page réservée.</p>
+{% endif %}
+
+<a href="{{ path('e03_sign_out') }}" class="btn btn-danger mt-3">Se déconnecter</a>
+{% endblock %}
