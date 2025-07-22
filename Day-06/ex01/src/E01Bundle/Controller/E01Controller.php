@@ -22,12 +22,17 @@ class E01Controller extends AbstractController
     #[Route('/e01', name: 'e01_index')]
     public function index(): Response
     {
-        try {
+        try
+		{
             return $this->render('index.html.twig');
-        } catch (DoctrineDBALException $e) {
+        }
+		catch (DoctrineDBALException $e)
+		{
             $this->addFlash('error', 'La base de données est indisponible.');
             return $this->render('error_db.html.twig');
-        } catch (Exception $e) {
+        }
+		catch (Exception $e)
+		{
             $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
             return $this->render('error_db_others.html.twig');
         }
@@ -36,12 +41,17 @@ class E01Controller extends AbstractController
     #[Route('/e01/sign-in', name: 'e01_sign-in')]
     public function signIn(): Response
     {
-        try {
+        try
+		{
             return $this->render('security/login.html.twig');
-        } catch (DoctrineDBALException $e) {
+        }
+		catch (DoctrineDBALException $e)
+		{
             $this->addFlash('error', 'La base de données est indisponible.');
             return $this->render('error_db.html.twig');
-        } catch (Exception $e) {
+        }
+		catch (Exception $e)
+		{
             $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
             return $this->render('error_db_others.html.twig');
         }

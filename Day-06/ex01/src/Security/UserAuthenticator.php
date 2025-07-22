@@ -29,7 +29,6 @@ class UserAuthenticator extends AbstractLoginFormAuthenticator
     }
     public function start(Request $request, AuthenticationException $authException = null): Response
 {
-    // Ici tu choisis la route de la page intermédiaire (par exemple, /e01/need-auth)
     $url = $this->urlGenerator->generate('e01_need_auth');
     return new RedirectResponse($url);
 }
