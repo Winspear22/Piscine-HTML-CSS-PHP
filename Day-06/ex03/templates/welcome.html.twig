@@ -3,14 +3,29 @@
 {% block title %}Page de bienvenue{% endblock %}
 
 {% block body %}
-<h1>Bienvenue, {{ user.username }} !</h1>
+<h1>Bienvenue {{ app.user.username }} !</h1>
 
-{% if 'ROLE_USER' in user.getRoles() %}
-    <p>Vous êtes un utilisateur, votre username est {{ user.username }}.</p>
-    <a href="{{ path('e03_post') }}" class="btn btn-primary">Accéder à la page d’administration</a>
+<p>Voici la liste des posts disponibles :</p>
+
+<a href="{{ path('e03_post_new') }}" class="btn btn-primary mb-3">Créer un nouveau post</a>
+
+{% if posts|length > 0 %}
+    <ul class="list-unstyled">
+        {% for post in posts %}
+            <li class="mb-3">
+                <a href="{{ path('e03_post_show', { id: post.id }) }}">
+                    <strong>{{ post.title }}</strong>
+                </a><br>
+                <small>
+                    par {{ post.author.username }},
+                    le {{ post.created|date('d/m/Y H:i') }}
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
 {% else %}
-    <p>Malheureusement, vous n’êtes pas un utilisateur. Vous ne pouvez pas accéder à la page réservée.</p>
+    <p>Aucun post pour le moment.</p>
 {% endif %}
 
-<a href="{{ path('e03_sign_out') }}" class="btn btn-danger mt-3">Se déconnecter</a>
+<a href="{{ path('e03_sign_out') }}" class="btn btn-danger mt-4">Se déconnecter</a>
 {% endblock %}

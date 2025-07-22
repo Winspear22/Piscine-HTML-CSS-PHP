@@ -97,20 +97,21 @@ class Ex03Controller extends AbstractController
 
     #[Route('/e03/welcome', name: 'e03_welcome')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function welcome(): Response
+    public function welcome(EntityManagerInterface $em): Response
     {
-        try
-		{
+        try {
+            $posts = $em->getRepository(Post::class)->findBy([], ['created' => 'DESC']);
+
             return $this->render('welcome.html.twig', [
                 'user' => $this->getUser(),
+                'posts' => $posts,
             ]);
-        }
-		catch (Exception $e)
-		{
+        } catch (Exception $e) {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
             return $this->redirectToRoute('e03_index');
         }
     }
+
 
     #[Route('/e03/post/new', name: 'e03_post_new')]
     #[IsGranted('ROLE_USER')]
@@ -136,6 +137,16 @@ class Ex03Controller extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/e03/post/{id}', name: 'e03_post_show')]
+    #[IsGranted('ROLE_USER')]
+    public function showPost(Post $post): Response
+    {
+        return $this->render('post_show.html.twig', [
+            'post' => $post
+        ]);
+    }
+
 
 
 }
