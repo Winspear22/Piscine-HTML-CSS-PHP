@@ -152,7 +152,4 @@ class Ex03Controller extends AbstractController
             'post' => $post
         ]);
     }
-
-
-
 }
