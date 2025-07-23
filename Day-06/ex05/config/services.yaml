@@ -4,12 +4,11 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
-            - '../src/EventListener/' # <--- HERE
             - '../src/Kernel.php'   
 
     App\EventListener\PingDatabaseListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.request, priority: 255 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 5000 }
 
     _defaults:
         autowire: true

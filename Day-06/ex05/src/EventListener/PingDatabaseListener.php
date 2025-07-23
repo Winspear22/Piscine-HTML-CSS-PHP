@@ -4,14 +4,15 @@ namespace App\EventListener;
 
 use Throwable;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Twig\Environment as TwigEnvironment;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class PingDatabaseListener
 {
-    private $connection;
-    private $twig;
+    private Connection $connection;
+    private TwigEnvironment $twig;
 
     public function __construct(Connection $connection, TwigEnvironment $twig)
     {
@@ -19,24 +20,33 @@ class PingDatabaseListener
         $this->twig = $twig;
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
-		file_put_contents('/tmp/ping-db.txt', date('c') . " - PING\n", FILE_APPEND);
-
-        if (!$event->isMainRequest())
+        if (!$event->isMainRequest()) {
             return;
-        try
-		{
+        }
+
+        try {
+            // Test de connexion à la base
             $this->connection->executeQuery('SELECT 1');
-        } 
-		catch (Throwable $e)
-		{
+
+            // Test de la présence de la table "user"
+            $this->connection->executeQuery('SELECT COUNT(*) FROM user');
+        } catch (TableNotFoundException $e) {
+            // Cas spécifique : table manquante
             $html = $this->twig->render('bundles/TwigBundle/Exception/error_db.html.twig', [
-                'error_message' => 'Impossible de se connecter à la base de données.',
+                'error_message' => 'La base est connectée, mais la table "user" est manquante.',
                 'exception_message' => $e->getMessage(),
             ]);
-            $response = new Response($html, 503);
-            $event->setResponse($response);
+            $event->setResponse(new Response($html, 503));
+        } catch (Throwable $e) {
+            // Cas général : base de données inaccessible ou autre
+            $html = $this->twig->render('bundles/TwigBundle/Exception/error_db.html.twig', [
+                'error_message' => 'Erreur de base de données.',
+                'exception_message' => $e->getMessage(),
+            ]);
+            $event->setResponse(new Response($html, 503));
         }
     }
 }
+
