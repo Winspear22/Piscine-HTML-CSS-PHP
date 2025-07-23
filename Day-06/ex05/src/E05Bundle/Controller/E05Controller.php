@@ -196,7 +196,7 @@ return $this->render('error_db_others.html.twig', [
 
         // Empêche de voter plusieurs fois
         $existingVote = $em->getRepository(Vote::class)->findOneBy([
-            'voter' => $user,
+            'user' => $user,
             'post' => $post
         ]);
 
