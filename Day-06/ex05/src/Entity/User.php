@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Vote::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $votes;
 
+    #[ORM\Column]
+    private ?int $reputation = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -132,6 +135,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $vote->setUser(null);
             }
         }
+        return $this;
+    }
+
+    public function getReputation(): int
+    {
+        $reputation = 0;
+
+        foreach ($this->getPosts() as $post) {
+            foreach ($post->getVotes() as $vote) {
+                $reputation += $vote->getIsLike() ? 1 : -1;
+            }
+        }
+
+        return $reputation;
+    }
+
+    public function setReputation(int $reputation): static
+    {
+        $this->reputation = $reputation;
+
         return $this;
     }
 }
