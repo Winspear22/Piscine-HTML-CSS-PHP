@@ -19,26 +19,53 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class E04Controller extends AbstractController
 {
     #[Route('/e04', name: 'e04_index')]
-    public function index(EntityManagerInterface $em): Response
+    public function index(Request $request, EntityManagerInterface $em): Response
     {
+        $session = $request->getSession();
+        $animals = ['dog', 'cat', 'tiger', 'fox', 'owl', 'koala', 'panda', 'eagle', 'zebra', 'wolf'];
+        $now = time();
+
         try
-		{
-            return $this->render('index.html.twig');
+        {
+            // Protection BDD
+            //$em->getRepository(User::class)->count();
+
+            // Gestion de session anonyme
+            //dump($request->getSession()->all());
+
+            if (!$session->has('anon_name') || !$session->has('last_access')
+            || $now - $session->get('last_access') > 60)
+            {
+                $name = 'Anonymous ' . $animals[array_rand($animals)];
+                $session->set('anon_name', $name);
+                $session->set('last_access', $now);
+                $elapsed = null;
+            }
+            else
+            {
+                $name = $session->get('anon_name');
+                $elapsed = $now - $session->get('last_access');
+                $session->set('last_access', $now);
+            }
+            return $this->render('index.html.twig', [
+                'name' => $name,
+                'elapsed' => $elapsed,
+            ]);
         }
-		catch (DoctrineDBALException $e)
-		{
+        catch (DoctrineDBALException $e)
+        {
             $this->addFlash('error', 'La base de données est indisponible.');
             return $this->render('error_db.html.twig');
         }
-		catch (Exception $e)
-		{
-return $this->render('error_db_others.html.twig', [
-    'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
-    'exception_message' => $e::class,
-]);
-
+        catch (Exception $e)
+        {
+            return $this->render('error_db_others.html.twig', [
+                'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
+                'exception_message' => $e::class,
+            ]);
         }
     }
+
 
     #[Route('/e04/need-auth', name: 'e04_need_auth')]
     public function needAuth(): Response
@@ -80,6 +107,19 @@ return $this->render('error_db_others.html.twig', [
         {
             try
             {
+                $animals = ['dog', 'cat', 'tiger', 'fox', 'owl', 'koala', 'panda', 'eagle', 'zebra', 'wolf'];
+                $username = $user->getUsername();
+
+                foreach ($animals as $animal) 
+                {
+                    if (strtolower($username) === strtolower("Anonymous $animal"))
+                    {
+                        $form->get('username')->addError(new FormError('Ce nom est réservé aux utilisateurs anonymes.'));
+                        return $this->render('sign_up.html.twig', [
+                            'registrationForm' => $form->createView(),
+                        ]);
+                    }
+}
                 if ($em->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]))
                     $form->get('username')->addError(new FormError('Ce nom d\'utilisateur est déjà pris.'));
                 else

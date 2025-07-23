@@ -51,14 +51,20 @@ class UserCustomAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        // 🧹 Nettoyage de la session anonyme
+        $session = $request->getSession();
+        $session->remove('anon_name');
+        $session->remove('last_access');
+
+        // ✅ Redirection après login (normale)
+        if ($targetPath = $this->getTargetPath($session, $firewallName))
+        {
             return new RedirectResponse($targetPath);
         }
 
-        // For example:
-        // return new RedirectResponse($this->urlGenerator->generate('some_route'));
         return new RedirectResponse($this->urlGenerator->generate('e04_welcome'));
     }
+
 
     protected function getLoginUrl(Request $request): string
     {
