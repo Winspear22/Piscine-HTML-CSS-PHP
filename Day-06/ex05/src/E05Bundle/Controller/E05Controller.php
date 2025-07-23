@@ -2,12 +2,13 @@
 
 namespace App\E05Bundle\Controller;
 
-use DateTimeImmutable;
 use Exception;
 use Throwable;
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Vote;
 use App\Form\PostType;
+use DateTimeImmutable;
 use App\Form\UserFormType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -128,7 +129,7 @@ return $this->render('error_db_others.html.twig', [
         }
     }
 
-        #[Route('/e05/post/new', name: 'e05_post_new')]
+    #[Route('/e05/post/new', name: 'e05_post_new')]
     #[IsGranted('ROLE_USER')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function newPost(Request $request, EntityManagerInterface $em): Response
@@ -137,27 +138,31 @@ return $this->render('error_db_others.html.twig', [
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-try {
-    $post->setAuthor($this->getUser());
-    $post->setCreated(new DateTimeImmutable());
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            try 
+            {
+                $post->setAuthor($this->getUser());
+                $post->setCreated(new \DateTimeImmutable());
 
-    $em->persist($post);
-    $em->flush();
+                $em->persist($post);
+                $em->flush();
 
-    dd('flush ok'); // ← S'il affiche ça, c’est que c’est bien inséré
-
-    $this->addFlash('success', 'Post créé avec succès !');
-    return $this->redirectToRoute('e05_welcome');
-} catch (\Throwable $e) {
-    dd($e->getMessage(), $e); // ← Et là tu verras l’erreur exacte s’il y en a une
-}
+                $this->addFlash('success', 'Post créé avec succès !');
+                return $this->redirectToRoute('e05_welcome');
+            }
+            catch (Throwable $e)
+            {
+                $this->addFlash('error', 'Erreur lors de l\'enregistrement du post.');
+                return $this->redirectToRoute('e05_post_new');
+            }
         }
 
         return $this->render('post.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
 
     #[Route('/e05/post/{id}', name: 'e05_post_show')]
     #[IsGranted('ROLE_USER')]
@@ -175,4 +180,41 @@ try {
             return $this->redirectToRoute('e05_welcome');
         }
     }
+
+    #[Route('/e05/post/{id}/vote/{type}', name: 'e05_post_vote')]
+    #[IsGranted('ROLE_USER')]
+    public function vote(Post $post, string $type, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+
+        // Empêche de voter pour son propre post
+        if ($post->getAuthor() === $user)
+        {
+            $this->addFlash('error', 'Tu ne peux pas voter pour ton propre post.');
+            return $this->redirectToRoute('e05_welcome');
+        }
+
+        // Empêche de voter plusieurs fois
+        $existingVote = $em->getRepository(Vote::class)->findOneBy([
+            'voter' => $user,
+            'post' => $post
+        ]);
+
+        if ($existingVote) {
+            $this->addFlash('error', 'Tu as déjà voté pour ce post.');
+            return $this->redirectToRoute('e05_welcome');
+        }
+
+        $vote = new Vote();
+        $vote->setUser($user);
+        $vote->setPost($post);
+        $vote->setIsLike($type === 'like');
+
+        $em->persist($vote);
+        $em->flush();
+
+        $this->addFlash('success', 'Ton vote a été enregistré !');
+        return $this->redirectToRoute('e05_welcome');
+    }
+
 }

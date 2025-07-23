@@ -14,6 +14,12 @@
         <p>Auteur : {{ post.author.username }} (Réputation : à implémenter)</p>
         <p>Créé le : {{ post.created|date('d/m/Y H:i') }}</p>
         <p>👍 {{ post.votes|filter(v => v.isLike())|length }} / {{ post.votes|filter(v => not v.isLike())|length }}</p>
+        {% if post.author.id != app.user.id %}
+    <a href="{{ path('e05_post_vote', {id: post.id, type: 'like'}) }}" class="btn btn-sm btn-success">👍</a>
+    <a href="{{ path('e05_post_vote', {id: post.id, type: 'dislike'}) }}" class="btn btn-sm btn-danger">👎</a>
+{% else %}
+    <span class="badge bg-secondary">Tu ne peux pas voter pour ton post</span>
+{% endif %}
     </div>
 {% else %}
     <p>Aucun post pour le moment.</p>
