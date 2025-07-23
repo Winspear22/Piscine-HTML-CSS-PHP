@@ -2,7 +2,7 @@
 
 namespace App\E05Bundle\Controller;
 
-use DateTime;
+use DateTimeImmutable;
 use Exception;
 use Throwable;
 use App\Entity\Post;
@@ -138,19 +138,20 @@ return $this->render('error_db_others.html.twig', [
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            try {
-                $post->setAuthor($this->getUser());
-                $post->setCreated(new DateTime());
+try {
+    $post->setAuthor($this->getUser());
+    $post->setCreated(new DateTimeImmutable());
 
-                $em->persist($post);
-                $em->flush();
+    $em->persist($post);
+    $em->flush();
 
-                $this->addFlash('success', 'Post créé avec succès !');
-                return $this->redirectToRoute('e05_welcome');
-            } catch (\Throwable $e) {
-                $this->addFlash('error', 'Erreur lors de l\'enregistrement du post.');
-                return $this->redirectToRoute('e05_post_new');
-            }
+    dd('flush ok'); // ← S'il affiche ça, c’est que c’est bien inséré
+
+    $this->addFlash('success', 'Post créé avec succès !');
+    return $this->redirectToRoute('e05_welcome');
+} catch (\Throwable $e) {
+    dd($e->getMessage(), $e); // ← Et là tu verras l’erreur exacte s’il y en a une
+}
         }
 
         return $this->render('post.html.twig', [

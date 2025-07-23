@@ -4,6 +4,8 @@
 
 {% block body %}
 <h1>Bienvenue {{ app.user.username }} !</h1>
+<a href="{{ path('e05_post_new') }}" class="btn btn-primary mb-3">Créer un nouveau post</a>
+
 {% for post in posts %}
     <div class="post">
         <h3>
