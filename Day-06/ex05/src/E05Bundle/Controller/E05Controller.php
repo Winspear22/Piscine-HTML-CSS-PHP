@@ -2,9 +2,12 @@
 
 namespace App\E05Bundle\Controller;
 
+use DateTime;
 use Exception;
 use Throwable;
+use App\Entity\Post;
 use App\Entity\User;
+use App\Form\PostType;
 use App\Form\UserFormType;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
@@ -108,18 +111,67 @@ return $this->render('error_db_others.html.twig', [
     #[Route('/e05/welcome', name: 'e05_welcome')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted(attribute: 'ROLE_USER')]
-    public function welcome(): Response
+    public function welcome(EntityManagerInterface $em): Response
     {
         try
         {
+            $posts = $em->getRepository(Post::class)->findBy([], ['created' => 'DESC']);
             return $this->render('welcome.html.twig', [
-            'username' => $this->getUser()->getUserIdentifier(),
+                'user' => $this->getUser(),
+                'posts' => $posts,
             ]);
         }
-        catch (Exception $e)
+        catch (Throwable $e)
         {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
             return $this->redirectToRoute('e05_index');
+        }
+    }
+
+        #[Route('/e05/post/new', name: 'e05_post_new')]
+    #[IsGranted('ROLE_USER')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function newPost(Request $request, EntityManagerInterface $em): Response
+    {
+        $post = new Post();
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $post->setAuthor($this->getUser());
+                $post->setCreated(new DateTime());
+
+                $em->persist($post);
+                $em->flush();
+
+                $this->addFlash('success', 'Post créé avec succès !');
+                return $this->redirectToRoute('e05_welcome');
+            } catch (\Throwable $e) {
+                $this->addFlash('error', 'Erreur lors de l\'enregistrement du post.');
+                return $this->redirectToRoute('e05_post_new');
+            }
+        }
+
+        return $this->render('post.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/e05/post/{id}', name: 'e05_post_show')]
+    #[IsGranted('ROLE_USER')]
+    public function showPost(Post $post): Response
+    {
+        try
+        {
+            return $this->render('post_show.html.twig', [
+                'post' => $post,
+            ]);
+        } 
+        catch (Throwable $e)
+        {
+            $this->addFlash('error', 'Erreur lors de l\'affichage du post.');
+            return $this->redirectToRoute('e05_welcome');
         }
     }
 }
