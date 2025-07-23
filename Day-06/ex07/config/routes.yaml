@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+e07_controllers:
+    resource:
+        path: ../src/E07Bundle/Controller/
+        namespace: App\E07Bundle\Controller
+    type: attribute
