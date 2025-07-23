@@ -181,40 +181,63 @@ return $this->render('error_db_others.html.twig', [
         }
     }
 
-    #[Route('/e05/post/{id}/vote/{type}', name: 'e05_post_vote')]
+    #[Route('/e05/post/{id}/vote/{type}', name: 'e05_post_vote', requirements: ['type' => 'like|dislike'])]
     #[IsGranted('ROLE_USER')]
     public function vote(Post $post, string $type, EntityManagerInterface $em): Response
     {
+        if (!in_array($type, ['like', 'dislike'])) 
+        {
+            throw $this->createNotFoundException('Type de vote invalide.');
+        }
         $user = $this->getUser();
 
-        // Empêche de voter pour son propre post
         if ($post->getAuthor() === $user)
         {
             $this->addFlash('error', 'Tu ne peux pas voter pour ton propre post.');
             return $this->redirectToRoute('e05_welcome');
         }
 
-        // Empêche de voter plusieurs fois
         $existingVote = $em->getRepository(Vote::class)->findOneBy([
             'user' => $user,
-            'post' => $post
+            'post' => $post,
         ]);
 
-        if ($existingVote) {
-            $this->addFlash('error', 'Tu as déjà voté pour ce post.');
-            return $this->redirectToRoute('e05_welcome');
+        $isLike = $type === 'like';
+
+        if ($existingVote)
+        {
+            // Même vote qu’avant → on annule
+            if ($existingVote->getIsLike() === $isLike)
+            {
+                $em->remove($existingVote);
+                $em->flush();
+
+                $this->addFlash('info', 'Ton vote a été retiré.');
+            }
+            else
+            {
+                // Vote opposé → on change
+                $existingVote->setIsLike($isLike);
+                $em->flush();
+
+                $this->addFlash('success', 'Ton vote a été mis à jour.');
+            }
+        } 
+        else
+        {
+            // Aucun vote existant → on crée
+            $vote = new Vote();
+            $vote->setUser($user);
+            $vote->setPost($post);
+            $vote->setIsLike($isLike);
+
+            $em->persist($vote);
+            $em->flush();
+
+            $this->addFlash('success', 'Ton vote a été enregistré.');
         }
-
-        $vote = new Vote();
-        $vote->setUser($user);
-        $vote->setPost($post);
-        $vote->setIsLike($type === 'like');
-
-        $em->persist($vote);
-        $em->flush();
-
-        $this->addFlash('success', 'Ton vote a été enregistré !');
         return $this->redirectToRoute('e05_welcome');
     }
+
 
 }
