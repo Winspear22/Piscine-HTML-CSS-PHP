@@ -20,77 +20,122 @@ class AppFixtures extends Fixture
 
         $users = [];
 
-        // Créer 10 utilisateurs avec ROLE_USER
-        for ($i = 1; $i <= 10; $i++)
-        {
-            $user = new User();
-            $user->setUsername("user$i");
-            $user->setRoles(['ROLE_USER']);
-            $user->setPassword($this->hasher->hashPassword($user, "$i"));
-            $user->setReputation(0);
+        // Utilisateur 0 points (aucun post, aucun vote)
+        $newbie = new User();
+        $newbie->setUsername('newbie');
+        $newbie->setRoles(['ROLE_USER']);
+        $newbie->setPassword($this->hasher->hashPassword($newbie, 'pass'));
+        $newbie->setReputation(0);
+        $manager->persist($newbie);
+        $users[] = $newbie;
 
-            $manager->persist($user);
-            $users[] = $user;
-        }
+        // Utilisateur 3 points (1 post avec 3 likes)
+        $liker = new User();
+        $liker->setUsername('liker');
+        $liker->setRoles(['ROLE_USER']);
+        $liker->setPassword($this->hasher->hashPassword($liker, 'pass'));
+        $manager->persist($liker);
+        $users[] = $liker;
 
+        // Utilisateur 6 points (1 post avec 3 likes et 3 dislikes)
+        $disliker = new User();
+        $disliker->setUsername('disliker');
+        $disliker->setRoles(['ROLE_USER']);
+        $disliker->setPassword($this->hasher->hashPassword($disliker, 'pass'));
+        $manager->persist($disliker);
+        $users[] = $disliker;
 
-        // Créer un administrateur
+        // Utilisateur 9 points (1 post avec 9 likes et 3 dislikes)
+        $editor = new User();
+        $editor->setUsername('editor');
+        $editor->setRoles(['ROLE_USER']);
+        $editor->setPassword($this->hasher->hashPassword($editor, 'pass'));
+        $manager->persist($editor);
+        $users[] = $editor;
+
+        // Utilisateur admin
         $admin = new User();
         $admin->setUsername('admin');
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->hasher->hashPassword($admin, 'admin'));
-        $admin->setReputation(0); // CORRECTION : on utilise bien $admin et non $user
-
+        $admin->setReputation(999);
         $manager->persist($admin);
-        $users[] = $admin;
 
-        $posts = [];
+        // On garde les utilisateurs non-auteurs pour voter
+        $voters = [$newbie, $admin];
 
-        // Créer 20 posts
-        for ($i = 0; $i < 20; $i++)
-        {
-            $author = $faker->randomElement($users);
+        // liker → 1 post, 3 likes
+        $post1 = new Post();
+        $post1->setTitle('Post de liker');
+        $post1->setContent('Contenu du post de liker');
+        $post1->setCreated(new \DateTimeImmutable('-10 days'));
+        $post1->setAuthor($liker);
+        $post1->setLastEditedAt($post1->getCreated());
+        $post1->setLastEditedBy($liker);
+        $manager->persist($post1);
 
-            $post = new Post();
-            $post->setTitle($faker->sentence(5));
-            $post->setContent($faker->paragraphs(3, true));
-            $post->setCreated(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 month')));
-            $post->setAuthor($author);
-            $post->setLastEditedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-1 month')));
-            $post->setLastEditedBy($faker->randomElement($users));
+        foreach (array_slice($voters, 0, 3) as $voter) {
+            $vote = new Vote();
+            $vote->setPost($post1);
+            $vote->setUser($voter);
+            $vote->setIsLike(true);
+            $manager->persist($vote);
+        }
+        $liker->setReputation(3);
 
-            $manager->persist($post);
-            $posts[] = $post;
+        // disliker → 1 post, 3 likes + 3 dislikes
+        $post2 = new Post();
+        $post2->setTitle('Post de disliker');
+        $post2->setContent('Contenu du post de disliker');
+        $post2->setCreated(new \DateTimeImmutable('-7 days'));
+        $post2->setAuthor($disliker);
+        $post2->setLastEditedAt($post2->getCreated());
+        $post2->setLastEditedBy($disliker);
+        $manager->persist($post2);
+
+        foreach (array_slice($voters, 0, 3) as $voter) {
+            $voteLike = new Vote();
+            $voteLike->setPost($post2);
+            $voteLike->setUser($voter);
+            $voteLike->setIsLike(true);
+            $manager->persist($voteLike);
+        }
+        foreach (array_slice($voters, 0, 3) as $voter) {
+            $voteDislike = new Vote();
+            $voteDislike->setPost($post2);
+            $voteDislike->setUser($voter);
+            $voteDislike->setIsLike(false);
+            $manager->persist($voteDislike);
+        }
+        $disliker->setReputation(3);
+
+        // editor → 1 post, 9 likes + 3 dislikes
+        $post3 = new Post();
+        $post3->setTitle('Post de editor');
+        $post3->setContent('Contenu du post de editor');
+        $post3->setCreated(new \DateTimeImmutable('-4 days'));
+        $post3->setAuthor($editor);
+        $post3->setLastEditedAt($post3->getCreated());
+        $post3->setLastEditedBy($editor);
+        $manager->persist($post3);
+
+        for ($i = 0; $i < 9; $i++) {
+            $vote = new Vote();
+            $vote->setPost($post3);
+            $vote->setUser($faker->randomElement($voters));
+            $vote->setIsLike(true);
+            $manager->persist($vote);
         }
 
-        // Créer des votes aléatoires pour chaque post
-        foreach ($posts as $post) {
-            $voters = $faker->randomElements($users, mt_rand(1, 5));
-
-            foreach ($voters as $voter) {
-                if ($voter === $post->getAuthor()) {
-                    continue; // un utilisateur ne vote pas pour son propre post
-                }
-
-                $vote = new Vote();
-                $vote->setPost($post);
-                $vote->setUser($voter);
-
-                $isLike = $faker->boolean(70); // 70% de chances d'aimer
-                $vote->setIsLike($isLike);
-
-                // Mise à jour de la réputation
-                if ($isLike) {
-                    $post->getAuthor()?->increaseReputation(1);
-                } else {
-                    $post->getAuthor()?->decreaseReputation(1);
-                }
-
-                $manager->persist($vote);
-            }
+        for ($i = 0; $i < 3; $i++) {
+            $vote = new Vote();
+            $vote->setPost($post3);
+            $vote->setUser($faker->randomElement($voters));
+            $vote->setIsLike(false);
+            $manager->persist($vote);
         }
+        $editor->setReputation(9);
 
         $manager->flush();
     }
 }
-

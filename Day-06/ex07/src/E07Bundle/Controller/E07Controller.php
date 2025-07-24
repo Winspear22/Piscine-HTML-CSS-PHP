@@ -280,5 +280,34 @@ return $this->render('error_db_others.html.twig', [
 
         return $this->redirectToRoute('e07_welcome');
     }
+
+    #[Route('/e07/post/{id}/edit', name: 'e07_post_edit')]
+    #[IsGranted('ROLE_USER')]
+    public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
+    {
+        // Empêcher un user de modifier un post qui ne lui appartient pas
+        if ($post->getAuthor() !== $this->getUser())
+        {
+            throw $this->createAccessDeniedException("Tu ne peux modifier que tes propres posts.");
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $post->setLastEditedAt(new \DateTimeImmutable());
+            $post->setLastEditedBy($this->getUser());
+            $em->flush();
+
+            $this->addFlash('success', 'Post modifié avec succès !');
+            return $this->redirectToRoute('e07_post_show', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post_edit.html.twig', [
+            'form' => $form->createView(),
+            'post' => $post,
+        ]);
+    }
         
 }
