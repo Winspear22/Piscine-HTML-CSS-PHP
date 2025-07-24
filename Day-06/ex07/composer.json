@@ -80,6 +80,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "4.2.x-dev",
+        "fakerphp/faker": "2.0.x-dev",
         "symfony/maker-bundle": "1.x-dev"
     }
 }
