@@ -311,10 +311,16 @@ return $this->render('error_db_others.html.twig', [
     #[IsGranted('ROLE_USER')]
     public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
     {
-        // Empêcher un user de modifier un post qui ne lui appartient pas
-        if ($post->getAuthor() !== $this->getUser())
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $isOwner = $post->getAuthor() === $user;
+        $canEditAsUser = $isOwner && $user->getReputation() >= 9;
+        $canEditAsAdmin = $user->isAdmin();
+
+        if (!$canEditAsUser && !$canEditAsAdmin)
         {
-            throw $this->createAccessDeniedException("Tu ne peux modifier que tes propres posts.");
+            throw $this->createAccessDeniedException("Tu n’as pas les droits nécessaires pour modifier ce post.");
         }
 
         $form = $this->createForm(PostType::class, $post);
@@ -323,7 +329,7 @@ return $this->render('error_db_others.html.twig', [
         if ($form->isSubmitted() && $form->isValid())
         {
             $post->setLastEditedAt(new \DateTimeImmutable());
-            $post->setLastEditedBy($this->getUser());
+            $post->setLastEditedBy($user);
             $em->flush();
 
             $this->addFlash('success', 'Post modifié avec succès !');
@@ -335,5 +341,7 @@ return $this->render('error_db_others.html.twig', [
             'post' => $post,
         ]);
     }
+
+
         
 }
