@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setUsername("user$i");
             $user->setRoles(['ROLE_USER']);
-            $user->setPassword($this->hasher->hashPassword($user, "password$i"));
+            $user->setPassword($this->hasher->hashPassword($user, "$i"));
             $manager->persist($user);
             $users[] = $user;
         }
@@ -33,7 +33,7 @@ class AppFixtures extends Fixture
         $admin = new User();
         $admin->setUsername('admin');
         $admin->setRoles(['ROLE_ADMIN']);
-        $admin->setPassword($this->hasher->hashPassword($admin, 'adminpass'));
+        $admin->setPassword($this->hasher->hashPassword($admin, 'admin'));
         $manager->persist($admin);
         $users[] = $admin;
 

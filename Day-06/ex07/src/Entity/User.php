@@ -46,6 +46,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Vote::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $votes;
 
+    #[ORM\Column(type: 'integer')]
+    private int $reputation = 0;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -181,4 +184,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getReputation(): ?int
+    {
+        return $this->reputation;
+    }
+
+    public function setReputation(int $reputation): static
+    {
+        $this->reputation = max(0, $reputation);
+        return $this;
+    }
+
+    public function increaseReputation(int $amount): void
+    {
+        $this->reputation += max(0, $amount);
+    }
+
+    public function decreaseReputation(int $amount): void
+    {
+        $this->reputation = max(0, $this->reputation - max(0, $amount));
+    }
+        
+
+
 }

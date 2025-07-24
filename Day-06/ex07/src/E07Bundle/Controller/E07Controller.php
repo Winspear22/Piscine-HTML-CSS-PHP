@@ -109,6 +109,7 @@ return $this->render('error_db_others.html.twig', [
     }
 
     #[Route('/e07/sign_up_admin', name: 'e07_sign_up_admin')]
+    #[IsGranted('ROLE_ADMIN')]
     public function createAdmin(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
