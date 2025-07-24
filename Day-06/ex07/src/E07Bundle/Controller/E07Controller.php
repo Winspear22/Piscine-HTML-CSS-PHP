@@ -230,7 +230,8 @@ return $this->render('error_db_others.html.twig', [
         /** @var User $author */
         $author = $post->getAuthor();
 
-        if ($author === $voter) {
+        if ($author === $voter)
+        {
             $this->addFlash('error', 'Tu ne peux pas voter pour ton propre post.');
             return $this->redirectToRoute('e07_welcome');
         }
@@ -240,6 +241,18 @@ return $this->render('error_db_others.html.twig', [
             'post' => $post,
         ]);
 
+        $reputation = $voter->getReputation();
+        if ($type === 'like' && $reputation < 3 && !$voter->isAdmin())
+        {
+            $this->addFlash('error', 'Tu dois avoir au moins 3 points de réputation pour liker.');
+            return $this->redirectToRoute('e07_welcome');
+        }
+        if ($type === 'dislike' && $reputation < 6 && !$voter->isAdmin())
+        {
+            $this->addFlash('error', 'Tu dois avoir au moins 6 points de réputation pour disliker.');
+            return $this->redirectToRoute('e07_welcome');
+        }
+
         $isLike = $type === 'like';
 
         if ($existingVote)
@@ -248,18 +261,14 @@ return $this->render('error_db_others.html.twig', [
             {
                 // Même vote → on retire et on met à jour la réputation
                 if ($isLike)
-                {
                     $author->decreaseReputation(1);
-                }
                 else
-                {
                     $author->increaseReputation(1);
-                }
                 $em->remove($existingVote);
                 $this->addFlash('info', 'Ton vote a été retiré.');
-                }
-                else
-                {
+            }
+            else
+            {
                 // Vote opposé → on met à jour le vote et la réputation
                 $existingVote->setIsLike($isLike);
                 if ($isLike)

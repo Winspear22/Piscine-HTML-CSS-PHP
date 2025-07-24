@@ -205,7 +205,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->reputation = max(0, $this->reputation - max(0, $amount));
     }
-        
+
+    public function isAdmin(): bool
+    {
+        return in_array('ROLE_ADMIN', $this->getRoles(), true); 
+    }
+
+
 
 
 }
