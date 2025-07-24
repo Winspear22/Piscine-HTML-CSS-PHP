@@ -33,7 +33,7 @@ class Vote
         return $this->id;
     }
 
-    public function isLike(): ?bool
+    public function getIsLike(): ?bool
     {
         return $this->isLike;
     }

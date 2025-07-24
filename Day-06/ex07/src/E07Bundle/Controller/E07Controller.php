@@ -242,24 +242,41 @@ return $this->render('error_db_others.html.twig', [
 
         $isLike = $type === 'like';
 
-        if ($existingVote) {
-            // Même vote → on annule
-            if ($existingVote->getIsLike() === $isLike) {
+        if ($existingVote)
+        {
+            if ($existingVote->getIsLike() === $isLike)
+            {
+                // Même vote → on retire et on met à jour la réputation
+                if ($isLike)
+                {
+                    $author->decreaseReputation(1);
+                }
+                else
+                {
+                    $author->increaseReputation(1);
+                }
                 $em->remove($existingVote);
                 $this->addFlash('info', 'Ton vote a été retiré.');
-            } else {
+                }
+                else
+                {
                 // Vote opposé → on met à jour le vote et la réputation
                 $existingVote->setIsLike($isLike);
-                if ($isLike) {
+                if ($isLike)
+                {
                     $author->increaseReputation(1);
                     $author->decreaseReputation(1); // annule le dislike précédent
-                } else {
+                }
+                else
+                {
                     $author->decreaseReputation(1);
                     $author->increaseReputation(1); // annule le like précédent
                 }
                 $this->addFlash('success', 'Ton vote a été mis à jour.');
             }
-        } else {
+        }
+        else
+        {
             // Aucun vote existant → on crée
             $vote = new Vote();
             $vote->setUser($voter);
