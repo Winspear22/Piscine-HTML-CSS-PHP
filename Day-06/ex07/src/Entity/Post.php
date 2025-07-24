@@ -151,4 +151,10 @@ class Post
 
         return $this;
     }
+
+    public function getScore(): int
+    {
+        return $this->votes->filter(fn($v) => $v->isLike())->count() -
+        $this->votes->filter(fn($v) => !$v->isLike())->count();
+    }
 }
