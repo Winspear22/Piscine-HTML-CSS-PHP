@@ -34,7 +34,8 @@ class E06Controller extends AbstractController
         }
 		catch (Exception $e)
 		{
-return $this->render('error_db_others.html.twig', [
+
+    return $this->render('error_db_others.html.twig', [
     'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
     'exception_message' => $e::class,
 ]);

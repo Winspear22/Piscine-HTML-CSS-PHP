@@ -4,6 +4,7 @@ namespace App\Ex03Bundle\Controller;
 
 use DateTime;
 use Exception;
+use Throwable;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\PostType;
@@ -95,13 +96,16 @@ class Ex03Controller extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function welcome(EntityManagerInterface $em): Response
     {
-        try {
+        try
+        {
             $posts = $em->getRepository(Post::class)->findBy([], ['created' => 'DESC']);
             return $this->render('welcome.html.twig', [
                 'user' => $this->getUser(),
                 'posts' => $posts,
             ]);
-        } catch (\Throwable $e) {
+        }
+        catch (Throwable $e)
+        {
             $this->addFlash('error', 'Une erreur est survenue lors de l\'affichage de la page de bienvenue.');
             return $this->redirectToRoute('e03_index');
         }
@@ -141,11 +145,14 @@ class Ex03Controller extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function showPost(Post $post): Response
     {
-        try {
+        try
+        {
             return $this->render('post_show.html.twig', [
                 'post' => $post,
             ]);
-        } catch (\Throwable $e) {
+        } 
+        catch (Throwable $e)
+        {
             $this->addFlash('error', 'Erreur lors de l\'affichage du post.');
             return $this->redirectToRoute('e03_welcome');
         }
