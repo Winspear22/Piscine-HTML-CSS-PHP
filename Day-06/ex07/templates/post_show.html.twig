@@ -47,10 +47,13 @@
 {% if app.user %}
     {% set isOwner = post.author.id == app.user.id %}
     {% set isAdmin = 'ROLE_ADMIN' in app.user.roles %}
-    {% if isOwner and app.user.reputation >= 9 or isAdmin %}
+    {% set hasEnoughReputation = app.user.reputation >= 9 %}
+
+    {% if isOwner or hasEnoughReputation or isAdmin %}
         <a href="{{ path('e07_post_edit', { id: post.id }) }}" class="btn btn-warning">✏️ Modifier le post</a>
     {% endif %}
 {% endif %}
+
 
 
 <a href="{{ path('e07_welcome') }}" class="btn btn-secondary mt-3">← Retour à l’accueil</a>

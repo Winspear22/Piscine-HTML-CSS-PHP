@@ -307,40 +307,45 @@ return $this->render('error_db_others.html.twig', [
         return $this->redirectToRoute('e07_welcome');
     }
 
-    #[Route('/e07/post/{id}/edit', name: 'e07_post_edit')]
-    #[IsGranted('ROLE_USER')]
-    public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
+#[Route('/e07/post/{id}/edit', name: 'e07_post_edit')]
+#[IsGranted('ROLE_USER')]
+public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
+{
+    /** @var User $user */
+    $user = $this->getUser();
+
+    // Règles d'édition
+    $isOwner = $post->getAuthor() === $user;
+    $hasReputation = $user->getReputation() >= 9;
+    $isAdmin = $user->isAdmin();
+
+    if (!$isOwner && !$hasReputation && !$isAdmin)
     {
-        /** @var User $user */
-        $user = $this->getUser();
-
-        $isOwner = $post->getAuthor() === $user;
-        $canEditAsUser = $isOwner && $user->getReputation() >= 9;
-        $canEditAsAdmin = $user->isAdmin();
-
-        if (!$canEditAsUser && !$canEditAsAdmin)
-        {
-            throw $this->createAccessDeniedException("Tu n’as pas les droits nécessaires pour modifier ce post.");
-        }
-
-        $form = $this->createForm(PostType::class, $post);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $post->setLastEditedAt(new \DateTimeImmutable());
-            $post->setLastEditedBy($user);
-            $em->flush();
-
-            $this->addFlash('success', 'Post modifié avec succès !');
-            return $this->redirectToRoute('e07_post_show', ['id' => $post->getId()]);
-        }
-
-        return $this->render('post_edit.html.twig', [
-            'form' => $form->createView(),
-            'post' => $post,
-        ]);
+        // Flash uniquement si c'est une restriction de réputation
+        $this->addFlash('error', 'Vous n\'avez plus les 9 points de réputation requis pour éditer ce post.');
+        return $this->redirectToRoute('e07_welcome');
     }
+
+    $form = $this->createForm(PostType::class, $post);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid())
+    {
+        $post->setLastEditedAt(new \DateTimeImmutable());
+        $post->setLastEditedBy($user);
+        $em->flush();
+
+        $this->addFlash('success', 'Post modifié avec succès !');
+        return $this->redirectToRoute('e07_post_show', ['id' => $post->getId()]);
+    }
+
+    return $this->render('post_edit.html.twig', [
+        'form' => $form->createView(),
+        'post' => $post,
+    ]);
+}
+
+
 
 
         
