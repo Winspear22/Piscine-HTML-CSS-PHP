@@ -36,10 +36,10 @@ class E07Controller extends AbstractController
         }
 		catch (Exception $e)
 		{
-return $this->render('error_db_others.html.twig', [
-    'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
-    'exception_message' => $e::class,
-]);
+            return $this->render('error_db_others.html.twig', [
+                'error_message' => 'Erreur inattendue : ' . $e->getMessage(),
+                'exception_message' => $e::class,
+            ]);
 
         }
     }
@@ -68,15 +68,17 @@ return $this->render('error_db_others.html.twig', [
                 'last_username' => $lastUsername,
             ]);
         }
-        catch (DoctrineDBALException $e) {
+        catch (DoctrineDBALException $e)
+        {
             $this->addFlash('error', 'La base de données est indisponible.');
             return $this->render('error_db.html.twig');
         }
-        catch (Exception $e) {
+        catch (Exception $e)
+        {
             $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
             return $this->render('error_db_others.html.twig');
         }
-}
+    }
 
     #[Route('/e07/sign_up', name: 'e07_sign_up')]
     public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
@@ -154,7 +156,6 @@ return $this->render('error_db_others.html.twig', [
                 $post->setAuthor($this->getUser());
                 $post->setCreated(new \DateTimeImmutable());
 
-                // 🔥 Ces 2 lignes sont cruciales :
                 $post->setLastEditedAt(new \DateTimeImmutable());
                 $post->setLastEditedBy($this->getUser());
 

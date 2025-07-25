@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Post;
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,12 +14,14 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class, [
-                'label' => 'Titre',
-            ])
-            ->add('content', TextareaType::class, [
-                'label' => 'Contenu',
-            ]);
+        ->add('title', TextType::class, [
+            'label' => 'Titre',
+            'attr' => ['maxlength' => 60],
+        ])
+        ->add('content', TextareaType::class, [
+            'label' => 'Contenu',
+            'attr' => ['maxlength' => 150],
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
