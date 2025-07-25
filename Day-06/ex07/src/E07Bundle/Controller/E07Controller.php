@@ -59,9 +59,13 @@ return $this->render('error_db_others.html.twig', [
     {
         try 
         {
+            $error = $authenticationUtils->getLastAuthenticationError();
+            $lastUsername = $authenticationUtils->getLastUsername();
+
+            if ($error)
+                $this->addFlash('danger', $error->getMessageKey());
             return $this->render('security/login.html.twig', [
-                'last_username' => $authenticationUtils->getLastUsername(),
-                'error' => $authenticationUtils->getLastAuthenticationError(),
+                'last_username' => $lastUsername,
             ]);
         }
         catch (DoctrineDBALException $e) {

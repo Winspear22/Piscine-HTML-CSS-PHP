@@ -10,8 +10,6 @@
         {% block javascripts %}{% endblock %}
     </head>
     <body>
-
-        {# 🔔 Affichage des messages flash visibles sur toutes les pages #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="flash flash-{{ label }}">
@@ -19,7 +17,6 @@
                 </div>
             {% endfor %}
         {% endfor %}
-
         {% block body %}{% endblock %}
 
     </body>
