@@ -37,7 +37,7 @@ class AppFixtures extends Fixture
         $manager->persist($liker);
         $users[] = $liker;
 
-        // Utilisateur 6 points (1 post avec 3 likes et 3 dislikes)
+        // Utilisateur 6 points (1 post avec 6 likes)
         $disliker = new User();
         $disliker->setUsername('disliker');
         $disliker->setRoles(['ROLE_USER']);
@@ -45,7 +45,7 @@ class AppFixtures extends Fixture
         $manager->persist($disliker);
         $users[] = $disliker;
 
-        // Utilisateur 9 points (1 post avec 9 likes et 3 dislikes)
+        // Utilisateur 9 points (1 post avec 9 likes)
         $editor = new User();
         $editor->setUsername('editor');
         $editor->setRoles(['ROLE_USER']);
@@ -61,10 +61,19 @@ class AppFixtures extends Fixture
         $admin->setReputation(999);
         $manager->persist($admin);
 
-        // On garde les utilisateurs non-auteurs pour voter
-        $voters = [$newbie, $admin];
+        // Création de 9 likers supplémentaires (reputation = 3, pas de posts)
+        $extraLikers = [];
+        for ($i = 1; $i <= 9; $i++) {
+            $user = new User();
+            $user->setUsername("liker_$i");
+            $user->setRoles(['ROLE_USER']);
+            $user->setPassword($this->hasher->hashPassword($user, 'pass'));
+            $user->setReputation(3);
+            $manager->persist($user);
+            $extraLikers[] = $user;
+        }
 
-        // liker → 1 post, 3 likes
+        // Post de liker → 3 likes
         $post1 = new Post();
         $post1->setTitle('Post de liker');
         $post1->setContent('Contenu du post de liker');
@@ -74,16 +83,16 @@ class AppFixtures extends Fixture
         $post1->setLastEditedBy($liker);
         $manager->persist($post1);
 
-        foreach (array_slice($voters, 0, 3) as $voter) {
+        for ($i = 0; $i < 3; $i++) {
             $vote = new Vote();
             $vote->setPost($post1);
-            $vote->setUser($voter);
+            $vote->setUser($extraLikers[$i]);
             $vote->setIsLike(true);
             $manager->persist($vote);
         }
         $liker->setReputation(3);
 
-        // disliker → 1 post, 3 likes + 3 dislikes
+        // Post de disliker → 6 likes
         $post2 = new Post();
         $post2->setTitle('Post de disliker');
         $post2->setContent('Contenu du post de disliker');
@@ -93,23 +102,16 @@ class AppFixtures extends Fixture
         $post2->setLastEditedBy($disliker);
         $manager->persist($post2);
 
-        foreach (array_slice($voters, 0, 3) as $voter) {
-            $voteLike = new Vote();
-            $voteLike->setPost($post2);
-            $voteLike->setUser($voter);
-            $voteLike->setIsLike(true);
-            $manager->persist($voteLike);
+        for ($i = 3; $i < 9; $i++) {
+            $vote = new Vote();
+            $vote->setPost($post2);
+            $vote->setUser($extraLikers[$i]);
+            $vote->setIsLike(true);
+            $manager->persist($vote);
         }
-        foreach (array_slice($voters, 0, 3) as $voter) {
-            $voteDislike = new Vote();
-            $voteDislike->setPost($post2);
-            $voteDislike->setUser($voter);
-            $voteDislike->setIsLike(false);
-            $manager->persist($voteDislike);
-        }
-        $disliker->setReputation(3);
+        $disliker->setReputation(6);
 
-        // editor → 1 post, 9 likes + 3 dislikes
+        // Post de editor → 9 likes
         $post3 = new Post();
         $post3->setTitle('Post de editor');
         $post3->setContent('Contenu du post de editor');
@@ -119,19 +121,11 @@ class AppFixtures extends Fixture
         $post3->setLastEditedBy($editor);
         $manager->persist($post3);
 
-        for ($i = 0; $i < 9; $i++) {
+        foreach ($extraLikers as $voter) {
             $vote = new Vote();
             $vote->setPost($post3);
-            $vote->setUser($faker->randomElement($voters));
+            $vote->setUser($voter);
             $vote->setIsLike(true);
-            $manager->persist($vote);
-        }
-
-        for ($i = 0; $i < 3; $i++) {
-            $vote = new Vote();
-            $vote->setPost($post3);
-            $vote->setUser($faker->randomElement($voters));
-            $vote->setIsLike(false);
             $manager->persist($vote);
         }
         $editor->setReputation(9);
