@@ -14,14 +14,14 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('title', TextType::class, [
-            'label' => 'Titre',
-            'attr' => ['maxlength' => 60],
-        ])
-        ->add('content', TextareaType::class, [
-            'label' => 'Contenu',
-            'attr' => ['maxlength' => 150],
-        ]);
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'attr' => ['maxlength' => 60],
+            ])
+            ->add('content', TextareaType::class, [
+                'label' => 'Contenu',
+                'attr' => ['maxlength' => 150],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
