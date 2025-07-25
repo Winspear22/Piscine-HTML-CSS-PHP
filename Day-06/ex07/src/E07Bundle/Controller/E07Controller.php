@@ -84,7 +84,11 @@ return $this->render('error_db_others.html.twig', [
             try
             {
                 if ($em->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]))
-                    $form->get('username')->addError(new FormError('Ce nom d\'utilisateur est déjà pris.'));
+                {
+                    $this->addFlash('error', 'Ce nom d\'utilisateur est déjà pris.');
+                    return $this->redirectToRoute('e07_sign_up');
+                }
+                    //$form->get('username')->addError(new FormError('Ce nom d\'utilisateur est déjà pris.'));
                 else
                 {
                     $user->setPassword($passwordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
