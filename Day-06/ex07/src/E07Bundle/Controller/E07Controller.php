@@ -273,43 +273,52 @@ return $this->render('error_db_others.html.twig', [
         return $this->redirectToRoute('e07_welcome');
     }
 
-#[Route('/e07/post/{id}/edit', name: 'e07_post_edit')]
-#[IsGranted('ROLE_USER')]
-public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
-{
-    /** @var User $user */
-    $user = $this->getUser();
-
-    // Règles d'édition
-    $isOwner = $post->getAuthor() === $user;
-    $hasReputation = $user->getReputation() >= 9;
-    $isAdmin = $user->isAdmin();
-
-    if (!$isOwner && !$hasReputation && !$isAdmin)
+    #[Route('/e07/post/{id}/edit', name: 'e07_post_edit')]
+    #[IsGranted('ROLE_USER')]
+    public function edit(Post $post, Request $request, EntityManagerInterface $em): Response
     {
-        // Flash uniquement si c'est une restriction de réputation
-        $this->addFlash('error', 'Vous n\'avez plus les 9 points de réputation requis pour éditer ce post.');
-        return $this->redirectToRoute('e07_welcome');
-    }
+        /** @var User $user */
+        $user = $this->getUser();
 
-    $form = $this->createForm(PostType::class, $post);
-    $form->handleRequest($request);
+        // Règles d'édition
+        $isOwner = $post->getAuthor() === $user;
+        $hasReputation = $user->getReputation() >= 9;
+        $isAdmin = $user->isAdmin();
 
-    if ($form->isSubmitted() && $form->isValid())
-    {
-        $post->setLastEditedAt(new \DateTimeImmutable());
-        $post->setLastEditedBy($user);
-        $em->flush();
+        $isAuthorAdmin = $post->getAuthor()?->isAdmin();
 
-        $this->addFlash('success', 'Post modifié avec succès !');
-        return $this->redirectToRoute('e07_post_show', ['id' => $post->getId()]);
-    }
+        // Bloque si l’auteur du post est admin et que l’utilisateur courant ne l’est pas
+        if ($isAuthorAdmin && !$isAdmin)
+        {
+            $this->addFlash('error', 'Seuls les administrateurs peuvent éditer les posts d\'autres administrateurs.');
+            return $this->redirectToRoute('e07_welcome');
+        }
 
-    return $this->render('post_edit.html.twig', [
-        'form' => $form->createView(),
-        'post' => $post,
-    ]);
-}
+        if (!$isOwner && !$hasReputation && !$isAdmin)
+        {
+            // Flash uniquement si c'est une restriction de réputation
+            $this->addFlash('error', 'Vous n\'avez plus les 9 points de réputation requis pour éditer ce post.');
+            return $this->redirectToRoute('e07_welcome');
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $post->setLastEditedAt(new \DateTimeImmutable());
+            $post->setLastEditedBy($user);
+            $em->flush();
+
+            $this->addFlash('success', 'Post modifié avec succès !');
+            return $this->redirectToRoute('e07_post_show', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post_edit.html.twig', [
+            'form' => $form->createView(),
+            'post' => $post,
+        ]);
+        }
 
 
 

@@ -54,8 +54,9 @@
     {% set isOwner = post.author.id == app.user.id %}
     {% set isAdmin = 'ROLE_ADMIN' in app.user.roles %}
     {% set hasEnoughReputation = app.user.reputation >= 9 %}
+    {% set isAuthorAdmin = 'ROLE_ADMIN' in post.author.roles %}
 
-    {% if isOwner or hasEnoughReputation or isAdmin %}
+    {% if (isOwner or hasEnoughReputation or isAdmin) and (not isAuthorAdmin or isAdmin) %}
         <a href="{{ path('e07_post_edit', { id: post.id }) }}" class="btn btn-warning">✏️ Modifier le post</a>
     {% endif %}
 {% endif %}
