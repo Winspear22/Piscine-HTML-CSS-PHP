@@ -181,6 +181,10 @@ return $this->render('error_db_others.html.twig', [
                 $post->setAuthor($this->getUser());
                 $post->setCreated(new \DateTimeImmutable());
 
+                // 🔥 Ces 2 lignes sont cruciales :
+                $post->setLastEditedAt(new \DateTimeImmutable());
+                $post->setLastEditedBy($this->getUser());
+
                 $em->persist($post);
                 $em->flush();
 
@@ -198,7 +202,6 @@ return $this->render('error_db_others.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
 
     #[Route('/e07/post/{id}', name: 'e07_post_show')]
     #[IsGranted('ROLE_USER')]

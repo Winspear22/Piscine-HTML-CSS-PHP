@@ -132,7 +132,8 @@ class Post
 
     public function addVote(Vote $vote): static
     {
-        if (!$this->votes->contains($vote)) {
+        if (!$this->votes->contains($vote))
+        {
             $this->votes->add($vote);
             $vote->setPost($this);
         }
@@ -154,7 +155,7 @@ class Post
 
     public function getScore(): int
     {
-        return $this->votes->filter(fn($v) => $v->isLike())->count() -
-        $this->votes->filter(fn($v) => !$v->isLike())->count();
+        return $this->votes->filter(fn($v) => $v->getIsLike())->count() -
+        $this->votes->filter(fn($v) => !$v->getIsLike())->count();
     }
 }
