@@ -18,6 +18,7 @@ use Doctrine\DBAL\Exception as DoctrineDBALException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class E07Controller extends AbstractController
 {
@@ -54,23 +55,24 @@ return $this->render('error_db_others.html.twig', [
     public function signOut(): void {}
 
     #[Route('/e07/sign_in', name: 'e07_sign_in')]
-    public function signIn(): Response
+    public function signIn(AuthenticationUtils $authenticationUtils): Response
     {
-        try
+        try 
         {
-            return $this->render('security/login.html.twig');
+            return $this->render('security/login.html.twig', [
+                'last_username' => $authenticationUtils->getLastUsername(),
+                'error' => $authenticationUtils->getLastAuthenticationError(),
+            ]);
         }
-        catch (DoctrineDBALException $e) 
-        {
+        catch (DoctrineDBALException $e) {
             $this->addFlash('error', 'La base de données est indisponible.');
             return $this->render('error_db.html.twig');
         }
-        catch (Exception $e)
-        {
+        catch (Exception $e) {
             $this->addFlash('error', 'Erreur inattendue : ' . $e->getMessage());
             return $this->render('error_db_others.html.twig');
         }
-    }
+}
 
     #[Route('/e07/sign_up', name: 'e07_sign_up')]
     public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
