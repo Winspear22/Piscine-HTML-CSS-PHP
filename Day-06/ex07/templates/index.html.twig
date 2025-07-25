@@ -8,7 +8,6 @@
     {% if not app.user %}
         <a href="{{ path('e07_sign_in') }}" class="btn btn-primary">Se connecter</a>
         <a href="{{ path('e07_sign_up') }}" class="btn btn-secondary">S’inscrire</a>
-        <a href="{{ path('e07_sign_up_admin') }}" class="btn btn-secondary">S’inscrire (ADMIN)</a>
     {% else %}
         <a href="{{ path('e07_welcome') }}" class="btn btn-success">Aller sur la page Welcome</a>
         <a href="{{ path('e07_sign_out') }}" class="btn btn-danger">Se déconnecter</a>

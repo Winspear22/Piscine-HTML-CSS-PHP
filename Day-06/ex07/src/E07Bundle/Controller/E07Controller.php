@@ -108,43 +108,6 @@ return $this->render('error_db_others.html.twig', [
         ]);
     }
 
-    #[Route('/e07/sign_up_admin', name: 'e07_sign_up_admin')]
-    #[IsGranted('ROLE_ADMIN')]
-    public function createAdmin(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserFormType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            try
-            {
-                if ($em->getRepository(User::class)->findOneBy(['username' => $user->getUsername()]))
-                    $form->get('username')->addError(new FormError('Ce nom d\'utilisateur est déjà pris.'));
-                else
-                {
-                    $user->setPassword($passwordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
-                    $user->setRoles(['ROLE_ADMIN']);
-                    $em->persist($user);
-                    $em->flush();
-
-                    $this->addFlash('success', 'Inscription réussie ! Connecte-toi !');
-                    return $this->redirectToRoute('e07_sign_in');
-                }
-            }
-            catch (Throwable $e)
-            {
-                $this->addFlash('error', 'Erreur lors de la création de l\'utilisateur.');
-                return $this->redirectToRoute('e07_index');
-            }
-        }
-
-        return $this->render('sign_up_admin.html.twig', [
-            'registrationFormAdmin' => $form->createView(),
-        ]);
-    }
-
     #[Route('/e07/welcome', name: 'e07_welcome')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[IsGranted(attribute: 'ROLE_USER')]

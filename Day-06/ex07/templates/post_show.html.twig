@@ -7,6 +7,12 @@
 
 <p><strong>Auteur :</strong> {{ post.author.username }} (Réputation : {{ post.author.reputation }})</p>
 <p><strong>Date :</strong> {{ post.created|date('d/m/Y H:i') }}</p>
+{% if post.lastEditedAt and post.lastEditedAt != post.created %}
+    <p>
+        <strong>Modifié le :</strong> {{ post.lastEditedAt|date('d/m/Y H:i') }}
+        par {{ post.lastEditedBy.username }}
+    </p>
+{% endif %}
 
 <hr>
 
