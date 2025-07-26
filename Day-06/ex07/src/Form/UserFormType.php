@@ -19,13 +19,14 @@ class UserFormType extends AbstractType
                     new Assert\NotBlank(message: 'Le nom d\'utilisateur est requis.'),
                     new Assert\Length([
                         'min' => 4,
-                        'max' => 50,
+                        'max' => 15,
                         'minMessage' => 'Le nom d\'utilisateur doit contenir au moins {{ limit }} caractères.',
                         'maxMessage' => 'Le nom d\'utilisateur ne peut pas dépasser {{ limit }} caractères.',
                     ]),
                 ],
                 'label' => 'Nom d’utilisateur',
-            ])            ->add('plainPassword', PasswordType::class, [
+            ])
+            ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'label' => 'Mot de passe',
             ]);

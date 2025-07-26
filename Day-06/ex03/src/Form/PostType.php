@@ -2,27 +2,26 @@
 
 namespace App\Form;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Post;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PostType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', null, [
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['max' => 255])
-                ]
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
+                'attr' => ['maxlength' => 60],
             ])
-            ->add('content', null, [
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
+            ->add('content', TextareaType::class, [
+                'label' => 'Contenu',
+                'attr' => ['maxlength' => 150],
             ]);
 }
 
