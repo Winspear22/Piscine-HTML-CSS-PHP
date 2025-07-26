@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exercice 03{% endblock %}
+
+{% block body %}
+    <h1>{{ text|uppercaseWords }}</h1>
+    <p>Ce texte contient {{ countNumbers(text) }} chiffres.</p>
+{% endblock %}
